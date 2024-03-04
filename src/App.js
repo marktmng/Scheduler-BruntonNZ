@@ -6,50 +6,72 @@ import EventForm from './EventForm'; // Import EventForm component
 // import { fetchSomeData } from './apiService'; // Import your API functions
 import './App.css';
 import './Style.css';
-
-
-// API endpoint to fetch events data
-// const API_URL = "http://localhost:8080"; //http://localhost:8080/tasks
+import { fetchData } from './Api';
+import moment from 'moment';
 
 // sample data
 
-const sampleEventData = [
-  {
-    "title":"Task 1",
-    "start_date":"Task 2",
-    "end_date":"Task 3"
-}
-]
+// const sampleEventData = [
+//   {
+//   "Title": "Graduation",
+//   "Description": "",
+//   "Location": "Main Hall",
+//   "StartDate": "3.2.2024 22:22",
+//   "EndDate": "4.2.2024 23:00"
+// }
+// ]
 
 function App() {
   // State variables
   const [selectMenu, setSelectMenu] = useState(null); // Selected menu item
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility
   const [modalContent, setModalContent] = useState(null); // Content for modal
-  const [events, setEvents] = useState([]); // State to store events
 
+  const [events, setEvents] = useState([]); 
 
-// Function to fetch data from the API
-// const fetchData = async () => {
-//   try {
-//     const response = await fetch(API_URL); // in console the error is this line and 
-//     if (!response.ok) {
-//       throw new Error('Failed to fetch data');
-//     }
-//     const data = await response.json();
-//     setEvents(data.length > 0 ? data : sampleEventData); // Use fetched data if available, otherwise fallback to sample data
-//   } catch (error) {
-//     console.error('Error fetching data:', error); // in this line
-//   }
-// };
+  useEffect(() => {
+// Any additional logic you need when events change
+  }, [events]);
 
+  // fetch the data from the backend
+  const fetchEventList = async () => {
+    // console.log( 3333)
+    console.log("Fetch Event List")
 
+    const response = await fetchData()
 
-  // Fetch data from API when the component mounts
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+    const evnts = Object.keys(response)
+    .map(key => response[key])
+    .map(evnt => {
+      const { Title, StartDate, EndDate } = evnt //Id
+        const title = Title;
+        const [start, end] = [StartDate, EndDate]
+          .map(date => {
+            // return new Date() // fake date
 
+            const result =  moment.utc(date).toDate() // 'DD.MM.YYYY HH:mm'
+            console.log("Response from backend:", response) // Log the response object
+            
+            console.log({result})
+            return result
+            //   .format('YYYY-MM-DD')
+          })
+
+        // const id = Id
+        return { title, start, end } //id
+    })
+    setEvents(evnts)
+  }
+
+  useEffect(() => {
+    fetchEventList()
+  }, [])
+
+  const createEvnts = () => {
+    fetchEventList()
+  };
+  console.log({ evnts: events })
+ 
 
   // Handle click on menu items
   const handleMenuClick = (event) => {
@@ -78,13 +100,6 @@ function App() {
     setIsModalVisible(false);
   }
 
-  // Handle event creation
-  const handleCreateEvent = (eventData) => {
-    // Add the new event to the events array
-    setEvents([...events, eventData]);
-    handleModalClose(); // Close the modal after creating event
-  }
-
   // Render the component
   return (
     <div className="app-container">
@@ -105,7 +120,7 @@ function App() {
       {/* Scheduler component */}
       <div className='scheduler-container'>
         {/* Pass events array to the Scheduler component */}
-        <Scheduler events={events} />
+        <Scheduler events={events} fetchEventList={fetchEventList}/>
       </div>
       
       {/* Modal */}
@@ -116,7 +131,7 @@ function App() {
         footer={null}
         >
         {modalContent === "Events" && (
-          <EventForm onCreate={handleCreateEvent} />
+          <EventForm onCreate={createEvnts} /> // pass createEvnts to EventForm to add new events
         )}
         {modalContent && <p>{modalContent}</p>}
         </Modal>
