@@ -17,7 +17,7 @@ function Scheduler(props) {
 
   return (
     <div className="scheduler-container">
-      <h2>My Scheduler</h2>
+      {/* <h2>My Scheduler</h2> */}
       {/* Pass handleCreateEvent to EventForm to add new events */}
       {/* <EventForm onCreate={handleCreateEvent} /> */}
 
