@@ -6,8 +6,10 @@ import EventForm from './EventForm'; // Import EventForm component
 // import { fetchSomeData } from './apiService'; // Import your API functions
 import './App.css';
 import './Style.css';
+import './navbar.css'
 import { fetchData } from './Api';
 import moment from 'moment';
+import TopNavbar from './TopNavbar';
 
 // sample data
 
@@ -71,6 +73,7 @@ function App() {
     fetchEventList()
   };
   console.log({ evnts: events })
+
  
 
   // Handle click on menu items
@@ -101,14 +104,22 @@ function App() {
   }
 
   // Render the component
-  return (
-    <div className="app-container">
+  return (    
+  <div>
+    {/* Top Navbar */}
+    <TopNavbar
+    className=""
+      handleMenuClick={handleMenuClick} selectMenu={selectMenu} />
+    <div>
+      <div className="app-container">
+      
+
       {/* Left menu */}
       <div className="left-menu">
         <Menu
           className="menu-bar"
           mode="vertical"
-          selectedKeys={selectMenu ? [selectMenu] : []} // Fix selectedKeys to be an array
+          selectedKeys={selectMenu ? [selectMenu] : []}
           onClick={handleMenuClick}
         >
           <Menu.Item key="tasks">Tasks</Menu.Item>
@@ -119,7 +130,6 @@ function App() {
 
       {/* Scheduler component */}
       <div className='scheduler-container'>
-        {/* Pass events array to the Scheduler component */}
         <Scheduler events={events} fetchEventList={fetchEventList}/>
       </div>
       
@@ -131,12 +141,13 @@ function App() {
         footer={null}
         >
         {modalContent === "Events" && (
-          <EventForm onCreate={createEvnts} /> // pass createEvnts to EventForm to add new events
+          <EventForm onCreate={createEvnts} />
         )}
         {modalContent && <p>{modalContent}</p>}
-        </Modal>
-
+      </Modal>
     </div>
+    </div>
+  </div>
   );
 }
 

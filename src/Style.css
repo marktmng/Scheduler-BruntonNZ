@@ -1,10 +1,10 @@
 .app-container {
     display: flex;
   }
+
   
   .left-menu {
     flex: 0 0 200px; /* Set a fixed width for the left menu */
-    background-color: #f0f2f5; /* Add background color */
   }
   
   .menu-bar {
@@ -13,6 +13,7 @@
   
   .scheduler-container {
     flex: 1; /* Let the scheduler container occupy remaining space */
+    padding: 1px;
   }
   
   
