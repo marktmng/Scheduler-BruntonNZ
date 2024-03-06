@@ -15,16 +15,16 @@
   background-color: #4085da;
 } */
 
-.top-menu-bar {
+  .top-menu-bar {
+    display: flex;
     justify-content: center;
-    background-color: rgb(73, 163, 242);
+    background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%);
     color: white;
     padding: 10px;
     font-weight: bold;
-    /* position: fixed; */
-    /* top: 0; */
-    /* width: 100%; */
-    /* z-index: 1000; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* transform: skewY(-5deg); /* Added skew for 3D effect */
+    
   }
 
   
