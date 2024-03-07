@@ -1,35 +1,48 @@
-// import React, { useState, useEffect } from 'react';
-// import EventForm from './EventForm';
+import React, { useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import { fetchData } from './Api';
-import './Style.css';
+import EditForm from './EditForm';
+import './Popup.css'
 
 const localizer = momentLocalizer(moment);
 
-function Scheduler(props) {
-  const {events , fetchEventList}=props 
+function Scheduler({ events, fetchEventList }) {
+  
+  const [selectedTask, setSelectedTask] = useState(null);
+  
 
-  // const handleCreateEvent =   ( ) => {  
-  //   fetchEventList() 
-  // };
+  const handleSelectTask = (task) => {
+    setSelectedTask(task);
+  };
+
+  const handleCloseForm = () => {
+    setSelectedTask(null);
+  };
 
   return (
     <div className="scheduler-container">
-      {/* <h2>My Scheduler</h2> */}
-      {/* Pass handleCreateEvent to EventForm to add new events */}
-      {/* <EventForm onCreate={handleCreateEvent} /> */}
-
-      {/* Render the calendar with events */}
       <Calendar
         localizer={localizer}
         events={events}
-        startAccessor="start" // Property name for event start date
-        endAccessor="end" // Property name for event end date
+        startAccessor="start"
+        endAccessor="end"
         style={{ height: '90vh' }}
-        
+        onSelectEvent={handleSelectTask}
       />
+      <div className={`popup ${selectedTask ? 'show' : ''}`}>
+        <div className="popup-inner">
+          {selectedTask && (
+            <EditForm
+              task={selectedTask}
+              onUpdate={fetchEventList}
+              onDelete={fetchEventList}
+              onClose={handleCloseForm}
+            />
+          )}
+          <button className="close-btn" onClick={handleCloseForm}>[ x ]</button>
+        </div>
+      </div>
     </div>
   );
 }

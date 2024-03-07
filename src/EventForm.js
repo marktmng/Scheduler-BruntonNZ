@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DateTimePicker from './DateTimePicker';
-import { postData } from './Api';
-import { render } from '@testing-library/react';
+import { postData, } from './Api';
+// import { render } from '@testing-library/react';
 // import App from './App';
+import './EditForm.css'; // Import your CSS file for styling
+
 
 
 // Event Form
@@ -69,7 +71,9 @@ function EventForm({ onCreate, initialEvent }) {
  
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form 
+    className='edit-form'
+    onSubmit={handleSubmit}>
       <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event" required />
       <DateTimePicker value={start} onChange={setStart} />
       <DateTimePicker value={end} onChange={setEnd} />

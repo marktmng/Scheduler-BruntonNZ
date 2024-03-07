@@ -30,7 +30,7 @@ function App() {
       .map(evnt => {
         const { Title, StartDate, EndDate } = evnt;
         const title = Title;
-        const [start, end] = [StartDate, EndDate].map(date => moment.utc(date).toDate());
+        const [start, end] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
         return { title, start, end };
       });
     setEvents(evnts);
@@ -102,17 +102,20 @@ function App() {
             <Scheduler events={events} fetchEventList={fetchEventList} selectedDate={selectedDate} />
           </div>
           {/* Modal */}
-          <Modal
+          <form>
+            <Modal
             title=''
             open={isModalVisible}
             onCancel={handleModalClose}
             footer={null}
           >
             {modalContent === "Events" && (
-              <EventForm onCreate={fetchEventList} />
+              <EventForm
+               onCreate={fetchEventList} />
             )}
             {modalContent && <p>{modalContent}</p>}
           </Modal>
+          </form>
         </div>
       </div>
     </div>
