@@ -14,7 +14,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   // Effect to pre-fill form fields when initialEvent changes
   useEffect(() => { 
     if (task) {
-      setTitle(task.Title || ''); // Set title from initialEvent or empty string
+      setTitle(task.title || ''); // Set title from initialEvent or empty string
       setStart(new Date(task.start) || new Date()); // Set start date from initialEvent or current date
       setEnd(new Date(task.end) || new Date()); // Set end date from initialEvent or current date
     }
