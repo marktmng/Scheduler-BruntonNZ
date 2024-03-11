@@ -28,10 +28,10 @@ function App() {
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
-        const { Title, StartDate, EndDate } = evnt;
+        const { Title, StartDate, EndDate,Task_code, Location, Description } = evnt;
         const title = Title;
         const [start, end] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
-        return { title, start, end };
+        return { title, start, end,Task_code, Location, Description };
       });
     setEvents(evnts);
   };

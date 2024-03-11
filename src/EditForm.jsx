@@ -6,33 +6,48 @@ import './EditForm.css'; // Import your CSS file for styling
 
 // Edit Form
 function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
-  const [title, setTitle] = useState(task?.Title || '');
-  // Initialize start and end dates as Date objects
-  const [start, setStart] = useState(new Date(task?.StartDate || Date.now())); // Ensure task.StartDate is a valid date string
-  const [end, setEnd] = useState(new Date(task?.EndDate || Date.now())); // Ensure task.EndDate is a valid date string
+  const [taskCode, setTaskCode] = useState('');
+  const [title, setTitle] = useState('');
+  const [start, setStart] = useState(new Date());
+  const [end, setEnd] = useState(new Date());
 
   // Effect to pre-fill form fields when initialEvent changes
   useEffect(() => { 
     if (task) {
+      setTaskCode(task.taskCode || '');
       setTitle(task.title || ''); // Set title from initialEvent or empty string
-      setStart(new Date(task.start) || new Date()); // Set start date from initialEvent or current date
-      setEnd(new Date(task.end) || new Date()); // Set end date from initialEvent or current date
+      setStart(new Date(task.start) || new Date());
+      setEnd(new Date(task.end) || new Date());
     }
   }, [task]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+     // Convert dates to ISO format
+  // const isoStartDate = start.toISOString();
+  // const isoEndDate = end.toISOString();
+
     const updatedTask = {
+      Task_code: taskCode,
       Title: title,
       StartDate: start,
-      EndDate: end
+      EndDate: end,
+      // Description:task.Description,
+      // Location:task.Location
+
+      // StartDate: isoStartDate,
+      // EndDate: isoEndDate
+
+      // StartDate: start.toISOString(), // Convert to ISO format
+      // EndDate: end.toISOString() // Convert to ISO format
+
     };
 
     try {
       if (task) {
         await updateTask(task.Task_code, updatedTask);
-        onUpdate();
+        onUpdate(task);
       } else {
         // Otherwise, it's an add operation
         await postData(updatedTask); // Call API to create a new event
@@ -49,15 +64,16 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     setEnd(new Date());
   };
 
-  const handleDelete = async () => {
+    const handleDelete = async () => {  
     try {
-      await deleteTask(task.Task_code);
-      onDelete();
+      await deleteTask(task.Task_code); // Assuming deleteTask only needs taskCode
+      onDelete(task); // Passing the whole task object for removal
       onClose();
     } catch (error) {
       console.error('Error deleting task:', error);
     }
   };
+  
   return (
     <form 
     className='edit-form'
@@ -65,8 +81,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event" required />
       <DateTimePicker value={start} onChange={setStart} />
       <DateTimePicker value={end} onChange={setEnd} />
-      <button type="submit">Add Event</button>
-      <button type="submit">Update Task</button>
+      <button type="submit" onClick={handleSubmit}>Update Task</button>
+      {/* {task && <button type="submit" onClick={handleSubmit}>Update Task</button>} */}
       {task && <button type="button" onClick={handleDelete}>Delete Task</button>}
     </form>
   );

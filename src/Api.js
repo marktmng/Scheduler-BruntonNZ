@@ -38,8 +38,8 @@ export const postData = async (data) => {
 // Function to update an existing task
 export const updateTask = async (Task_code, newData) => {
   try {
-    const response = await fetch(`${API_URL}/${Task_code}`, {
-      method: "PUT",
+    const response = await fetch(`${API_URL}/taskUpd/${Task_code}`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -59,7 +59,7 @@ export const updateTask = async (Task_code, newData) => {
 // Function to delete a task
 export const deleteTask = async (Task_code) => {
   try {
-    const response = await fetch(`${API_URL}/${Task_code}`, {
+    const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
       method: "DELETE",
     });
     if (!response.ok) {
