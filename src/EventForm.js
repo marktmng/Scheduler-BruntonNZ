@@ -13,6 +13,7 @@ function EventForm({ onCreate, initialEvent }) {
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
   const [dataForPost,setDataForPost]=useState(null)
+  const [recurrence, setRecurrence] = useState(null); // implementing recurrence
   // const [location, setLocation] = useState('');
 
   // Populate form fields with initial event data when it's provided
@@ -21,7 +22,8 @@ function EventForm({ onCreate, initialEvent }) {
       setTitle(initialEvent.title || '');
       setStart(new Date(initialEvent.start) || new Date());
       setEnd(new Date(initialEvent.end) || new Date());
-      // setLocation(initialEvent.location || '');
+      setRecurrence(initialEvent.recurrence || '') // implementing recurrence
+      // setLocation(initialEvent.location || ''); 
     }
   }, [initialEvent]);
 
@@ -39,6 +41,7 @@ function EventForm({ onCreate, initialEvent }) {
       setTitle('');
       setStart(new Date());
       setEnd(new Date());
+      setRecurrence(null); // implementing recurrence
       
       setDataForPost(null)
     } catch (error) {
@@ -54,7 +57,8 @@ function EventForm({ onCreate, initialEvent }) {
     const eventPost = {
       Title: title,
       StartDate: start,
-      EndDate: end
+      EndDate: end,
+      Repeatable: recurrence // implementing recurrence
     }
     setDataForPost(eventPost)
  
@@ -74,9 +78,19 @@ function EventForm({ onCreate, initialEvent }) {
     <form 
     className='edit-form'
     onSubmit={handleSubmit}>
-      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event" required />
+      <input type="text" 
+      value={title} 
+      onChange={(e) => setTitle(e.target.value)} 
+      placeholder="Event" required />
+
       <DateTimePicker value={start} onChange={setStart} />
       <DateTimePicker value={end} onChange={setEnd} />
+
+      <input type="text" 
+      value={recurrence} 
+      onChange={(e) => setRecurrence(e.target.value)} 
+      placeholder="Make Recurrence" />  {/* implementing recurrence
+      
       {/* <input type="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location" required /> */}
 
       <button type="submit">Add Event</button>

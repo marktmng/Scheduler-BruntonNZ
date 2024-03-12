@@ -1,10 +1,11 @@
 .edit-form {
     max-width: 400px;
+    /* height: 450px; */
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%);
+    /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
     ;
   }
   
@@ -14,7 +15,7 @@
     width: 100%;
     margin-bottom: 10px;
     padding: 8px;
-    font-size: 16px;
+    font-size: 13px;
   }
   
   .edit-form .buttons {

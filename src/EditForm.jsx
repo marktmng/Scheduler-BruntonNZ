@@ -24,24 +24,11 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     // Convert dates to ISO format
-  // const isoStartDate = start.toISOString();
-  // const isoEndDate = end.toISOString();
-
     const updatedTask = {
       Task_code: taskCode,
       Title: title,
       StartDate: start,
       EndDate: end,
-      // Description:task.Description,
-      // Location:task.Location
-
-      // StartDate: isoStartDate,
-      // EndDate: isoEndDate
-
-      // StartDate: start.toISOString(), // Convert to ISO format
-      // EndDate: end.toISOString() // Convert to ISO format
-
     };
 
     try {

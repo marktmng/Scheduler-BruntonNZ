@@ -1,6 +1,6 @@
 /* App.js */
 import React, { useState, useEffect } from 'react';
-import { Menu, Modal, DatePicker } from "antd"; // Import DatePicker for the small calendar
+import { Menu, Modal, DatePicker, Calendar } from "antd"; // Import DatePicker for the small calendar
 import Scheduler from './Scheduler';
 import EventForm from './EventForm'; // Import EventForm component
 import './App.css';
@@ -28,10 +28,10 @@ function App() {
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
-        const { Title, StartDate, EndDate,Task_code, Location, Description } = evnt;
+        const { Title, StartDate, EndDate,Task_code, Location, Description, Repeatable } = evnt;
         const title = Title;
         const [start, end] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
-        return { title, start, end,Task_code, Location, Description };
+        return { title, start, end,Task_code, Location, Description, Repeatable };
       });
     setEvents(evnts);
   };
@@ -43,15 +43,15 @@ function App() {
 
     // Set modal content based on selected menu item
     switch(event.key) {
-      case "tasks":
-        setModalContent("Tasks");
-        break;
+      // case "tasks":
+      //   setModalContent("Tasks");
+      //   break;
       case "events":
         setModalContent("Events");
         break;
-      case "appointments":
-        setModalContent("Appointments");
-        break;
+      // case "appointments":
+      //   setModalContent("Appointments");
+      //   break;
       default:
         setModalContent(null);
         break;
@@ -87,14 +87,13 @@ function App() {
               selectedKeys={selectMenu ? [selectMenu] : []}
               onClick={handleMenuClick}
             >
-              <Menu.Item key="tasks">Tasks</Menu.Item>
+              {/* <Menu.Item key="tasks">Tasks</Menu.Item> */}
               <Menu.Item key="events">Events</Menu.Item>
-              <Menu.Item key="appointments">Appointments</Menu.Item>
+              {/* <Menu.Item key="appointments">Appointments</Menu.Item> */}
               {/* Small calendar */}
-              <div key="smallCalendar">
+              {/* <div key="smallCalendar">
                 <DatePicker onChange={handleDateChange} />
-                </div>
-              
+                </div> */}              
             </Menu>
           </div>
           {/* Scheduler component */}
@@ -108,11 +107,16 @@ function App() {
             open={isModalVisible}
             onCancel={handleModalClose}
             footer={null}
+            
           >
+            {/* <hr/> */}
             {modalContent === "Events" && (
               <EventForm
-               onCreate={fetchEventList} />
+               onCreate={fetchEventList}
+               />
             )}
+            <br/>
+            <hr/>
             {modalContent && <p>{modalContent}</p>}
           </Modal>
           </form>
