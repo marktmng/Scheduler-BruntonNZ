@@ -9,8 +9,7 @@ const localizer = momentLocalizer(moment);
 
 function Scheduler({ events, fetchEventList }) {
   
-  const [selectedTask, setSelectedTask] = useState(null);
-  
+  const [selectedTask, setSelectedTask] = useState(null);  
 
   const handleSelectTask = (task) => {
     setSelectedTask(task);
@@ -19,6 +18,12 @@ function Scheduler({ events, fetchEventList }) {
   const handleCloseForm = () => {
     setSelectedTask(null);
   };
+
+  // // add function to click grid
+  // const handleGridClick = (date) => {
+  //   console.log(date)
+
+  // }
 
   return (
     <div className="scheduler-container">
@@ -29,6 +34,8 @@ function Scheduler({ events, fetchEventList }) {
         endAccessor="end"
         style={{ height: '90vh' }}
         onSelectEvent={handleSelectTask}
+
+        // onClick={handleGridClick} // passed the handGridClick function as a prop
       />
       <div className={`popup ${selectedTask ? 'show' : ''}`}>
         <div className="popup-inner">

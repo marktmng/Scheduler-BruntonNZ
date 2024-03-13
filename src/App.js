@@ -28,11 +28,31 @@ function App() {
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
-        const { Title, StartDate, EndDate,Task_code, Location, Description, Repeatable } = evnt;
+        const { Title, StartDate, EndDate, Task_code, Location, Description, Repeatable } = evnt;
         const title = Title;
-        const [start, end] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
-        return { title, start, end,Task_code, Location, Description, Repeatable };
-      });
+        const [startValue, endValue] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm'))
+        const [start, end] = [startValue, endValue].map(value => value.toDate());
+
+        if (!Repeatable) {
+          return [{ title, start, end, Task_code, Location, Description, Repeatable }];
+        } else {
+          const result = []
+          const totalDays = moment.duration(endValue.diff(startValue)).asDays()
+          const margin = Repeatable.includes('FREQ=WEEKLY') ? 7 : 1
+
+          const totalTimes = (totalDays / margin)
+
+          const rangeStart = moment(startValue)
+          for (let i = 0; i < totalTimes; i++) {
+            const start = rangeStart.toDate()
+            const end = start
+            result.push({ title, start, end, Task_code, Location, Description, Repeatable })
+            rangeStart.add('d', margin)
+          }
+
+          return result
+        }
+      }).flat();
     setEvents(evnts);
   };
 
@@ -42,7 +62,7 @@ function App() {
     setIsModalVisible(true); // Show modal when menu item is clicked
 
     // Set modal content based on selected menu item
-    switch(event.key) {
+    switch (event.key) {
       // case "tasks":
       //   setModalContent("Tasks");
       //   break;
@@ -69,15 +89,14 @@ function App() {
   };
 
   // Render the component
-  return (    
+  return (
     <div>
       {/* Top Navbar */}
       <TopNavbar
-        className=""
         handleMenuClick={handleMenuClick}
         selectMenu={selectMenu}
       />
-      <div>
+      <div >
         <div className="app-container">
           {/* Left menu */}
           <div className="left-menu">
@@ -93,7 +112,7 @@ function App() {
               {/* Small calendar */}
               {/* <div key="smallCalendar">
                 <DatePicker onChange={handleDateChange} />
-                </div> */}              
+                </div> */}
             </Menu>
           </div>
           {/* Scheduler component */}
@@ -101,24 +120,24 @@ function App() {
             <Scheduler events={events} fetchEventList={fetchEventList} selectedDate={selectedDate} />
           </div>
           {/* Modal */}
-          <form>
+          <form  >
             <Modal
-            title=''
-            open={isModalVisible}
-            onCancel={handleModalClose}
-            footer={null}
-            
-          >
-            {/* <hr/> */}
-            {modalContent === "Events" && (
-              <EventForm
-               onCreate={fetchEventList}
-               />
-            )}
-            <br/>
-            <hr/>
-            {modalContent && <p>{modalContent}</p>}
-          </Modal>
+              title=''
+              open={isModalVisible}
+              onCancel={handleModalClose}
+              footer={null}
+
+            >
+              {/* <hr/> */}
+              {modalContent === "Events" && (
+                <EventForm
+                  onCreate={fetchEventList}
+                />
+              )}
+              <br />
+              <hr />
+              {modalContent && <p>{modalContent}</p>}
+            </Modal>
           </form>
         </div>
       </div>
