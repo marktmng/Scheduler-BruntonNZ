@@ -7,6 +7,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  const [recEndDate, setRecEndDate] = useState(new Date()); // for recurrence date
   const [recurrence, setRecurrence] = useState(''); // implement repeatable
   const [dataForPost, setDataForPost] = useState(null);
 
@@ -15,6 +16,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setTitle(initialEvent.title || '');
       setStart(new Date(initialEvent.start) || new Date());
       setEnd(new Date(initialEvent.end) || new Date());
+      setRecEndDate(new Date(initialEvent.recEndDate) || new Date()); // for recurrence
       setRecurrence(initialEvent.recurrence || '');
     }
   }, [initialEvent]);
@@ -26,6 +28,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setTitle('');
       setStart(new Date());
       setEnd(new Date());
+      setRecEndDate(new Date()); // for recurrence
       setRecurrence('');
       setDataForPost(null);
     } catch (error) {
@@ -39,7 +42,8 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       Title: title,
       StartDate: start,
       EndDate: end,
-      Repeatable: recurrence
+      Repeatable: recurrence,
+      RecEndDate: recEndDate
     };
     setDataForPost(eventPost);
     // onClose(); // Close the form
@@ -96,19 +100,17 @@ function EventForm({ onClose, onCreate, initialEvent }) {
           value={recurrence}
           onChange={(e) => setRecurrence(e.target.value)}
         >
+          <option disabled value="">Make Recurrence</option>
           <option value="">Make Recurrence</option>
           <option value="FREQ=DAILY">Daily</option>
-          <option value="FREQ=WEEKLY;BYDAY=MO">Weekly (Monday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=TU">Weekly (Tuesday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=WE">Weekly (Wednesday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=TH">Weekly (Thursday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=FR">Weekly (Friday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=SA">Weekly (Saturday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=SU">Weekly (Sunday)</option>
-
+          <option value="FREQ=WEEKLY">Weekly</option>
           <option value="FREQ=MONTHLY">Monthly</option>
+          <option value="FREQ=YEARLY">Yearly</option>
           {/* Add more options as needed */}
         </select>
+        <br/>
+        <br/>
+        <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
         <br/>
         <br/>
       <button className="add-btn" type="submit">Add Event</button>

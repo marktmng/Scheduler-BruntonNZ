@@ -36,9 +36,13 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
               style={{position:'absolute', left: 0, top:0}}/>
       </div>
 
-      <Menu.Item key="home" className="nav-item"> Home </Menu.Item>
+      <div className="nav-item">
+        <h1>Brunton NZ - Accounting Software and Technology Solutions</h1>
+      </div>
+
+      {/* <Menu.Item key="home" className="nav-item"> Home </Menu.Item>
       <Menu.Item key="about" className="nav-item"> About </Menu.Item>
-      <Menu.Item key="contact" className="nav-item"> Contact</Menu.Item>
+      <Menu.Item key="contact" className="nav-item"> Contact</Menu.Item> */}
       {/* Upload Image Button */}
       <Menu.Item key="upload" className="nav-item" style={{ position: 'absolute', right: 0 }}>
         <Upload {...uploadProps}>

@@ -4,7 +4,9 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import EditForm from './EditForm';
 import './Popup.css'
+import './EditForm.css'
 import EventForm from './EventForm';
+import classNames from 'classnames';
 
 
 const localizer = momentLocalizer(moment);
@@ -61,13 +63,25 @@ useEffect (() => {
       <Calendar
         localizer={localizer}
         event={event}
-        events={events}
+        events={events} // this is the one showing on the calender
         startAccessor="start"
         endAccessor="end"
         style={{ height: '90vh' }}
         selectable={true}
         onSelectEvent={handleSelectTask}
         onSelectSlot={handleSelectSlot}
+
+        eventPropGetter={(event, start, end, isSelected) => {
+          // Add additional classes based on event properties
+          return {
+            className: classNames('event', {
+              'high-priority': event.priority === 'high', // Apply 'high-priority' class for high-priority events
+              'completed': event.status === 'completed', // Apply 'completed' class for completed events
+            }),
+          };
+        }}
+
+        
       />
 
 {showModal && (

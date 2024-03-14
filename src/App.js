@@ -28,10 +28,10 @@ function App() {
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
-        const { Title, StartDate, EndDate,Task_code, Location, Description } = evnt;
+        const { Title, StartDate, EndDate,Task_code, RecEndDate,  Location, Description } = evnt;
         const title = Title;
-        const [start, end] = [StartDate, EndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
-        return { title, start, end,Task_code, Location, Description };
+        const [start, end, recEndDate ] = [StartDate, EndDate, RecEndDate ].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
+        return { title, start, end, recEndDate, Task_code, Location, Description };
       });
     setEvents(evnts);
   };
@@ -96,7 +96,10 @@ function App() {
           </div>
           {/* Scheduler component */}
           <div className='scheduler-container'>
-            <Scheduler events={events} fetchEventList={fetchEventList} selectedDate={selectedDate} />
+            <Scheduler 
+            events={events} // this is the one showing on the calender which from Scheduler
+            fetchEventList={fetchEventList} 
+            selectedDate={selectedDate} />
           </div>
           {/* Modal */}
           <form  >

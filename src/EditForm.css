@@ -49,6 +49,7 @@
     font-size: 12px;
     border-radius: 50px;
     cursor: pointer;
+    box-shadow: 0 2px 10px rgba(1, 0.5, 0.5, 0.3);
     /* width: 150px; */
   }
   
@@ -66,7 +67,7 @@
   }
 
   .edit-form .add-btn{
-    background-color: rgb(114, 199, 233);
+    background-color: rgb(15, 140, 190);
     color: white;
     border: none;
   }
@@ -77,3 +78,23 @@
     border: none;
   }
   
+
+  /* Defined CSS classes for event customization */
+.event {
+  display: flex;
+  background-color: #eba834; /* Default background color */
+  color: white; /* Default text color */
+  border-radius: 5px; /* Rounded corners */
+  padding: 5px; /* Padding around the event */
+}
+
+/* Customize event appearance based on event type */
+.high-priority {
+  background-color: #e74c3c; /* Red background for high-priority events */
+}
+
+/* Customize event appearance for completed events */
+.completed {
+  background-color: #2ecc71; /* Green background for completed events */
+  text-decoration: line-through; /* Add strikethrough for completed events */
+}

@@ -11,6 +11,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  const [recEndDate, setRecEndDate] = useState(new Date()); // for recurrence date
   const [recurrence, setRecurrence] = useState(''); // implement repeatable
 
   // Effect to pre-fill form fields when initialEvent changes
@@ -20,6 +21,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       setTitle(task.title || ''); // Set title from initialEvent or empty string
       setStart(new Date(task.start) || new Date());
       setEnd(new Date(task.end) || new Date());
+      setRecEndDate(new Date(task.recEndDate) || new Date()); // for recurrence
       setRecurrence(task.recurrence || ''); // implement repeatable
     }
   }, [task]);
@@ -32,7 +34,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       Title: title,
       StartDate: start,
       EndDate: end,
-      Repeatable: recurrence
+      Repeatable: recurrence,
+      RecEndDate: recEndDate
     };
 
     try {
@@ -53,6 +56,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     setTitle('');
     setStart(new Date());
     setEnd(new Date());
+    setRecEndDate(new Date());
   };
 
 
@@ -106,13 +110,16 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
           value={recurrence}
           onChange={(e) => setRecurrence(e.target.value)}
         >
-          <option value="">Make Recurrence</option>
+          <option disabled value="">Make Recurrence</option>
           <option value="FREQ=DAILY">Daily</option>
           <option value="FREQ=WEEKLY">Weekly</option>
           <option value="FREQ=MONTHLY">Monthly</option>
           <option value="FREQ=YEARLY">Yearly</option>
           {/* Add more options as needed */}
         </select>
+        <br/>
+        <br/>
+        <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
         <br />
         <br />
 
