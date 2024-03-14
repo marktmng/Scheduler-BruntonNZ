@@ -32,6 +32,11 @@
     
   }
 
+  .logo-size{
+    height: 78px;
+    width: 155px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
   
 /* Style for menu items */
 .nav-item {
@@ -54,12 +59,9 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    /* z-index: -1; */
-    /* border-bottom: 2px solid #4fe259; */
-    /* background: rgb(89, 114, 217); */
-    border-radius: 15px;
+    width: 70%;
+    height: 40%;
+    border-radius: 5px;
     transform: scale(0) translateY(50px);
     transition: .5s;
     opacity: 0;

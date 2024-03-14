@@ -108,15 +108,9 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
         >
           <option value="">Make Recurrence</option>
           <option value="FREQ=DAILY">Daily</option>
-          <option value="FREQ=WEEKLY;BYDAY=MO">Weekly (Monday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=TU">Weekly (Tuesday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=WE">Weekly (Wednesday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=TH">Weekly (Thursday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=FR">Weekly (Friday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=SA">Weekly (Saturday)</option>
-          <option value="FREQ=WEEKLY;BYDAY=SU">Weekly (Sunday)</option>
-
+          <option value="FREQ=WEEKLY">Weekly</option>
           <option value="FREQ=MONTHLY">Monthly</option>
+          <option value="FREQ=YEARLY">Yearly</option>
           {/* Add more options as needed */}
         </select>
         <br />

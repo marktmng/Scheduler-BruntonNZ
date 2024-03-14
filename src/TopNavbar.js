@@ -29,6 +29,13 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
       selectedKeys={selectTopMenu ? [selectTopMenu] : []}
       onClick={handleTopMenuClick}
     >
+      <div >
+        <img src='/brunton_logo.png' 
+              alt='logo' 
+              className='logo-size' 
+              style={{position:'absolute', left: 0, top:0}}/>
+      </div>
+
       <Menu.Item key="home" className="nav-item"> Home </Menu.Item>
       <Menu.Item key="about" className="nav-item"> About </Menu.Item>
       <Menu.Item key="contact" className="nav-item"> Contact</Menu.Item>
