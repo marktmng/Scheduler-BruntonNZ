@@ -122,9 +122,9 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
         <br />
         <br />
 
-      <button className='update-btn' type="submit" onClick={handleSubmit}>Update Task</button>
+      <button className='update-btn' type="submit" onClick={handleSubmit}>Save Changes</button>
       {/* {task && <button type="submit" onClick={handleSubmit}>Update Task</button>} */}
-      {task && <button className='delete-btn' type="button" onClick={handleDelete}>Delete Task</button>}
+      {task && <button className='delete-btn' type="button" onClick={handleDelete}>Delete</button>}
     </form>
   );
 }

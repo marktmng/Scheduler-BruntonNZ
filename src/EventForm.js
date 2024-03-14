@@ -3,7 +3,7 @@ import DateTimePicker from './DateTimePicker';
 import { postData } from './Api';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 
-function EventForm({ onCreate, initialEvent }) {
+function EventForm({ onClose, onCreate, initialEvent }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
@@ -42,6 +42,7 @@ function EventForm({ onCreate, initialEvent }) {
       Repeatable: recurrence
     };
     setDataForPost(eventPost);
+    // onClose(); // Close the form
   };
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function EventForm({ onCreate, initialEvent }) {
       submitData(dataForPost);
     }
   }, [dataForPost]);
+  
 
   const parseRecurrence = (ruleString) => {
     if (!ruleString || !ruleString.trim()) {
