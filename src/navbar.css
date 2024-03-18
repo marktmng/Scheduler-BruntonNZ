@@ -21,9 +21,9 @@
     justify-content: center;
     /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
     background: linear-gradient(30deg, 
-              rgb(115, 197, 255) 0%, 
+              #00AEEF, 
               rgb(255, 255, 255) 30%, 
-              rgba(65, 171, 216, 0.8) 100%);;
+              rgba(65, 171, 216, 0.8) 100%);
 
     color: white;
     padding: 10px;
@@ -34,8 +34,8 @@
   }
 
   .logo-size{
-    height: 78px;
-    width: 155px;
+    height: 80px;
+    width: 157px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -73,15 +73,15 @@
     opacity: 1;
   }
 
-  .nav-item h1{
+  /* .nav-item h1{
     position: relative;
     /* font-size: 14vw; */
-    color: rgb(23, 141, 210);
+    /* color: #00AEEF; */
     /* -webkit-text-stroke: 0.3vw #383d52; */
     /* text-transform: uppercase; */
 
-  }
-
+  /* } */ 
+/* 
   .nav-item h1::before{
     content: attr(data-text);
     position: absolute;
@@ -89,19 +89,78 @@
     left: 0;
     width: 100%;
     height: 100%; */
-    color: #01fe87;
+    /* color: #01fe87;
     -webkit-text-stroke: 0vw rgb(36, 126, 196);
     border-right: 0 solid #01fe87;
     overflow: hidden;
-    animation: animate 5s linear infinite;
-  }
-  @keyframes animate {
+    animation: animate 5s linear infinite; */
+  /* } */ 
+  /* @keyframes animate {
     0%, 10%, 100% {
       width: 0;
     }
     70%, 90% {
       width: 100%;
     }
+  } */
+  
+  .nav-item-title {
+    color: #005E83;
+    opacity: 2;
+    -webkit-text-stroke: 0.01vw rgb(36, 126, 196);
+    animation: fadeAndMove 4s infinite, glitch 4s infinite, sparkle 2s infinite; /* Adjust the duration as needed */
   }
   
+  /* @keyframes fadeAndMove {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    25% {
+      opacity: 1;
+      transform: translateX(0%);
+    }
+    75% {
+      opacity: 10;
+      transform: translateX(0%);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  } */
+ 
+    /* @keyframes glitch {
+      0% {
+        text-shadow: 0 0 0.2em #00AEEF, 0 0 0.2em #00AEEF, 0 0 0.2em #00AEEF;
+      }
+      25% {
+        text-shadow: -0.2em -0.2em 0.1em #00AEEF, 0.2em 0.2em 0.1em #00AEEF, -0.2em 0.2em 0.1em #00AEEF;
+      }
+      50% {
+        text-shadow: 0.2em -0.2em 0.1em #00AEEF, -0.2em 0.2em 0.1em #00AEEF, 0.2em 0.2em 0.1em #00AEEF;
+      }
+      75% {
+        text-shadow: -0.2em 0.2em 0.1em #00AEEF, 0.2em -0.2em 0.1em #00AEEF, -0.2em -0.2em 0.1em #00AEEF;
+      }
+      100% {
+        text-shadow: 0 0 0.2em #00AEEF, 0 0 0.2em #00AEEF, 0 0 0.2em #00AEEF;
+      }
+    } */
 
+/*     
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(1);
+  }
+} */
+  

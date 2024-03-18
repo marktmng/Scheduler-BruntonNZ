@@ -37,7 +37,9 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
       </div>
 
       <div className="nav-item">
-        <h1>Brunton NZ - Accounting Software and Technology Solutions</h1>
+        {/* <h1>Brunton NZ - Accounting Software and Technology Solutions</h1> */}
+        <h1 className="nav-item-title"> MY SCHEDULER </h1>
+
       </div>
 
       {/* <Menu.Item key="home" className="nav-item"> Home </Menu.Item>

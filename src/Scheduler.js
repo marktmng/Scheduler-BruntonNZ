@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { Resizable } from 'react-resizable'; // Import Resizable from react-resizable
 import EditForm from './EditForm';
 import './Popup.css'
 import './EditForm.css'
@@ -58,6 +59,20 @@ useEffect (() => {
   };
 }, []); // Empty dependency array to ensure the effect only runs once on mount
 
+// // define resizable event component
+// const ResizableEvent = ({ event }) => (
+//   <Resizable 
+//   defaultSize={{width: 100, height: 100}} // initial size of the event
+//   minWidth={50} // minimum width of the event
+//   minHeight={50} // minimum height of the event
+//   >
+//     <div>
+//       {event.title} {/* render event content */}
+//     </div>
+//   </Resizable>
+
+// );
+
   return (
     <div className="scheduler-container">
       <Calendar
@@ -71,18 +86,24 @@ useEffect (() => {
         onSelectEvent={handleSelectTask}
         onSelectSlot={handleSelectSlot}
 
-        eventPropGetter={(event, start, end, isSelected) => {
+        // component ={{
+        //   events: ResizableEvent, // use resizable event comp
+        // }}
+
+        eventPropGetter={(events, start, end, isSelected) => {
           // Add additional classes based on event properties
           return {
             className: classNames('event', {
-              'high-priority': event.priority === 'high', // Apply 'high-priority' class for high-priority events
-              'completed': event.status === 'completed', // Apply 'completed' class for completed events
+              'high-priority': events.priority === 'high', // Apply 'high-priority' class for high-priority events
+              'completed': events.status === 'completed', // Apply 'completed' class for completed events
             }),
           };
         }}
-
-        
       />
+
+      {/* component ={{
+        event: Resizable, // use resizable event comp
+      }} */}
 
 {showModal && (
               <div className="popup-overlay">

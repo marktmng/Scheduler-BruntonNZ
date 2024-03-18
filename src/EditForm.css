@@ -6,10 +6,17 @@
     border: .25px solid #a3c4fa;
     border-radius: 8px;
     /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
-    background-image: linear-gradient(45deg, rgb(115, 197, 255) 0%, rgb(255, 255, 255) 55%, rgba(65, 171, 216, 0.8) 100%);
+    background-image: linear-gradient(45deg, 
+                      rgb(115, 197, 255) 0%, 
+                      rgb(255, 255, 255) 55%, 
+                      rgba(65, 171, 216, 0.8) 100%);
     border-radius: 30px;
     box-shadow: 0 1px 2.5px rgba(0, 0, 0, 0.5);
     
+  }
+
+  .edit-form:hover {
+    transform: scale(1.05); /* Scale up the form on hover */
   }
   
   .edit-form .select-opt{
@@ -82,19 +89,39 @@
   /* Defined CSS classes for event customization */
 .event {
   display: flex;
-  background-color: #eba834; /* Default background color */
-  color: white; /* Default text color */
-  border-radius: 5px; /* Rounded corners */
+  /* background-color: #eba834; /* Default background color */
+  color: black; /* Default text color */
+  border-radius: 0px 10px; /* Rounded corners */
   padding: 5px; /* Padding around the event */
+  transition: background-color 0.2s ease-in, transform 0.2s ease-in-out;
+  width: 100%;
+  height: auto;
+  border-top: 1.5px solid rgb(96, 80, 37); /* Border color */
+ /*  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+ background: linear-gradient(30deg, 
+              #eba834, 
+              #eedd8a, 
+              #ebcd34);
+position: sticky; /* Set position to relative */
+/*z-index: 1; /* Set a higher z-index */
+  
+}
+
+.event:hover{
+  background:#ebcd34;
+  /* transform: translate(10px, 5px ); */
+  transform: scale(1.1); /* Scale up the form on hover */
+  height: 55px;
+  z-index: 2;
 }
 
 /* Customize event appearance based on event type */
-.high-priority {
+/* .high-priority {
   background-color: #e74c3c; /* Red background for high-priority events */
-}
+/* }  */
 
 /* Customize event appearance for completed events */
-.completed {
+/* .completed {
   background-color: #2ecc71; /* Green background for completed events */
-  text-decoration: line-through; /* Add strikethrough for completed events */
-}
+  /* text-decoration: line-through; /* Add strikethrough for completed events */
+/* }   */

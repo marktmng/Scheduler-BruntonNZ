@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DateTimePicker from './DateTimePicker';
-import { updateTask, deleteTask, postData } from './Api';
+import { updateTask, deleteTask, postData, deleteRecTask, updateRecTask } from './Api';
 import './EditForm.css'; // Import your CSS file for styling
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 
@@ -40,7 +40,14 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
 
     try {
       if (task) {
-        await updateTask(task.Task_code, updatedTask);
+        if (task.recurrence) {
+          // If the task has recurrence, call the updateRecTask function
+          await updateRecTask(task.Task_code, updatedTask);
+        } else {
+          // Otherwise, call the updateTask function for tasks without recurrence
+          await updateTask(task.Task_code, updatedTask);
+        }
+        
         onUpdate(task);
       } else {
         // Otherwise, it's an add operation
@@ -87,14 +94,21 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
 
 
     const handleDelete = async () => {  
-    try {
-      await deleteTask(task.Task_code); // Assuming deleteTask only needs taskCode
-      onDelete(task); // Passing the whole task object for removal
-      onClose();
-    } catch (error) {
-      console.error('Error deleting task:', error);
-    }
-  };
+      try {
+        if (task.recurrence) {
+          // If the task has recurrence, call the deleteRecTask function
+          await deleteRecTask(task.Task_code);
+        } else {
+          // Otherwise, call the deleteTask function for tasks without recurrence
+          await deleteTask(task.Task_code);
+        }
+        
+        onDelete(task); // Passing the whole task object for removal
+        onClose();
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    };
   
   return (
     <form 
