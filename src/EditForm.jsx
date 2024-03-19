@@ -39,12 +39,23 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     };
 
     try {
+      // if (task) {
+      //   if (task.recurrence) {
+      //     // If the task has recurrence, call the updateRecTask function
+      //     await updateRecTask(task.Task_code, updatedTask);
+      //   } else {
+      //     // Otherwise, call the updateTask function for tasks without recurrence
+      //     await updateTask(task.Task_code, updatedTask);
+      //   }
+
       if (task) {
-        if (task.recurrence) {
-          // If the task has recurrence, call the updateRecTask function
+        if (task.recEndDate && recurrence) { // If the task has recurrence and a new recurrence is set
           await updateRecTask(task.Task_code, updatedTask);
-        } else {
-          // Otherwise, call the updateTask function for tasks without recurrence
+        } else if (task.recEndDate && !recurrence) { // If the task has recurrence but recurrence is removed
+          await updateTask(task.Task_code, updatedTask);
+        } else if (!task.recEndDate && recurrence) { // If the task didn't have recurrence but a new recurrence is added
+          await updateRecTask(task.Task_code, updatedTask);
+        } else { // Otherwise, update the task without recurrence
           await updateTask(task.Task_code, updatedTask);
         }
         
@@ -93,22 +104,22 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   };
 
 
-    const handleDelete = async () => {  
-      try {
-        if (task.recurrence) {
-          // If the task has recurrence, call the deleteRecTask function
-          await deleteRecTask(task.Task_code);
-        } else {
-          // Otherwise, call the deleteTask function for tasks without recurrence
-          await deleteTask(task.Task_code);
-        }
-        
-        onDelete(task); // Passing the whole task object for removal
-        onClose();
-      } catch (error) {
-        console.error('Error deleting task:', error);
+  const handleDelete = async () => {  
+    try {
+      if (task.recEndDate && recurrence ) { //&& recurrence
+        // If the task has recurrence, call the deleteRecTask function
+        await deleteRecTask(task.Task_code);
+      } else if (task.recEndDate && !recurrence) {
+        // Otherwise, call the deleteTask function for tasks without recurrence
+        await deleteTask(task.Task_code);
       }
-    };
+      
+      onDelete(task); // Passing the whole task object for removal
+      onClose();
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
   
   return (
     <form 

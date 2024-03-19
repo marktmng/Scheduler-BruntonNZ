@@ -10,6 +10,8 @@ function EventForm({ onClose, onCreate, initialEvent }) {
   const [recEndDate, setRecEndDate] = useState(new Date()); // for recurrence date
   const [recurrence, setRecurrence] = useState(''); // implement repeatable
   const [dataForPost, setDataForPost] = useState(null);
+  const [description, setDescription] = useState(''); // for description
+  const [location, setLocation] = useState(''); // location
 
   useEffect(() => {
     if (initialEvent) {
@@ -18,6 +20,8 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setEnd(new Date(initialEvent.end) || new Date());
       setRecEndDate(new Date(initialEvent.recEndDate) || new Date()); // for recurrence
       setRecurrence(initialEvent.recurrence || '');
+      setDescription(initialEvent.description || ''); // description
+      setLocation(initialEvent.location || ''); // location
     }
   }, [initialEvent]);
 
@@ -30,6 +34,8 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setEnd(new Date());
       setRecEndDate(new Date()); // for recurrence
       setRecurrence('');
+      setDescription(''); // description
+      setLocation(''); // location
       setDataForPost(null);
     } catch (error) {
       console.error('Error posting data:', error);
@@ -43,7 +49,9 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       StartDate: start,
       EndDate: end,
       Repeatable: recurrence,
-      RecEndDate: recEndDate
+      RecEndDate: recEndDate,
+      Description: description,
+      Location: location
     };
     setDataForPost(eventPost);
     // onClose(); // Close the form
@@ -112,7 +120,9 @@ function EventForm({ onClose, onCreate, initialEvent }) {
         <br/>
         <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
         <br/>
-        <br/>
+        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
+        
+        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location/Venue" required />
       <button className="add-btn" type="submit">Add Event</button>
     </form>
   );
