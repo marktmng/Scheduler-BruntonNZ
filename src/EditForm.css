@@ -39,6 +39,12 @@
    border: none; 
   }
 
+  /* .edit-form .desc{
+    height: 100px;
+    /* width: auto; */
+    /* border-radius: 0%; */
+  /* } */ 
+
   .edit-form button{
     margin-top: 50px;
   }
@@ -92,6 +98,7 @@
   /* background-color: #eba834; /* Default background color */
   color: black; /* Default text color */
   border-radius: 0px 10px; /* Rounded corners */
+  font-size: 12px;
   padding: 5px; /* Padding around the event */
   transition: background-color 0.2s ease-in, transform 0.2s ease-in-out;
   width: 100%;
@@ -111,8 +118,10 @@ position: sticky; /* Set position to relative */
   background:#ebcd34;
   /* transform: translate(10px, 5px ); */
   transform: scale(1.1); /* Scale up the form on hover */
-  height: 55px;
+  height: 70px;
+  font-size: 14px;
   z-index: 2;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 /* Customize event appearance based on event type */

@@ -13,6 +13,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [end, setEnd] = useState(new Date());
   const [recEndDate, setRecEndDate] = useState(new Date()); // for recurrence date
   const [recurrence, setRecurrence] = useState(''); // implement repeatable
+  const [description, setDescription] = useState(''); // for description
+  const [location, setLocation] = useState(''); // location
 
   // Effect to pre-fill form fields when initialEvent changes
   useEffect(() => { 
@@ -23,6 +25,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       setEnd(new Date(task.end) || new Date());
       setRecEndDate(new Date(task.recEndDate) || new Date()); // for recurrence
       setRecurrence(task.recurrence || ''); // implement repeatable
+      setDescription(task.description || ''); // description
+      setLocation(task.location || ''); // location
     }
   }, [task]);
 
@@ -35,18 +39,12 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       StartDate: start,
       EndDate: end,
       Repeatable: recurrence,
-      RecEndDate: recEndDate
+      RecEndDate: recEndDate,
+      Description: description,
+      Location: location
     };
 
     try {
-      // if (task) {
-      //   if (task.recurrence) {
-      //     // If the task has recurrence, call the updateRecTask function
-      //     await updateRecTask(task.Task_code, updatedTask);
-      //   } else {
-      //     // Otherwise, call the updateTask function for tasks without recurrence
-      //     await updateTask(task.Task_code, updatedTask);
-      //   }
 
       if (task) {
         if (task.recEndDate && recurrence) { // If the task has recurrence and a new recurrence is set
@@ -75,6 +73,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     setStart(new Date());
     setEnd(new Date());
     setRecEndDate(new Date());
+    setDescription(''); // description
+    setLocation(''); // location
   };
 
 
@@ -125,7 +125,12 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     <form 
     className='edit-form'
     onSubmit={handleSubmit}>
-      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event" required />
+      <input type="text" 
+      value={title} 
+      onChange={(e) => setTitle(e.target.value)} 
+      placeholder="Title" required 
+      />
+
       <DateTimePicker value={start} onChange={setStart} />
       <DateTimePicker value={end} onChange={setEnd} />
 
@@ -140,13 +145,26 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
           <option value="FREQ=WEEKLY">Weekly</option>
           <option value="FREQ=MONTHLY">Monthly</option>
           <option value="FREQ=YEARLY">Yearly</option>
-          {/* Add more options as needed */}
+          
         </select>
         <br/>
         <br/>
         <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
         <br />
-        <br />
+        <input 
+              type="text" 
+              value={description} 
+              onChange={(e) => setDescription(e.target.value)} 
+              placeholder="Description" // required 
+          />
+
+          <input 
+              type="text" 
+              value={location} 
+              onChange={(e) => setLocation(e.target.value)} 
+              placeholder="Location/Venue" required 
+          />
+
 
       <button className='update-btn' type="submit" onClick={handleSubmit}>Save Changes</button>
       {/* {task && <button type="submit" onClick={handleSubmit}>Update Task</button>} */}

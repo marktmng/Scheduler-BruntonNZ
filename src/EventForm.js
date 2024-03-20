@@ -89,15 +89,18 @@ function EventForm({ onClose, onCreate, initialEvent }) {
     }
   };
   
-  
-
   useEffect(() => {
     parseRecurrence(recurrence);
   }, [recurrence]);
 
   return (
     <form className='edit-form' onSubmit={handleSubmit}>
-      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event" required />
+      <input 
+      type="text" 
+      value={title} 
+      onChange={(e) => setTitle(e.target.value)} 
+      placeholder="Title" required 
+      />
       <DateTimePicker value={start} onChange={setStart} />
       <DateTimePicker value={end} onChange={setEnd} />
       {/* <input type="text" value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder="Recurrence rule" /> */}
@@ -114,15 +117,27 @@ function EventForm({ onClose, onCreate, initialEvent }) {
           <option value="FREQ=WEEKLY">Weekly</option>
           <option value="FREQ=MONTHLY">Monthly</option>
           <option value="FREQ=YEARLY">Yearly</option>
-          {/* Add more options as needed */}
+
         </select>
         <br/>
         <br/>
-        <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
+        <DateTimePicker 
+        value={recEndDate} 
+        onChange={setRecEndDate} 
+        />
         <br/>
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
-        
-        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location/Venue" required />
+        <input 
+            type="text" 
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)} 
+            placeholder="Description" // required 
+        />
+
+        <input type="text" 
+            value={location} 
+            onChange={(e) => setLocation(e.target.value)} 
+            placeholder="Location/Venue" required 
+        />
       <button className="add-btn" type="submit">Add Event</button>
     </form>
   );

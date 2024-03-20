@@ -4,11 +4,19 @@
 
   
   .left-menu {
-    flex: 0 0 200px; /* Set a fixed width for the left menu */
+    flex: 0 0 165px; /* Set a fixed width for the left menu */
+    /* background: linear-gradient(30deg, 
+              #00AEEF, 
+              rgb(255, 255, 255) 30%, 
+              rgba(65, 171, 216, 0.8) 100%); */
   }
   
   .menu-bar {
     border-right: none; /* Remove border on the right side */
+    /* background: linear-gradient(30deg, 
+              #00AEEF, 
+              rgb(255, 255, 255) 30%, 
+              rgba(65, 171, 216, 0.8) 100%); */
   }
   
   .scheduler-container {

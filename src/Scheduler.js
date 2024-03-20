@@ -2,17 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Resizable } from 'react-resizable'; // Import Resizable from react-resizable
+// import { Resizable } from 'react-resizable'; // Import Resizable from react-resizable
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop"; // Import withDragAndDrop HOC
 import EditForm from './EditForm';
 import './Popup.css'
 import './EditForm.css'
 import EventForm from './EventForm';
 import classNames from 'classnames';
+// import { updateTask } from './Api';
 
+const DragAndDropCalendar = withDragAndDrop(Calendar); // Wrap Calendar component with withDragAndDrop HOC
 
 const localizer = momentLocalizer(moment);
 
-function Scheduler({ events, fetchEventList, showData }) {
+function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
   
   const [selectedTask, setSelectedTask] = useState(null);
   const popupRef = useRef(null); // Created a reference to hid the popup element  
@@ -28,6 +31,7 @@ function Scheduler({ events, fetchEventList, showData }) {
   useEffect(() => {
     fetchEventList();
   }, []);
+  
 
   const handleSelectSlot = (slotInfo) => {
     setShowModal(true)
@@ -42,6 +46,103 @@ function Scheduler({ events, fetchEventList, showData }) {
     setSelectedTask(null);
     setShowModal(null)
   };
+
+//  // just trying 1st attempt
+  
+
+//   // Handle event drop function
+// const onEventDrop = (event) => {
+//   const updatedEvent = {
+//     ...event,
+//     start: moment(event.start).toDate(), // Convert start date to Date object
+//     end: moment(event.end).toDate(), // Convert end date to Date object
+//   };
+
+//   // Update the event in the events array
+//   const updatedEvents = events.map((event) => {
+//     if (event.Task_code === updatedEvent.Task_code) {
+//       return updatedEvent; // Update the dropped event
+//     }
+//     return event;
+//   });
+
+//   // Update events state with the modified event data
+//   setEvent(updatedEvents);
+
+// };
+
+// const onEventDrop = (event) => {
+//   // Calculate the duration of the event
+//   const duration = moment(event.end).diff(moment(event.start));
+
+//   // Update the start and end dates of the event
+//   const updatedEvent = {
+//     ...event,
+//     start: moment(event.start).toDate(), // Convert start date to Date object
+//     end: moment(event.start).add(duration).toDate(), // Update end date based on duration
+//   };
+
+//   // Update the event in the events array
+//   const updatedEvents = events.map((event) => {
+//     if (event.Task_code === updatedEvent.Task_code) {
+//       return updatedEvent; // Update the dropped event
+//     }
+//     return event;
+//   });
+
+//   // Update events state with the modified event data
+//   onEventDropCallback(event);
+
+//   // You may also want to make an API call to update the event dates in your backend data
+// };
+
+
+// // const onEventDrop = (event) => {
+//   // Call the onEventDropCallback function provided by the parent component
+//   onEventDropCallback(event);
+//   // You may also want to make an API call to update the event dates in your backend data
+// };
+
+
+//  // Handle event drop function
+//  // 2nd attept
+//  const onEventDrop = async (events) => {
+//   const updatedEvent = {
+//     ...events,
+//     start: moment(events.start).toDate(), // Convert start date to Date object
+//     end: moment(events.end).toDate(), // Convert end date to Date object
+//   };
+
+//   try {
+//     // Make API call to update event dates in backend
+//     // Assuming you have an API function updateTask to update event dates
+//     await updateTask(updatedEvent.Task_code, {
+//       StartDate: updatedEvent.start,
+//       EndDate: updatedEvent.end
+//     });
+
+//     // Call the onEventDropCallback function provided by the parent component
+//     onEventDropCallback(updatedEvent);
+
+//     // You may also want to update the events array in state here if needed
+//   } catch (error) {
+//     console.error('Error updating event:', error);
+//   }
+// };
+
+// // Example of the onEventDropCallback function in the parent component
+// const handleEventDrop = (updatedEvent) => {
+//   // Find the index of the updated event in the events array
+//   const index = events.findIndex(events => events.Task_code === updatedEvent.Task_code);
+//   if (index !== -1) {
+//     // Update the events array immutably
+//     const updatedEvents = [...events];
+//     updatedEvents[index] = updatedEvent;
+//     setEvent(updatedEvents); // Update the events array in state
+//   }
+// };
+
+
 
 //Function to handle clicks outside the popup
 const handlePopHide = (event) => {
@@ -75,9 +176,9 @@ useEffect (() => {
 
   return (
     <div className="scheduler-container">
-      <Calendar
+      <DragAndDropCalendar
         localizer={localizer}
-        event={event}
+        // event={event}
         events={events} // this is the one showing on the calender
         startAccessor="start"
         endAccessor="end"
@@ -85,17 +186,19 @@ useEffect (() => {
         selectable={true}
         onSelectEvent={handleSelectTask}
         onSelectSlot={handleSelectSlot}
+        // onEventDrop={onEventDrop} // Apply drag-and-drop functionality
+        // handleEventDrop={handleEventDrop}
 
         // component ={{
         //   events: ResizableEvent, // use resizable event comp
         // }}
 
-        eventPropGetter={(events, start, end, isSelected) => {
+        eventPropGetter={(event, start, end, isSelected) => {
           // Add additional classes based on event properties
           return {
             className: classNames('event', {
-              'high-priority': events.priority === 'high', // Apply 'high-priority' class for high-priority events
-              'completed': events.status === 'completed', // Apply 'completed' class for completed events
+              // 'high-priority': event.priority === 'high', // Apply 'high-priority' class for high-priority events
+              // 'completed': event.status === 'completed', // Apply 'completed' class for completed events
             }),
           };
         }}
@@ -108,6 +211,7 @@ useEffect (() => {
 {showModal && (
               <div className="popup-overlay">
               <div className="popup-inner">
+
                 <EventForm 
                 selectedDate={selectedDate}
                 addNewEvent={addNewEvent}
