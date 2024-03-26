@@ -3,6 +3,7 @@ import DateTimePicker from './DateTimePicker';
 import { updateTask, deleteTask, postData, deleteRecTask, updateRecTask } from './Api';
 import './EditForm.css'; // Import your CSS file for styling
 import { RRule, RRuleSet, rrulestr } from 'rrule';
+import moment from 'moment';
 
 
 // Edit Form
@@ -17,18 +18,19 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [location, setLocation] = useState(''); // location
 
   // Effect to pre-fill form fields when initialEvent changes
-  useEffect(() => { 
+  useEffect(() => {
     if (task) {
       setTaskCode(task.taskCode || '');
-      setTitle(task.title || ''); // Set title from initialEvent or empty string
+      setTitle(task.title || '');
       setStart(new Date(task.start) || new Date());
       setEnd(new Date(task.end) || new Date());
-      setRecEndDate(new Date(task.recEndDate) || new Date()); // for recurrence
-      setRecurrence(task.recurrence || ''); // implement repeatable
-      setDescription(task.description || ''); // description
-      setLocation(task.location || ''); // location
+      setRecEndDate(new Date(task.recEndDate) || new Date());
+      setRecurrence(task.recurrence || '');
+      setDescription(task.Description || ''); // Set description from task
+      setLocation(task.Location || ''); // Set location from task
     }
   }, [task]);
+console.log(task) // print the data
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,28 +47,27 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     };
 
     try {
-
-      if (task) {
+      if (task) { // If task exists, it means it's an update operation
         if (task.recEndDate && recurrence) { // If the task has recurrence and a new recurrence is set
           await updateRecTask(task.Task_code, updatedTask);
         } else if (task.recEndDate && !recurrence) { // If the task has recurrence but recurrence is removed
           await updateTask(task.Task_code, updatedTask);
+          
         } else if (!task.recEndDate && recurrence) { // If the task didn't have recurrence but a new recurrence is added
           await updateRecTask(task.Task_code, updatedTask);
-        } else { // Otherwise, update the task without recurrence
+        } else if (task.recEndDate && recurrence) { // If the task has recurrence and recurrence is unchanged
           await updateTask(task.Task_code, updatedTask);
         }
-        
-        onUpdate(task);
-      } else {
-        // Otherwise, it's an add operation
+        onUpdate(task); // Notify parent component about the update
+      } else { // If task doesn't exist, it's an add operation
         await postData(updatedTask); // Call API to create a new event
         onCreate(); // Refresh event list
       }
-      onClose(); // Close the form
+      onClose(); // Close the form after operation is done
     } catch (error) {
-      console.error('Error updating/adding task:', error);
+      console.error('Error updating/adding task:', error); // Log any errors that occur during the operation
     }
+
 
     // Clear the form fields
     setTitle('');
@@ -120,6 +121,22 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       console.error('Error deleting task:', error);
     }
   };
+
+  // logic for add and subtract 1 minute in date
+  const onChageStart =(start)=>{
+    setStart(start)
+    if(start >= end) {
+      setEnd(moment(start).add(1,'m').toDate()) // add 1 minutes to the end time
+    }
+  }
+
+  
+  const onChageEnd =(end)=>{
+    setEnd(end) 
+    if(start >= end) {
+      setStart(moment(end).subtract(1,'m').toDate()) // subtract 1 minutes from start time
+    }
+  }
   
   return (
     <form 
@@ -131,8 +148,8 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       placeholder="Title" required 
       />
 
-      <DateTimePicker value={start} onChange={setStart} />
-      <DateTimePicker value={end} onChange={setEnd} />
+      <DateTimePicker value={start} onChange={onChageStart} />
+      <DateTimePicker value={end} onChange={ onChageEnd} />
 
       <br />
       <select

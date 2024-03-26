@@ -105,10 +105,11 @@
   } */
   
   .nav-item-title {
-    color: #005E83;
+    color: #00AEEF;
     opacity: 2;
     -webkit-text-stroke: 0.01vw rgb(36, 126, 196);
     animation: fadeAndMove 4s infinite, glitch 4s infinite, sparkle 2s infinite; /* Adjust the duration as needed */
+    text-shadow: 0 4px 3px rgba(49, 88, 217, 0.2);
   }
   
   /* @keyframes fadeAndMove {

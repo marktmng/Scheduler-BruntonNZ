@@ -1,0 +1,242 @@
+swagger: "2.0"
+info:
+  title: Scheduler Test API
+  description: |
+    API fot scheduler application
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: pavelkiwiandrosov.00@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /task/:
+    get:
+      tags:
+      - task
+      description: |-
+        get all Tasks
+        <br>
+      operationId: TaskController.GetAllTasks
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.FTask'
+    post:
+      tags:
+      - task
+      description: |-
+        create single/recurrent Task
+        <br>
+      operationId: TaskController.CreateTask
+      parameters:
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.FTask'
+      responses:
+        "200":
+          description: success post!
+        "403":
+          description: error message
+  /task/{task_code}:
+    get:
+      tags:
+      - task
+      description: |-
+        get task by task_code
+        <br>
+      operationId: TaskController.GetTask
+      parameters:
+      - in: path
+        name: task_code
+        description: The key for Task
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.FTask'
+        "403":
+          description: '{task_code} is empty'
+  /task/taskDel/{task_code}:
+    delete:
+      tags:
+      - task
+      description: |-
+        delete the task
+        <br>
+      operationId: TaskController.DeleteTask
+      parameters:
+      - in: path
+        name: task_code
+        description: The task_code you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{task_code} delete success!'
+        "403":
+          description: '{task_code} is empty'
+  /task/taskRecDel/{task_code}:
+    delete:
+      tags:
+      - task
+      description: |-
+        delete recurrence by Task
+        <br>
+      operationId: TaskController.DeleteCascadeTask
+      parameters:
+      - in: path
+        name: task_code
+        description: The task_code you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{task_code} delete success!'
+        "403":
+          description: '{task_code} is empty'
+  /task/taskRecUpd/{task_code}:
+    post:
+      tags:
+      - task
+      description: |-
+        update recurrence by Tasks (can receive FTask but will update only Title, Description and Location)
+        <br>
+      operationId: TaskController.UpdateCascadeTask
+      parameters:
+      - in: path
+        name: task_code
+        description: The task_code you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for task content
+        required: true
+        schema:
+          $ref: '#/definitions/models.FTask'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.FTask'
+        "403":
+          description: error message
+  /task/taskUpd/{task_code}:
+    post:
+      tags:
+      - task
+      description: |-
+        update the task
+        <br>
+      operationId: TaskController.UpdateTask
+      parameters:
+      - in: path
+        name: task_code
+        description: The task_code you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for task content
+        required: true
+        schema:
+          $ref: '#/definitions/models.FTask'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.FTask'
+        "403":
+          description: error message
+definitions:
+  LoginParam:
+    title: LoginParam
+    type: object
+  core.ModifyPwd:
+    title: ModifyPwd
+    type: object
+    properties:
+      new_pwd:
+        type: string
+      old_pwd:
+        type: string
+      user_code:
+        type: string
+  core.UserDetailsWithPwd:
+    title: UserDetailsWithPwd
+    type: object
+    properties:
+      email_address:
+        type: string
+      has_confirmed_page:
+        type: boolean
+      has_posted_page:
+        type: boolean
+      has_recognised_page:
+        type: boolean
+      has_uploaded_page:
+        type: boolean
+      id:
+        type: integer
+        format: int64
+      inactive:
+        type: boolean
+      password:
+        type: string
+      phone_no:
+        type: string
+      role:
+        type: string
+      user_code:
+        type: string
+      user_name:
+        type: string
+  models.FTask:
+    title: FTask
+    type: object
+    properties:
+      Description:
+        type: string
+      EndDate:
+        type: string
+      Location:
+        type: string
+      RecEndDate:
+        type: string
+      RecStartDate:
+        type: string
+      Repeatable:
+        type: string
+      StartDate:
+        type: string
+      Task_code:
+        type: string
+      Title:
+        type: string
+  utils.JSONStruct:
+    title: JSONStruct
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int64
+      data:
+        $ref: '#/definitions/utils.interface'
+      msg:
+        type: string
+  utils.interface:
+    title: interface
+    type: object
+tags:
+- name: task
+  description: |
+    Operations about Tasks

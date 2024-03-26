@@ -105,17 +105,22 @@
   height: auto;
   border-top: 1.5px solid rgb(96, 80, 37); /* Border color */
  /*  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
- background: linear-gradient(30deg, 
+ /* background: linear-gradient(30deg, 
               #eba834, 
               #eedd8a, 
-              #ebcd34);
-position: sticky; /* Set position to relative */
+              #ebcd34); */
+  background: linear-gradient(30deg, 
+              #00AEEF, 
+              rgb(156, 194, 230) 30%, 
+              rgba(65, 171, 216, 0.8) 100%);;
+  position: sticky; /* Set position to relative */
 /*z-index: 1; /* Set a higher z-index */
   
 }
 
 .event:hover{
-  background:#ebcd34;
+  /* background:#ebcd34; */
+  background: #00AEEF;
   /* transform: translate(10px, 5px ); */
   transform: scale(1.1); /* Scale up the form on hover */
   height: 70px;

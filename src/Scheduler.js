@@ -9,13 +9,13 @@ import './Popup.css'
 import './EditForm.css'
 import EventForm from './EventForm';
 import classNames from 'classnames';
-// import { updateTask } from './Api';
+import { updateTask } from './Api';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar); // Wrap Calendar component with withDragAndDrop HOC
 
 const localizer = momentLocalizer(moment);
 
-function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
+function Scheduler({ events, fetchEventList, onEventDropCallback , dropEvent, showData }) {
   
   const [selectedTask, setSelectedTask] = useState(null);
   const popupRef = useRef(null); // Created a reference to hid the popup element  
@@ -24,9 +24,30 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
   const [showModal, setShowModal] = useState(false); // Modal visibality
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const addNewEvent = () => {
-    setEvent([...event, addNewEvent]) // setEvents is the setter function for events state
-  }
+  const [title, setTitle] = useState('');
+  const [start, setStart] = useState(new Date());
+  const [end, setEnd] = useState(new Date());
+  const [recEndDate, setRecEndDate] = useState(new Date()); // for recurrence date
+  const [recurrence, setRecurrence] = useState(''); // implement repeatable
+  // const [dataForPost, setDataForPost] = useState(null);
+  const [description, setDescription] = useState(''); // for description
+  const [location, setLocation] = useState(''); // location
+
+  useEffect(() => {
+    if (dropEvent) {
+      setTitle(dropEvent.title || '');
+      setStart(new Date(dropEvent.start) || new Date());
+      setEnd(new Date(dropEvent.end) || new Date());
+      setRecEndDate(new Date(dropEvent.recEndDate) || new Date()); // for recurrence
+      setRecurrence(dropEvent.recurrence || '');
+      setDescription(dropEvent.Description || ''); // description
+      setLocation(dropEvent.Location || ''); // location
+    }
+  }, [dropEvent]);
+
+  // const addNewEvent = () => {
+  //   setEvent([...event, addNewEvent]) // setEvents is the setter function for events state
+  // }
 
   useEffect(() => {
     fetchEventList();
@@ -40,6 +61,7 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
 
   const handleSelectTask = (task) => {
     setSelectedTask(task);
+    setTitle(task.title) // settin title
   };
 
   const handleCloseForm = () => {
@@ -71,31 +93,95 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
 
 // };
 
-// const onEventDrop = (event) => {
-//   // Calculate the duration of the event
-//   const duration = moment(event.end).diff(moment(event.start));
 
-//   // Update the start and end dates of the event
+// // failed
+// const onEventDrop = async (event) => {
 //   const updatedEvent = {
 //     ...event,
-//     start: moment(event.start).toDate(), // Convert start date to Date object
-//     end: moment(event.start).add(duration).toDate(), // Update end date based on duration
+//     Title: title,
+//     StartDate: start,
+//     EndDate: end,
+//     Repeatable: recurrence,
+//     RecEndDate: recEndDate,
+//     Description: description,
+//     Location: location
 //   };
 
+//   console.log('Updated event:', updatedEvent); // Log the updated event object
+
 //   // Update the event in the events array
-//   const updatedEvents = events.map((event) => {
-//     if (event.Task_code === updatedEvent.Task_code) {
+//   const updatedEvents = events.map((evnt) => {
+//     if (evnt.Task_code === updatedEvent.Task_code) {
 //       return updatedEvent; // Update the dropped event
 //     }
-//     return event;
+//     return evnt;
 //   });
 
 //   // Update events state with the modified event data
-//   onEventDropCallback(event);
+//   onEventDropCallback(updatedEvents);
 
-//   // You may also want to make an API call to update the event dates in your backend data
+//   // Make an API call to update the event in the backend
+//   await updateEventInBackend(updatedEvent);
 // };
 
+// const updateEventInBackend = async (updatedEvent) => {
+//   try {
+//     // Update the event using the API function
+//     await updateTask(updatedEvent.Task_code, { // Assuming id is the property representing the unique identifier of the event
+//       Title: updatedEvent.Title,
+//       StartDate: updatedEvent.StartDate,
+//       EndDate: updatedEvent.EndDate,
+//       Repeatable: updatedEvent.Repeatable,
+//       RecEndDate: updatedEvent.RecEndDate,
+//       Description: updatedEvent.Description,
+//       Location: updatedEvent.Loca
+//       // Other properties if necessary
+//     });
+
+//     console.log('Event updated in the backend:', updatedEvent);
+//   } catch (error) {
+//     console.error('Error updating event in the backend:', error);
+//     throw error;
+//   }
+// };
+
+const onEventDrop = async ({event,   start, end }) => {
+  console.log("Event object:",{ event,   start, end} ); //debugging
+  
+  const updatedEvent = {
+    ...event,
+    start,
+    end,
+    // recurrence,
+    // recEndDate,
+    // description,
+    // location,
+  };
+  // setEvent(updatedEvent)
+
+  // console.log("Event object:", event); //debugging
+
+  try {
+    
+    // Update event in the backend
+    await updateTask(updatedEvent.Task_code, {
+      Title: updatedEvent.title,
+      StartDate: start,
+      EndDate: end,
+      Repeatable: updatedEvent.recurrence,
+      RecEndDate: updatedEvent.recEndDate,
+      Description: updatedEvent.description,
+      Location: updatedEvent.location,
+    });
+    
+    // Call the callback function provided by the parent component
+    onEventDropCallback(updatedEvent);
+    
+    console.log('Event dropped:', updatedEvent);
+  } catch (error) {
+    console.error('Error updating event:', error);
+  }
+};
 
 // // const onEventDrop = (event) => {
 //   // Call the onEventDropCallback function provided by the parent component
@@ -130,7 +216,7 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , showData }) {
 //   }
 // };
 
-// // Example of the onEventDropCallback function in the parent component
+// Example of the onEventDropCallback function in the parent component
 // const handleEventDrop = (updatedEvent) => {
 //   // Find the index of the updated event in the events array
 //   const index = events.findIndex(events => events.Task_code === updatedEvent.Task_code);
@@ -178,7 +264,7 @@ useEffect (() => {
     <div className="scheduler-container">
       <DragAndDropCalendar
         localizer={localizer}
-        // event={event}
+        event={event}
         events={events} // this is the one showing on the calender
         startAccessor="start"
         endAccessor="end"
@@ -186,7 +272,7 @@ useEffect (() => {
         selectable={true}
         onSelectEvent={handleSelectTask}
         onSelectSlot={handleSelectSlot}
-        // onEventDrop={onEventDrop} // Apply drag-and-drop functionality
+        onEventDrop={onEventDrop} // Apply drag-and-drop functionality
         // handleEventDrop={handleEventDrop}
 
         // component ={{
@@ -214,7 +300,7 @@ useEffect (() => {
 
                 <EventForm 
                 selectedDate={selectedDate}
-                addNewEvent={addNewEvent}
+                // addNewEvent={addNewEvent}
                 // fetchEventList={fetchEventList}
                 onCreate={fetchEventList}
                  />

@@ -52,3 +52,61 @@ body{
   min-height: 100vh;
   background-color: #4085da;
 } */
+
+/* removed :: before and ::after */
+.rbc-agenda-time-cell span::before,
+.rbc-agenda-time-cell span::after {
+    content: none !important;
+}
+
+/* Remove time indicator from the time slots */
+.rbc-current-time-indicator {
+  display: none; /* Hide the current time indicator */
+}
+
+
+
+/* table */
+
+/* Common styles for both header and body tables */
+.rbc-agenda-view table.rbc-agenda-table th,
+.rbc-agenda-view table.rbc-agenda-table td {
+    padding: 8px; /* Add padding for spacing */
+    text-align: left; /* Align text to the left */
+}
+
+/* Set specific widths for each column */
+.rbc-agenda-view table.rbc-agenda-table th:first-child,
+.rbc-agenda-view table.rbc-agenda-table td:first-child {
+    width: 120px; /* Adjust width as needed */
+}
+
+.rbc-agenda-view table.rbc-agenda-table th:nth-child(2),
+.rbc-agenda-view table.rbc-agenda-table td:nth-child(2) {
+    width: 100px; /* Adjust width as needed */
+}
+
+.rbc-agenda-view table.rbc-agenda-table th:nth-child(3),
+.rbc-agenda-view table.rbc-agenda-table td:nth-child(3) {
+    width: 200px; /* Adjust width as needed */
+}
+
+/* Additional styles for header table */
+.rbc-agenda-view table.rbc-agenda-table thead th {
+    font-weight: bold; /* Make header text bold */
+}
+
+/* Ensure content aligns properly under respective headers */
+.rbc-agenda-view table.rbc-agenda-table tbody td:first-child,
+.rbc-agenda-view table.rbc-agenda-table tbody td:nth-child(4),
+.rbc-agenda-view table.rbc-agenda-table tbody td:nth-child(7) {
+    text-align: left; /* Align Date and Event columns to the left */
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody td:nth-child(2),
+.rbc-agenda-view table.rbc-agenda-table tbody td:nth-child(5) {
+    text-align: left; /* Align Time column to the center */
+}
+
+
+

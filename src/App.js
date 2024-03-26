@@ -66,6 +66,11 @@ function App() {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+  
+  const handleEventDropCallback = () => {
+    fetchEventList() // fetch the list for dragging and dropping
+    // Any other logic you want to perform when event is dropped
+  };
 
   // Render the component
   return (
@@ -99,7 +104,9 @@ function App() {
             <Scheduler 
             events={events} // this is the one showing on the calender which from Scheduler
             fetchEventList={fetchEventList} 
-            selectedDate={selectedDate} />
+            selectedDate={selectedDate} 
+            onEventDropCallback={handleEventDropCallback} // Add this line
+            />
           </div>
           {/* Modal */}
           <form  >
