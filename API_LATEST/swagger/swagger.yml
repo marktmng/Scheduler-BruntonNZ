@@ -157,6 +157,219 @@ paths:
             $ref: '#/definitions/models.FTask'
         "403":
           description: error message
+  /user/addorupd:
+    post:
+      tags:
+      - user
+      description: |-
+        add or update user
+        <br>
+      operationId: CoreController.add or update user
+      parameters:
+      - in: body
+        name: userDetail
+        description: user detail
+        required: true
+        schema:
+          $ref: '#/definitions/core.UserDetailsWithPwd'
+      - in: header
+        name: Authorization
+        description: With the bearer in front
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      - Definition:
+        - BearerAuth
+        - api_key
+        - Authorization
+        - header
+        - with
+        - JWT
+        - token
+  /user/delete:
+    delete:
+      tags:
+      - user
+      description: |-
+        delete user
+        <br>
+      operationId: CoreController.delete user
+      parameters:
+      - in: query
+        name: userCode
+        description: user code
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: With the bearer in front
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      - Definition:
+        - BearerAuth
+        - api_key
+        - Authorization
+        - header
+        - with
+        - JWT
+        - token
+  /user/login:
+    post:
+      tags:
+      - user
+      description: |-
+        login with user_code and password
+        <br>
+      operationId: CoreController.Login
+      parameters:
+      - in: body
+        name: LoginParam
+        description: loginParam
+        required: true
+        schema:
+          $ref: '#/definitions/LoginParam'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+  /user/rstpasswd:
+    post:
+      tags:
+      - user
+      description: |-
+        reset password
+        <br>
+      operationId: CoreController.reset password
+      parameters:
+      - in: body
+        name: ModifyPwd
+        description: reset user password
+        required: true
+        schema:
+          $ref: '#/definitions/core.ModifyPwd'
+      - in: header
+        name: Authorization
+        description: With the bearer in front
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      - Definition:
+        - BearerAuth
+        - api_key
+        - Authorization
+        - header
+        - with
+        - JWT
+        - token
+  /user/updpasswd:
+    post:
+      tags:
+      - user
+      description: |-
+        Modify password
+        <br>
+      operationId: CoreController.Modify password
+      parameters:
+      - in: body
+        name: ModifyPwd
+        description: modify user password
+        required: true
+        schema:
+          $ref: '#/definitions/core.ModifyPwd'
+      - in: header
+        name: Authorization
+        description: With the bearer in front
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      - Definition:
+        - BearerAuth
+        - api_key
+        - Authorization
+        - header
+        - with
+        - JWT
+        - token
+  /user/userlist:
+    get:
+      tags:
+      - user
+      description: |-
+        get user list
+        <br>
+      operationId: CoreController.Get user list
+      parameters:
+      - in: query
+        name: pageindex
+        description: page index
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: pagesize
+        description: page size
+        required: true
+        type: integer
+        format: int64
+      - in: header
+        name: Authorization
+        description: With the bearer in front
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      - Definition:
+        - BearerAuth
+        - api_key
+        - Authorization
+        - header
+        - with
+        - JWT
+        - token
 definitions:
   LoginParam:
     title: LoginParam
@@ -175,6 +388,10 @@ definitions:
     title: UserDetailsWithPwd
     type: object
     properties:
+      color_background:
+        type: string
+      color_text:
+        type: string
       email_address:
         type: string
       has_confirmed_page:
@@ -240,3 +457,6 @@ tags:
 - name: task
   description: |
     Operations about Tasks
+- name: user
+  description: |
+    Operations about Users

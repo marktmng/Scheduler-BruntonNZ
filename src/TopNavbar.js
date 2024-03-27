@@ -32,13 +32,13 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
       <div >
         <img src='/brunton_logo.png' 
               alt='logo' 
-              className='logo-size' 
+              className='logo' 
               style={{position:'absolute', left: 0, top:0}}/>
       </div>
 
       <div className="nav-item">
         {/* <h1>Brunton NZ - Accounting Software and Technology Solutions</h1> */}
-        <h1 className="nav-item-title"> MY SCHEDULER </h1>
+        <h1 className="nav-item-title"> Scheduler </h1>
 
       </div>
 

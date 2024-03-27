@@ -95,7 +95,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
   }, [recurrence]);
 
     // logic for add and subtract 1 minute in date
-    const onChageStart =(start)=>{
+    const onChangeStart =(start)=>{
       setStart(start)
       if(start >= end) {
         setEnd(moment(start).add(1,'m').toDate()) // add 1 minutes to the end time
@@ -103,7 +103,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
     }
   
     
-    const onChageEnd =(end)=>{
+    const onChangeEnd =(end)=>{
       setEnd(end) 
       if(start >= end) {
         setStart(moment(end).subtract(1,'m').toDate()) // subtract 1 minutes from start time
@@ -118,9 +118,9 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       onChange={(e) => setTitle(e.target.value)} 
       placeholder="Title" required 
       />
-      <DateTimePicker value={start} onChange={onChageStart} />
-      <DateTimePicker value={end} onChange={onChageEnd} />
-      
+      <DateTimePicker value={start} onChange={onChangeStart} />
+      <DateTimePicker value={end} onChange={onChangeEnd} />
+
       {/* <input type="text" value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder="Recurrence rule" /> */}
 
       <br/>
