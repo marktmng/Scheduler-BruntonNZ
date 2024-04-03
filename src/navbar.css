@@ -82,5 +82,22 @@
     text-shadow: 0 4px 3px rgba(49, 88, 217, 0.2);
   }
 
+  .circle {
+    width: 55px;
+    height: 55px;
+    background-color: #00AEEF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto; /* This pushes the circle to the right */
+  }
+  
+  .circle-letter {
+    color: white;
+    font-size: 20px;
+  }
+  
+
 
   

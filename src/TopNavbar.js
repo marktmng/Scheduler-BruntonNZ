@@ -1,25 +1,25 @@
 import React from 'react';
-import { Menu, Button, Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Menu, Button, Upload, message, Modal } from 'antd';
+import { UserOutlined, UploadOutlined } from '@ant-design/icons';
 import './navbar.css';
+import Login from './Login'; // Import the Login component
+import Profile from './Profile';
 
-const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
-  const uploadProps = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text',
-    },
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, handleLogout }) => {
+  // State variable to track if login modal is visible
+  const [isLoginModalVisible, setIsLoginModalVisible] = React.useState(false);
+
+  // Toggle login modal visibility
+  const toggleLoginModal = () => {
+    setIsLoginModalVisible(!isLoginModalVisible);
+  };
+
+  // Function to get the first letter of the user's name
+  const getFirstLetter = () => {
+    if (username) {
+      return username.charAt(0).toUpperCase();
+    }
+    return <UserOutlined />; // Default letter when no username is provided
   };
 
   return (
@@ -29,28 +29,32 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu }) => {
       selectedKeys={selectTopMenu ? [selectTopMenu] : []}
       onClick={handleTopMenuClick}
     >
-      <div >
-        <img src='/brunton_logo.png' 
-              alt='logo' 
-              className='logo' 
-              style={{position:'absolute', left: 0, top:0}}/>
+      <div>
+        <img src='/brunton_logo.png' alt='logo' className='logo' style={{ position: 'absolute', left: 0, top: 0 }} />
       </div>
 
       <div className="nav-item">
-        {/* <h1>Brunton NZ - Accounting Software and Technology Solutions</h1> */}
         <h1 className="nav-item-title"> Scheduler </h1>
-
       </div>
 
-      {/* <Menu.Item key="home" className="nav-item"> Home </Menu.Item>
-      <Menu.Item key="about" className="nav-item"> About </Menu.Item>
-      <Menu.Item key="contact" className="nav-item"> Contact</Menu.Item> */}
-      {/* Upload Image Button */}
-      <Menu.Item key="upload" className="nav-item" style={{ position: 'absolute', right: 0 }}>
-        <Upload {...uploadProps}>
-          <Button icon={<UploadOutlined />} />
-        </Upload>
-      </Menu.Item>
+      {/* Render login circle if user is not logged in */}
+      {!username &&
+        <div className='circle' onClick={toggleLoginModal}>
+          <span className='circle-letter'>{getFirstLetter()}</span>
+        </div>
+      }
+
+      <Modal
+        title="Login"
+        open={isLoginModalVisible}
+        onCancel={toggleLoginModal}
+        footer={null}
+      >
+        {/* Render Login component inside modal */}
+        <Profile handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
+
+      </Modal>
+
     </Menu>
   );
 };

@@ -1,26 +1,31 @@
-/* App.js */
 import React, { useState, useEffect } from 'react';
-import { Menu, Modal, DatePicker, Calendar } from "antd"; // Import DatePicker for the small calendar
+import { Menu, Modal, DatePicker } from "antd";
 import Scheduler from './Scheduler';
-import EventForm from './EventForm'; // Import EventForm component
+import EventForm from './EventForm';
 import './App.css';
 import './Style.css';
 import './navbar.css';
 import { fetchData } from './Api';
 import moment from 'moment';
 import TopNavbar from './TopNavbar';
+import Login from './Login'; // Import the Login component
+import Profile from './Profile'; // Import the Profile component
 
-function App() {
+function App(username, password) {
   // State variables
-  const [selectMenu, setSelectMenu] = useState(null); // Selected menu item
-  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility
-  const [modalContent, setModalContent] = useState(null); // Content for modal
+  const [selectMenu, setSelectMenu] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const [events, setEvents] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null); // State for selected date in the small calendar
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  // const [error, setError] = useState('');
 
   useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    setIsLoggedIn(loggedInStatus === 'true');
     fetchEventList();
-  }, []);
+  }, [isLoggedIn]);
 
   // Fetch event list from the backend
   const fetchEventList = async () => {
@@ -28,29 +33,22 @@ function App() {
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
-        const { Title, StartDate, EndDate,Task_code, RecEndDate,  Location, Description } = evnt;
+        const { Title, StartDate, EndDate, Task_code, RecEndDate, Location, Description } = evnt;
         const title = Title;
-        const [start, end, recEndDate ] = [StartDate, EndDate, RecEndDate ].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
+        const [start, end, recEndDate] = [StartDate, EndDate, RecEndDate].map(date => moment(date, 'YYYY.MM.DD HH:mm').toDate());
         return { title, start, end, recEndDate, Task_code, Location, Description };
       });
     setEvents(evnts);
   };
+
   // Handle click on menu items
   const handleMenuClick = (event) => {
     setSelectMenu(event.key);
-    setIsModalVisible(true); // Show modal when menu item is clicked
-
-    // Set modal content based on selected menu item
+    setIsModalVisible(true);
     switch (event.key) {
-      // case "tasks":
-      //   setModalContent("Tasks");
-      //   break;
       case "events":
         setModalContent("Events");
         break;
-      // case "appointments":
-      //   setModalContent("Appointments");
-      //   break;
       default:
         setModalContent(null);
         break;
@@ -66,70 +64,73 @@ function App() {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  
-  const handleEventDropCallback = () => {
-    fetchEventList() // fetch the list for dragging and dropping
-    // Any other logic you want to perform when event is dropped
+
+  // // Handle login
+  // const handleLogin = () => {
+  //   if (username.trim() === '' || password.trim() === '') {
+  //           setError('Username and password cannot be empty.');
+  //           return; // Prevent further execution if fields are empty
+  //       }
+  // };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
   };
 
   // Render the component
   return (
     <div>
-      {/* Top Navbar */}
-      <TopNavbar
-        handleMenuClick={handleMenuClick}
-        selectMenu={selectMenu}
-      />
-      <div >
-        <div className="app-container">
-          {/* Left menu */}
-          <div className="left-menu">
-            <Menu
-              className="menu-bar"
-              mode="vertical"
-              selectedKeys={selectMenu ? [selectMenu] : []}
-              onClick={handleMenuClick}
-            >
-              {/* <Menu.Item key="tasks">Tasks</Menu.Item> */}
-              <Menu.Item key="events">Events</Menu.Item>
-              {/* <Menu.Item key="appointments">Appointments</Menu.Item> */}
-              {/* Small calendar */}
-              {/* <div key="smallCalendar">
-                <DatePicker onChange={handleDateChange} />
-                </div> */}
-            </Menu>
+      {isLoggedIn ? ( // If logged in, render the main application
+        <div>
+          <TopNavbar
+            handleMenuClick={handleMenuClick}
+            selectMenu={selectMenu}
+            handleLogout={handleLogout}
+          />
+          <div className="app-container">
+            <div className="left-menu">
+              <Menu
+                className="menu-bar"
+                mode="vertical"
+                selectedKeys={selectMenu ? [selectMenu] : []}
+                onClick={handleMenuClick}
+              >
+                <Menu.Item key="events">Events</Menu.Item>
+              </Menu>
+            </div>
+            <div className='scheduler-container'>
+              <Scheduler
+                events={events}
+                fetchEventList={fetchEventList}
+                selectedDate={selectedDate}
+              />
+            </div>
+            <form>
+              <Modal
+                title=''
+                open={isModalVisible}
+                onCancel={handleModalClose}
+                footer={null}
+              >
+                {modalContent === "Events" && (
+                  <EventForm
+                    onCreate={fetchEventList}
+                  />
+                )}
+              </Modal>
+            </form>
           </div>
-          {/* Scheduler component */}
-          <div className='scheduler-container'>
-            <Scheduler 
-            events={events} // this is the one showing on the calender which from Scheduler
-            fetchEventList={fetchEventList} 
-            selectedDate={selectedDate} 
-            onEventDropCallback={handleEventDropCallback} // Add this line
-            />
-          </div>
-          {/* Modal */}
-          <form  >
-            <Modal
-              title=''
-              open={isModalVisible}
-              onCancel={handleModalClose}
-              footer={null}
-
-            >
-              {/* <hr/> */}
-              {modalContent === "Events" && (
-                <EventForm
-                  onCreate={fetchEventList}
-                />
-              )}
-              <br />
-              <hr />
-              {modalContent && <p>{modalContent}</p>}
-            </Modal>
-          </form>
         </div>
-      </div>
+      ) : ( // If not logged in, render the Login component
+      <Login 
+      isLoggedIn={isLoggedIn} 
+      loginHandler={setIsLoggedIn} 
+      // handleLogin={handleLogin}
+      handleLogout={handleLogout} />
+
+      )}
     </div>
   );
 }
