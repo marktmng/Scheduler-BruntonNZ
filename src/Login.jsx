@@ -49,7 +49,6 @@ export const Login = ({ handleLogout, handleLogin }) => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 'Authorization':'Bearer 4TZNYtIrYwJteuO3fBM1awBGZ8vv8x7YoaJ3fx8C4wA=' // use this line for user list
                     },
                     body: JSON.stringify({
                         user_code: username,
