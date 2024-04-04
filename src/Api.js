@@ -1,9 +1,18 @@
+// import { token } from "./Login";
 
 const API_URL = `http://localhost:8080/v1/task`;
 
 export const fetchData = async () => {
   try {
-    const response = await fetch(API_URL);
+    const token = localStorage.getItem('Token')
+
+    const response = await fetch(API_URL,{
+      method: "GET",
+      headers:{
+        'Authorization': `${token}`,
+        // 'Authorization':'Bearer yTIgfbIDTnphChtiB6IpkswrIyVWeaau6HGlOb3Z64o='
+      }
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -15,12 +24,16 @@ export const fetchData = async () => {
   }
 };
 
-export const postData = async (data) => {
+export const postData = async (data, token) => {
   try {
+    const token = localStorage.getItem('Token')
+
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
       },
       body: JSON.stringify(data),
     });
@@ -36,12 +49,17 @@ export const postData = async (data) => {
 };
 
 // Function to update an existing task
-export const updateTask = async (Task_code, newData) => {
+export const updateTask = async (Task_code, newData, token) => {
   try {
+
+    const token = localStorage.getItem('Token')
+
     const response = await fetch(`${API_URL}/taskUpd/${Task_code}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
       },
       body: JSON.stringify(newData),
     });
@@ -57,10 +75,17 @@ export const updateTask = async (Task_code, newData) => {
 };
 
 // Function to delete a task
-export const deleteTask = async (Task_code) => {
+export const deleteTask = async (Task_code, token) => {
   try {
+
+    const token = localStorage.getItem('Token')
+
     const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
       method: "DELETE",
+      headers:{
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
+      }
     });
     if (!response.ok) {
       throw new Error("Failed to delete task");
@@ -76,12 +101,17 @@ export const deleteTask = async (Task_code) => {
 
 // for recurrence
 // Function to update an existing task with recurrence
-export const updateRecTask = async (Task_code, newRecData) => {
+export const updateRecTask = async (Task_code, newRecData, token) => {
   try {
+
+    const token = localStorage.getItem('Token')
+
     const response = await fetch(`${API_URL}/taskRecUpd/${Task_code}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
       },
       body: JSON.stringify(newRecData),
     });
@@ -97,10 +127,17 @@ export const updateRecTask = async (Task_code, newRecData) => {
 };
 
 // Function to delete a task with recurrence
-export const deleteRecTask = async (Task_code) => {
+export const deleteRecTask = async (Task_code, token) => {
   try {
+
+    const token = localStorage.getItem('Token')
+    
     const response = await fetch(`${API_URL}/taskRecDel/${Task_code}`, {
       method: "DELETE",
+      headers: {
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
+      }
     });
     if (!response.ok) {
       throw new Error("Failed to delete recurrence");

@@ -15,7 +15,7 @@ const DragAndDropCalendar = withDragAndDrop(Calendar); // Wrap Calendar componen
 
 const localizer = momentLocalizer(moment);
 
-function Scheduler({ events, fetchEventList, onEventDropCallback , dropEvent }) {
+function Scheduler({ events, fetchEventList, onEventDropCallback , dropEvent, fetchUserlist }) {
   
   const [selectedTask, setSelectedTask] = useState(null);
   const popupRef = useRef(null); // Created a reference to hid the popup element  
@@ -51,7 +51,9 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , dropEvent }) 
 
   useEffect(() => {
     fetchEventList();
+    // fetchUserlist();
   }, []);
+  
   
 
   const handleSelectSlot = (slotInfo) => {
@@ -151,6 +153,7 @@ useEffect (() => {
         onSelectSlot={handleSelectSlot}
         onEventDrop={onEventDrop} // Apply drag-and-drop functionality
         // handleEventDrop={handleEventDrop}
+        fetchUserlist={fetchUserlist}
 
         // component ={{
         //   events: ResizableEvent, // use resizable event comp

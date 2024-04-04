@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './login.css';
 
-
-const Login = ({ handleLogout }) => {
+export const Login = ({ handleLogout, handleLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+    // const [token, setToken] = useState('');
 
     useEffect(() => {
-        const loggedInStatus = localStorage.getItem('isLoggedIn');
-        if (loggedInStatus === 'true') {
-            setIsLoggedIn(true);
-        }
+        // const loggedInStatus = localStorage.getItem('isLoggedIn');
+        // if (loggedInStatus === 'true') {
+        //     setIsLoggedIn(true);
+        // }
     }, []);
 
     const handleUsernameChange = (event) => {
@@ -27,6 +27,7 @@ const Login = ({ handleLogout }) => {
         localStorage.setItem('isLoggedIn', status)
         setIsLoggedIn(status)
     };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -40,25 +41,41 @@ const Login = ({ handleLogout }) => {
             handleLogout(); // logout if already logged in
             handleLoginStatus(false);
         }
+
+
          else {
             try {
                 const response = await fetch('http://localhost:8080/v1/user/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 'Authorization':'Bearer FpjM5nthhL7Dzi0S9XKuV6tm3nmqy2CmU6nqGs7_SKk=' // use this line for user list
+                        // 'Authorization':'Bearer 4TZNYtIrYwJteuO3fBM1awBGZ8vv8x7YoaJ3fx8C4wA=' // use this line for user list
                     },
                     body: JSON.stringify({
                         user_code: username,
                         password: password,
                     }),
-                }); 
+                    
+                });
                 
-                console.log(response.headers.get('Authorization')) // deal with authorization
+                // .then((response) => {
+                //     return response.JSON();
+                // })
+                // .then((data) => {
+                //     localStorage.setItem('takoen', data);
+                //     console.log(data)
+                // })
+                
+                console.log(response.headers.get('Authorization')) // to get the token
 
                 const responseData = await response.json();
+                console.log('Response Data:', responseData);
+
                 if (response.ok) {
                     // Login successful
+                    // const token = response.token;
+                    // console.log('Token:', token); // Check if token is retrieved correctly
+                    localStorage.setItem('Token', response.headers.get('Authorization')); // Store the token in localStorage
                     console.log('Login successful');
                     handleLoginStatus(true);
                     // Access user data
@@ -74,8 +91,12 @@ const Login = ({ handleLogout }) => {
                 // Handle error (display error message, etc.)
                 setError('An error occurred. Please try again.');
             }
+            
         }
+        
     };
+
+  
 
     return (
         <div className='login-container'>

@@ -1,236 +1,296 @@
+basePath: /api/v1
 definitions:
-  models.Task:
+  controllers.LoginParam:
     properties:
-      EndDate:
+      password:
         type: string
-      StartDate:
+      user_code:
         type: string
-      description:
+    type: object
+  core.ModifyPwd:
+    properties:
+      new_pwd:
         type: string
+      old_pwd:
+        type: string
+      user_code:
+        type: string
+    type: object
+  core.UserDetails:
+    properties:
+      color_background:
+        type: string
+      color_text:
+        type: string
+      email_address:
+        type: string
+      has_confirmed_page:
+        type: boolean
+      has_posted_page:
+        type: boolean
+      has_recognised_page:
+        type: boolean
+      has_uploaded_page:
+        type: boolean
       id:
         type: integer
+      inactive:
+        type: boolean
+      phone_no:
+        type: string
+      role:
+        type: string
+      user_code:
+        type: string
+      user_name:
+        type: string
+    type: object
+  core.UserDetailsWithPwd:
+    properties:
+      color_background:
+        type: string
+      color_text:
+        type: string
+      email_address:
+        type: string
+      has_confirmed_page:
+        type: boolean
+      has_posted_page:
+        type: boolean
+      has_recognised_page:
+        type: boolean
+      has_uploaded_page:
+        type: boolean
+      id:
+        type: integer
+      inactive:
+        type: boolean
+      password:
+        type: string
+      phone_no:
+        type: string
+      role:
+        type: string
+      user_code:
+        type: string
+      user_name:
+        type: string
+    type: object
+  core.UserPage:
+    properties:
+      CurrentPage:
+        example: 1
+        format: int
+        type: integer
+      ToltalPages:
+        example: 1
+        format: int
+        type: integer
+      ToltalUsers:
+        example: 1
+        format: int
+        type: integer
+      Users:
+        items:
+          $ref: '#/definitions/core.UserDetails'
+        type: array
+    type: object
+  models.FTask:
+    properties:
+      description:
+        type: string
+      endDate:
+        type: string
+      hours:
+        type: string
       location:
+        type: string
+      recEndDate:
+        type: string
+      recStartDate:
+        type: string
+      repeatable:
+        type: string
+      startDate:
         type: string
       task_code:
         type: string
       title:
         type: string
-    type: object
-  models.User:
-    properties:
-      id:
-        type: integer
-      password:
-        type: string
-      task:
-        $ref: '#/definitions/models.Task'
       userCode:
         type: string
-      username:
+    type: object
+  utils.JSONStruct:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
         type: string
     type: object
+host: localhost:8080
 info:
   contact: {}
+  description: API fot scheduler application
+  title: Scheduler Test API
+  version: 1.0.0
 paths:
-  /:
-    get:
-      description: get all Users
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.User'
-    post:
-      description: create users
-      parameters:
-      - description: body for user content
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: int
-        "403":
-          description: Forbidden
-          schema:
-            type: body
-  /:uid:
-    delete:
-      description: |-
-        update the user
-        delete the user
-      parameters:
-      - description: The uid you want to update
-        in: path
-        name: uid
-        required: true
-        type: string
-      - description: body for user content
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      - description: The uid you want to delete
-        in: path
-        name: uid
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "403":
-          description: Forbidden
-          schema:
-            type: uid
-    get:
-      description: get user by uid
-      parameters:
-      - description: The key for staticblock
-        in: path
-        name: uid
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: Forbidden
-          schema:
-            type: uid
-    put:
-      description: |-
-        update the user
-        delete the user
-      parameters:
-      - description: The uid you want to update
-        in: path
-        name: uid
-        required: true
-        type: string
-      - description: body for user content
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      - description: The uid you want to delete
-        in: path
-        name: uid
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "403":
-          description: Forbidden
-          schema:
-            type: uid
-  /login:
-    get:
-      description: Logs user into the system
-      parameters:
-      - description: The username for login
-        in: query
-        name: username
-        required: true
-        type: string
-      - description: The password for login
-        in: query
-        name: password
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "403":
-          description: Forbidden
-          schema:
-            type: user
-  /logout:
-    get:
-      description: Logs out current logged in user session
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-  /v1/task:
+  /task/:
     get:
       description: get all Tasks
+      parameters:
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
       responses:
         "200":
-          description: OK
+          description: model or error message
           schema:
-            $ref: '#/definitions/models.Task'
+            items:
+              $ref: '#/definitions/models.FTask'
+            type: array
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
     post:
-      description: post task
+      description: create single/recurrent Task
       parameters:
       - description: body for user content
         in: body
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.Task'
+          $ref: '#/definitions/models.FTask'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
       responses:
         "200":
-          description: OK
+          description: success post! or error message
           schema:
             type: string
-        "403":
-          description: Forbidden
-          schema:
-            type: body
-  /v1/task/:task_code:
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /task/:task_code:
     get:
       description: get task by task_code
       parameters:
-      - description: The key for staticblock
+      - description: The key for Task
         in: path
         name: task_code
         required: true
         type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
       responses:
         "200":
-          description: OK
+          description: model or task not exist
           schema:
-            $ref: '#/definitions/models.Task'
-        "403":
-          description: Forbidden
-          schema:
-            type: task_code
-  /v1/taskDel/:task_code:
+            $ref: '#/definitions/models.FTask'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /task/taskDel/:task_code:
     delete:
       description: delete the task
       parameters:
-      - description: The uid you want to delete
+      - description: The task_code you want to delete
         in: path
         name: task_code
         required: true
         type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
       responses:
         "200":
-          description: OK
+          description: delete success! or Task is empty
           schema:
             type: string
-        "403":
-          description: Forbidden
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /task/taskRecDel/:task_code:
+    delete:
+      description: delete recurrence by Task
+      parameters:
+      - description: The task_code you want to delete
+        in: path
+        name: task_code
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: delete success! or Task is empty
           schema:
-            type: task_code
-  /v1/taskUpd/:task_code:
-    put:
+            type: string
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /task/taskRecUpd/:task_code:
+    post:
+      description: update recurrence by Tasks (can receive FTask but will update only
+        Title, Description and Location)
+      parameters:
+      - description: The task_code you want to update
+        in: path
+        name: task_code
+        required: true
+        type: string
+      - description: body for task content
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FTask'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: model or error message
+          schema:
+            $ref: '#/definitions/models.FTask'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /task/taskUpd/:task_code:
+    post:
       description: update the task
       parameters:
       - description: The task_code you want to update
@@ -243,14 +303,187 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.Task'
+          $ref: '#/definitions/models.FTask'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: model or task not exist
+          schema:
+            $ref: '#/definitions/models.FTask'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tasks
+  /user/addorupd:
+    post:
+      description: add or update user
+      parameters:
+      - description: user detail
+        in: body
+        name: userDetail
+        required: true
+        schema:
+          $ref: '#/definitions/core.UserDetailsWithPwd'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        type: string
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Task'
-        "403":
-          description: Forbidden
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - users
+  /user/delete:
+    delete:
+      description: delete user
+      parameters:
+      - description: user code
+        in: query
+        name: userCode
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
           schema:
-            type: task_code
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - users
+  /user/login:
+    post:
+      description: login with user_code and password
+      parameters:
+      - description: loginParam
+        in: body
+        name: loginParam
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginParam'
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/core.UserDetailsWithPwd'
+              type: object
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      tags:
+      - users
+  /user/rstpasswd:
+    post:
+      description: reset password
+      parameters:
+      - description: reset user password
+        in: body
+        name: ModifyPwd
+        required: true
+        schema:
+          $ref: '#/definitions/core.ModifyPwd'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - users
+  /user/updpasswd:
+    post:
+      description: Modify password
+      parameters:
+      - description: modify user password
+        in: body
+        name: ModifyPwd
+        required: true
+        schema:
+          $ref: '#/definitions/core.ModifyPwd'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - users
+  /user/userlist:
+    get:
+      description: get user list
+      parameters:
+      - description: page index
+        in: query
+        name: pageindex
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: pagesize
+        required: true
+        type: integer
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/core.UserPage'
+              type: object
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - users
+schemes:
+- http
+- https
 swagger: "2.0"

@@ -45,7 +45,7 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
       }
 
       <Modal
-        title="Login"
+        title="Logout"
         open={isLoginModalVisible}
         onCancel={toggleLoginModal}
         footer={null}

@@ -4,7 +4,7 @@ import { postData } from './Api';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 import moment from 'moment';
 
-function EventForm({ onClose, onCreate, initialEvent }) {
+function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
@@ -13,6 +13,12 @@ function EventForm({ onClose, onCreate, initialEvent }) {
   const [dataForPost, setDataForPost] = useState(null);
   const [description, setDescription] = useState(''); // for description
   const [location, setLocation] = useState(''); // location
+  const [usercode, setUsercode] = useState(''); // usercode
+
+
+  // useEffect(() => {
+  //   fetchUserlists();
+  // }, [])
 
   useEffect(() => {
     if (initialEvent) {
@@ -23,6 +29,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setRecurrence(initialEvent.recurrence || '');
       setDescription(initialEvent.Description || ''); // description
       setLocation(initialEvent.Location || ''); // location
+      setUsercode(initialEvent.usercode || ''); // usercode
     }
   }, [initialEvent]);
 
@@ -37,6 +44,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       setRecurrence('');
       setDescription(''); // description
       setLocation(''); // location
+      setUsercode(''); // usercode
       setDataForPost(null);
     } catch (error) {
       console.error('Error posting data:', error);
@@ -52,13 +60,15 @@ function EventForm({ onClose, onCreate, initialEvent }) {
       Repeatable: recurrence,
       RecEndDate: recEndDate,
       Description: description,
-      Location: location
+      Location: location,
+      user_code: usercode
     };
     setDataForPost(eventPost);
     // onClose(); // Close the form
   };
 
   useEffect(() => {
+
     if (dataForPost) {
       submitData(dataForPost);
     }
@@ -144,6 +154,15 @@ function EventForm({ onClose, onCreate, initialEvent }) {
         onChange={setRecEndDate} 
         />
         <br/>
+
+        <select
+        value={usercode}
+        onChange={setUsercode}
+        // fetchUserlist={fetchUserlist}
+        >
+        <option disabled value="">User</option>
+        {/* <option value={usercode}>{usercode} </option> */}
+        </select>
         <input 
             type="text" 
             value={description} 

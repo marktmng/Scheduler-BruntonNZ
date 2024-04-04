@@ -2,6 +2,10 @@
     display: flex;
   }
 
+  /* .black-text {
+    color: black;
+  } */
+  
   
   .left-menu {
     flex: 0 0 165px; /* Set a fixed width for the left menu */

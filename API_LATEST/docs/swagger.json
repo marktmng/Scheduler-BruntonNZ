@@ -1,0 +1,774 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "API fot scheduler application",
+        "title": "Scheduler Test API",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/task/": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get all Tasks",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "model or error message",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.FTask"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create single/recurrent Task",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "description": "body for user content",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success post! or error message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/task/:task_code": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get task by task_code",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The key for Task",
+                        "name": "task_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "model or task not exist",
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/task/taskDel/:task_code": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete the task",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The task_code you want to delete",
+                        "name": "task_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success! or Task is empty",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/task/taskRecDel/:task_code": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete recurrence by Task",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The task_code you want to delete",
+                        "name": "task_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success! or Task is empty",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/task/taskRecUpd/:task_code": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "update recurrence by Tasks (can receive FTask but will update only Title, Description and Location)",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The task_code you want to update",
+                        "name": "task_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body for task content",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "model or error message",
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/task/taskUpd/:task_code": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "update the task",
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The task_code you want to update",
+                        "name": "task_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body for task content",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "model or task not exist",
+                        "schema": {
+                            "$ref": "#/definitions/models.FTask"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/addorupd": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "add or update user",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "description": "user detail",
+                        "name": "userDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/core.UserDetailsWithPwd"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete user",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user code",
+                        "name": "userCode",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "description": "login with user_code and password",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "description": "loginParam",
+                        "name": "loginParam",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.LoginParam"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/core.UserDetailsWithPwd"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/rstpasswd": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "reset password",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "description": "reset user password",
+                        "name": "ModifyPwd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/core.ModifyPwd"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/updpasswd": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Modify password",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "description": "modify user password",
+                        "name": "ModifyPwd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/core.ModifyPwd"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/userlist": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get user list",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page index",
+                        "name": "pageindex",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "pagesize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/core.UserPage"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controllers.LoginParam": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "user_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.ModifyPwd": {
+            "type": "object",
+            "properties": {
+                "new_pwd": {
+                    "type": "string"
+                },
+                "old_pwd": {
+                    "type": "string"
+                },
+                "user_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.UserDetails": {
+            "type": "object",
+            "properties": {
+                "color_background": {
+                    "type": "string"
+                },
+                "color_text": {
+                    "type": "string"
+                },
+                "email_address": {
+                    "type": "string"
+                },
+                "has_confirmed_page": {
+                    "type": "boolean"
+                },
+                "has_posted_page": {
+                    "type": "boolean"
+                },
+                "has_recognised_page": {
+                    "type": "boolean"
+                },
+                "has_uploaded_page": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "inactive": {
+                    "type": "boolean"
+                },
+                "phone_no": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "user_code": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.UserDetailsWithPwd": {
+            "type": "object",
+            "properties": {
+                "color_background": {
+                    "type": "string"
+                },
+                "color_text": {
+                    "type": "string"
+                },
+                "email_address": {
+                    "type": "string"
+                },
+                "has_confirmed_page": {
+                    "type": "boolean"
+                },
+                "has_posted_page": {
+                    "type": "boolean"
+                },
+                "has_recognised_page": {
+                    "type": "boolean"
+                },
+                "has_uploaded_page": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "inactive": {
+                    "type": "boolean"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone_no": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "user_code": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.UserPage": {
+            "type": "object",
+            "properties": {
+                "CurrentPage": {
+                    "type": "integer",
+                    "format": "int",
+                    "example": 1
+                },
+                "ToltalPages": {
+                    "type": "integer",
+                    "format": "int",
+                    "example": 1
+                },
+                "ToltalUsers": {
+                    "type": "integer",
+                    "format": "int",
+                    "example": 1
+                },
+                "Users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/core.UserDetails"
+                    }
+                }
+            }
+        },
+        "models.FTask": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "endDate": {
+                    "type": "string"
+                },
+                "hours": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "recEndDate": {
+                    "type": "string"
+                },
+                "recStartDate": {
+                    "type": "string"
+                },
+                "repeatable": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
+                "task_code": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.JSONStruct": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
