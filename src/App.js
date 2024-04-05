@@ -10,7 +10,7 @@ import moment from 'moment';
 import TopNavbar from './TopNavbar';
 import Login from './Login'; // Import the Login component
 import Profile from './Profile'; // Import the Profile component
-import { getUserlist } from './userApi'; // to get userlist only
+
 
 function App() {
   // State variables
@@ -21,18 +21,18 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   // const [error, setError] = useState('');
-  const [userList, setUserList] = useState([]);
+
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn');
     setIsLoggedIn(loggedInStatus === 'true');
     fetchEventList();
-    fetchUserlist();
   }, [isLoggedIn]);
 
   // Fetch event list from the backend
   const fetchEventList = async () => {
     const response = await fetchData();
+    
     const evnts = Object.keys(response)
       .map(key => response[key])
       .map(evnt => {
@@ -43,24 +43,7 @@ function App() {
       });
     setEvents(evnts);
   };
-
-   // for userlist
-   useEffect(() => {
-    fetchUserlist();
-   },[]);
-
-  // for userlist
-  const fetchUserlist = async () => {
-    const result = await getUserlist();
-    const userLists = Object.keys(result)
-    .map(key => result[key])
-    .map(userLists =>{
-      const { user_code } = userLists;
-      const usercode = user_code;
-      return {usercode};
-    });
-    setUserList(userLists)
-  }
+ 
 
   // Handle click on menu items
   const handleMenuClick = (event) => {
@@ -138,8 +121,6 @@ function App() {
                 {modalContent === "Events" && (
                   <EventForm
                     onCreate={fetchEventList}
-                    userList={userList}
-                    // fetchUserlist={fetchUserlist}
                   />
                 )}
               </Modal>
@@ -150,7 +131,6 @@ function App() {
       <Login 
       isLoggedIn={isLoggedIn} 
       loginHandler={setIsLoggedIn} 
-      // handleLogin={handleLogin}
       handleLogout={handleLogout} />
 
       )}

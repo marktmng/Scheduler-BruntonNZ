@@ -22,29 +22,29 @@ export const getUserlist = async () => {
   }
 };
 
-// export const postData = async (data, token) => {
-//   try {
-//     const token = localStorage.getItem('Token')
+export const AddOrUpdUser = async (data, token) => {
+  try {
+    const token = localStorage.getItem('Token')
 
-//     const response = await fetch(API_URL, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         // 'Authorization': `Bearer ${token}`,
-//         'Authorization': `${token}`,
-//       },
-//       body: JSON.stringify(data),
-//     });
-//     if (!response.ok) {
-//       throw new Error("Failed to post data");
-//     }
-//     const responseData = await response.json();
-//     return responseData;
-//   } catch (error) {
-//     console.error("Error posting data:", error);
-//     throw error;
-//   }
-// };
+    const response = await fetch(`http://localhost:8080/v1/user/addorupd`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to post data");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+};
 
 // // Function to update an existing task
 // export const updateTask = async (Task_code, newData, token) => {
@@ -72,29 +72,30 @@ export const getUserlist = async () => {
 //   }
 // };
 
-// // Function to delete a task
-// export const deleteTask = async (Task_code, token) => {
-//   try {
+// Function to delete a task
+export const deleteTask = async (user_code, token) => {
+  try {
 
-//     const token = localStorage.getItem('Token')
+    const token = localStorage.getItem('Token')
 
-//     const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
-//       method: "DELETE",
-//       headers:{
-//         // 'Authorization': `Bearer ${token}`,
-//         'Authorization': `${token}`,
-//       }
-//     });
-//     if (!response.ok) {
-//       throw new Error("Failed to delete task");
-//     }
-//     const responseData = await response.json();
-//     return responseData;
-//   } catch (error) {
-//     console.error("Error deleting task:", error);
-//     throw error;
-//   }
-// };
+    // const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
+      const response = await fetch(`http://localhost:8080/v1/user/delete?userCode=${user_code}`, {
+      method: "DELETE",
+      headers:{
+        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `${token}`,
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete task");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    throw error;
+  }
+};
 
 
 // // for recurrence
