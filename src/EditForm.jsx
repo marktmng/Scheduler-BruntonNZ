@@ -4,10 +4,10 @@ import { updateTask, deleteTask, postData, deleteRecTask, updateRecTask } from '
 import './EditForm.css'; // Import your CSS file for styling
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 import moment from 'moment';
-
+import { getUserlist } from './userApi'; // to get userlist only
 
 // Edit Form
-function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
+function EditForm({ task, onUpdate, onDelete, onClose, onCreate, fet }) {
   const [taskCode, setTaskCode] = useState('');
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
@@ -16,6 +16,30 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [recurrence, setRecurrence] = useState(''); // implement repeatable
   const [description, setDescription] = useState(''); // for description
   const [location, setLocation] = useState(''); // location
+  const [userList, setUserList] = useState([]);
+
+  
+  // for userlist
+  useEffect(() => {
+    fetchUserlist();
+   },[]);
+
+  // for userlist
+  const fetchUserlist = async () => {
+    try {
+      const result = await getUserlist();
+      const users = result.data.Users; // Accessing the Users array from the response data
+      const userCodes = users.map(user => user.user_code); // Extracting user_code from each user object
+      setUserList(userCodes);
+      console.log('Usercode', userCodes)
+      // console.log('Data', result)
+
+    } catch (error) {
+      console.error('Error fetching user list:', error);
+      // Handle error appropriately
+    }
+
+  };
 
   // Effect to pre-fill form fields when initialEvent changes
   useEffect(() => {
@@ -166,8 +190,22 @@ console.log(task) // print the data
         </select>
         <br/>
         <br/>
-        <DateTimePicker value={recEndDate} onChange={setRecEndDate} />
+        <DateTimePicker value={recEndDate} 
+        onChange={setRecEndDate} 
+        />
         <br />
+
+        <select
+        className="select-opt"
+        >
+          <option disabled value="">Select User</option>
+          {userList.map(userCode => (
+            <option key={userCode} value={userCode}>{userCode}</option>
+          ))}
+        </select>
+         <br/>
+         <br/>
+
         <input 
               type="text" 
               value={description} 
