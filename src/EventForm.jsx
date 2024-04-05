@@ -3,8 +3,9 @@ import DateTimePicker from './DateTimePicker';
 import { postData } from './Api';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 import moment from 'moment';
+import { getUserlist } from './userApi'; // to get userlist only
 
-function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
+function EventForm({ onClose, onCreate, initialEvent }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
@@ -13,12 +14,29 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
   const [dataForPost, setDataForPost] = useState(null);
   const [description, setDescription] = useState(''); // for description
   const [location, setLocation] = useState(''); // location
-  const [usercode, setUsercode] = useState(''); // usercode
+  const [userList, setUserList] = useState([]);
 
+  // for userlist
+  useEffect(() => {
+    fetchUserlist();
+   },[]);
 
-  // useEffect(() => {
-  //   fetchUserlists();
-  // }, [])
+  // for userlist
+  const fetchUserlist = async () => {
+    try {
+      const result = await getUserlist();
+      const users = result.data.Users; // Accessing the Users array from the response data
+      const userCodes = users.map(user => user.user_code); // Extracting user_code from each user object
+      setUserList(userCodes);
+      console.log('Usercode', userCodes)
+      console.log('Data', result)
+
+    } catch (error) {
+      console.error('Error fetching user list:', error);
+      // Handle error appropriately
+    }
+
+  };
 
   useEffect(() => {
     if (initialEvent) {
@@ -29,7 +47,6 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
       setRecurrence(initialEvent.recurrence || '');
       setDescription(initialEvent.Description || ''); // description
       setLocation(initialEvent.Location || ''); // location
-      setUsercode(initialEvent.usercode || ''); // usercode
     }
   }, [initialEvent]);
 
@@ -44,7 +61,6 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
       setRecurrence('');
       setDescription(''); // description
       setLocation(''); // location
-      setUsercode(''); // usercode
       setDataForPost(null);
     } catch (error) {
       console.error('Error posting data:', error);
@@ -60,8 +76,7 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
       Repeatable: recurrence,
       RecEndDate: recEndDate,
       Description: description,
-      Location: location,
-      user_code: usercode
+      Location: location
     };
     setDataForPost(eventPost);
     // onClose(); // Close the form
@@ -131,8 +146,6 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
       <DateTimePicker value={start} onChange={onChangeStart} />
       <DateTimePicker value={end} onChange={onChangeEnd} />
 
-      {/* <input type="text" value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder="Recurrence rule" /> */}
-
       <br/>
       <select
           className="select-opt"
@@ -156,13 +169,16 @@ function EventForm({ onClose, onCreate, initialEvent, fetchUserlists }) {
         <br/>
 
         <select
-        value={usercode}
-        onChange={setUsercode}
-        // fetchUserlist={fetchUserlist}
+        className="select-opt"
         >
-        <option disabled value="">User</option>
-        {/* <option value={usercode}>{usercode} </option> */}
+          <option disabled value="">Select User</option>
+          {userList.map(userCode => (
+            <option key={userCode} value={userCode}>{userCode}</option>
+          ))}
         </select>
+         <br/>
+         <br/>
+        
         <input 
             type="text" 
             value={description} 
