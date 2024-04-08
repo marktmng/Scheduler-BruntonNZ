@@ -73,7 +73,7 @@ export const AddOrUpdUser = async (data, token) => {
 // };
 
 // Function to delete a task
-export const deleteTask = async (user_code, token) => {
+export const deleteUser = async (user_code, token) => {
   try {
 
     const token = localStorage.getItem('Token')

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, Modal, DatePicker } from "antd";
 import Scheduler from './Scheduler';
 import EventForm from './EventForm';
+import AuUsers from './auUsers'; // Import the AuUsers component
 import './App.css';
 import './Style.css';
 import './navbar.css';
@@ -9,10 +10,10 @@ import { fetchData } from './Api';
 import moment from 'moment';
 import TopNavbar from './TopNavbar';
 import Login from './Login'; // Import the Login component
-import Profile from './Profile'; // Import the Profile component
+// import Profile from './Profile'; // Import the Profile component
 
 
-function App() {
+function App() { //{ fetchSchUser }
   // State variables
   const [selectMenu, setSelectMenu] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -21,6 +22,10 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   // const [error, setError] = useState('');
+
+  // useEffect (() => {
+  //   fetchSchUser()
+  // }, [])
 
 
   useEffect(() => {
@@ -42,6 +47,7 @@ function App() {
         return { title, start, end, recEndDate, Task_code, Location, Description };
       });
     setEvents(evnts);
+    console.log('Fetched', evnts)
   };
  
 
@@ -52,6 +58,9 @@ function App() {
     switch (event.key) {
       case "events":
         setModalContent("Events");
+        break;
+        case "users":
+        setModalContent("Users");
         break;
       default:
         setModalContent(null);
@@ -102,6 +111,8 @@ function App() {
                 onClick={handleMenuClick}
               >
                 <Menu.Item key="events">Events</Menu.Item>
+                <Menu.Item key="users">Users</Menu.Item>
+
               </Menu>
             </div>
             <div className='scheduler-container'>
@@ -109,6 +120,7 @@ function App() {
                 events={events}
                 fetchEventList={fetchEventList}
                 selectedDate={selectedDate}
+                // fetchSchUser={fetchSchUser}
               />
             </div>
             <form>
@@ -122,7 +134,15 @@ function App() {
                   <EventForm
                     onCreate={fetchEventList}
                   />
-                )}
+                )}       
+
+                {modalContent === "Users" && (
+                  <AuUsers
+                  // onCreate={fetchSchUser}
+                />
+                
+                )}  
+
               </Modal>
             </form>
           </div>

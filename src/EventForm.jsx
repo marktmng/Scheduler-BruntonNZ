@@ -136,17 +136,26 @@ function EventForm({ onClose, onCreate, initialEvent }) {
     }
 
   return (
-    <form className='edit-form' onSubmit={handleSubmit}>
+    <form 
+    className='edit-form' 
+    onSubmit={handleSubmit}>
+      
+      <label for="title">Title:</label>
       <input 
       type="text" 
       value={title} 
       onChange={(e) => setTitle(e.target.value)} 
       placeholder="Title" required 
       />
+      <label for="start">Start Date:</label>
       <DateTimePicker value={start} onChange={onChangeStart} />
+      <br/>
+
+      <label for="end">End Date:</label>
       <DateTimePicker value={end} onChange={onChangeEnd} />
 
       <br/>
+      <label for="recurrence">Recurrence:</label>
       <select
           className="select-opt"
           value={recurrence}
@@ -162,12 +171,14 @@ function EventForm({ onClose, onCreate, initialEvent }) {
         </select>
         <br/>
         <br/>
+        <label for="recEndDate">Recurrence Date:</label>
         <DateTimePicker 
         value={recEndDate} 
         onChange={setRecEndDate} 
         />
         <br/>
 
+        <label for="usercode">User Code:</label>
         <select
         className="select-opt"
         >
@@ -179,6 +190,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
          <br/>
          <br/>
         
+         <label for="description">Description:</label>
         <input 
             type="text" 
             value={description} 
@@ -186,6 +198,7 @@ function EventForm({ onClose, onCreate, initialEvent }) {
             placeholder="Description" // required 
         />
 
+<label for="location">Location:</label>
         <input type="text" 
             value={location} 
             onChange={(e) => setLocation(e.target.value)} 

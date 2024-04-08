@@ -7,7 +7,7 @@ import moment from 'moment';
 import { getUserlist } from './userApi'; // to get userlist only
 
 // Edit Form
-function EditForm({ task, onUpdate, onDelete, onClose, onCreate, fet }) {
+function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [taskCode, setTaskCode] = useState('');
   const [title, setTitle] = useState('');
   const [start, setStart] = useState(new Date());
@@ -164,8 +164,8 @@ console.log(task) // print the data
   
   return (
     <form 
-    className='edit-form'
-    onSubmit={handleSubmit}>
+      className='edit-form'
+      onSubmit={handleSubmit}>
       <input type="text" 
       value={title} 
       onChange={(e) => setTitle(e.target.value)} 
