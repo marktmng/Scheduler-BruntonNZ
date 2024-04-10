@@ -4,17 +4,16 @@ import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
 import './EditForm.css'; // Import your CSS file for styling
 
 // au = Add or Update
-function AuUsers ({ user }) {
+function AuUsers({ user }) {
 
-    const [ schUser, setSchUser] = useState([]);
-
-    const [usercode , setUsercode] = useState('');
-    const [username, setUsername ] = useState('');
-    const [email, setEmail ] = useState('');
+    const [schUser, setSchUser] = useState([]);
+    const [usercode, setUsercode] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole ] = useState('');
-    const [textColor, setTextColor ] = useState('');
-    const [backgrounColor, setBackgroundColor ] = useState('');
+    const [role, setRole] = useState('');
+    const [textColor, setTextColor] = useState('');
+    const [backgrounColor, setBackgroundColor] = useState('');
 
 
     // sample
@@ -58,14 +57,14 @@ function AuUsers ({ user }) {
         try {
             const response = await getUserlist();
             setSchUser(response);
-            console.log('Response',response)
+            console.log('Response', response)
 
         } catch (error) {
             console.error('Error fetching user list:', error);
         }
     };
 
-    useEffect (() => {
+    useEffect(() => {
         if (user) {
             setUsercode(user.usercode || '');
             setUsername(user.username || '');
@@ -111,69 +110,69 @@ function AuUsers ({ user }) {
     };
 
     return (
-        <form 
-        className='edit-form'
-        onSubmit={handleAddOrUpdateUser}>
+        <form
+            className='edit-form'
+            onSubmit={handleAddOrUpdateUser}>
             <div>
                 {/* input fields */}
-            <label for="usercode">User Code:</label>
-            <input 
-              type="text" 
-              value={usercode} 
-              onChange={(e) => setUsercode(e.target.value)} 
-              placeholder="usercode" // required 
-          />
+                <label for="usercode">User Code:</label>
+                <input
+                    type="text"
+                    value={usercode}
+                    onChange={(e) => setUsercode(e.target.value)}
+                    placeholder="usercode" // required 
+                />
 
-            <label for="username">User Name:</label>
-            <input 
-              type="text" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
-              placeholder="username" // required 
-          />
-          <label for="email">Email:</label>
-          <input 
-              type="text" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              placeholder="email" // required 
-          />
-          
-          <label for="password">Password:</label>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              placeholder="password" // required 
-          />
+                <label for="username">User Name:</label>
+                <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="username" // required 
+                />
+                <label for="email">Email:</label>
+                <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="email" // required 
+                />
 
-        <label for="role">Role:</label>
-            <input 
-              type="text" 
-              value={role} 
-              onChange={(e) => setRole(e.target.value)} 
-              placeholder="role" // required 
-          />
+                <label for="password">Password:</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="password" // required 
+                />
 
-        <label for="textColor">Text Color:</label>
-            <input 
-              type="color" 
-              value={textColor} 
-              onChange={(e) => setTextColor(e.target.value)} 
-              placeholder="text color" // required 
-          />
-        
-        <label for="backgrounColor"> Background Color:</label>
-            <input 
-              type="color" 
-              value={backgrounColor} 
-              onChange={(e) => setBackgroundColor(e.target.value)} 
-              placeholder="" // required 
-          />
+                <label for="role">Role:</label>
+                <input
+                    type="text"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    placeholder="Position" // required 
+                />
+
+                <label for="textColor">Text Color:</label>
+                <input
+                    type="color"
+                    value={textColor}
+                    onChange={(e) => setTextColor(e.target.value)}
+                    placeholder="text color" // required 
+                />
+
+                <label for="backgrounColor"> Background Color:</label>
+                <input
+                    type="color"
+                    value={backgrounColor}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    placeholder="" // required 
+                />
 
 
             </div>
-            <button type="submit">Add/Update User</button>
+            <button type="submit">Add User</button>
             {/* <ul>
                 {schUser.map((user) => (
                     <li key={user.user_code}>
