@@ -15,43 +15,9 @@ function AuUsers({ user }) {
     const [textColor, setTextColor] = useState('');
     const [backgrounColor, setBackgroundColor] = useState('');
 
-
-    // sample
-    // const users = {
-
-    //     "id": 1,
-    //     "user_code": "one",
-    //     "user_name": "string",
-    //     "inactive": true,
-    //     "phone_no": "string",
-    //     "email_address": "string",
-    //     "has_uploaded_page": true,
-    //     "has_recognised_page": true,
-    //     "has_confirmed_page": true,
-    //     "has_posted_page": true,
-    //     "role": "string",
-    //     "color_text": "string",
-    //     "color_background": "string"
-    // }
-
     useEffect(() => {
         fetchSchUser();
     }, []);
-
-    // const fetchSchUser = async () => {
-    //     try {
-    //         const response = await getUserlist();
-    //         const schUser = Object.values(response)
-    //         .map( s_User => {
-    //             const { user_code, user_name, email_address, role, color_text, color_background } = s_User;
-    //             return { user_code, user_name, email_address, role, color_text, color_background };
-    //         });
-    //         setSchUser(schUser);
-
-    //     } catch (error) {
-    //         console.error('Error fetching user list:', error);
-    //     }
-    // };
 
     const fetchSchUser = async () => {
         try {
