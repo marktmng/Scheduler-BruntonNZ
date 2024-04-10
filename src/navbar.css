@@ -1,14 +1,14 @@
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght500&display=swap');
 
-* {
-  margin: 0;
-  /* padding: 0; */
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  /* height: 78px; */
-}
+ * {
+   margin: 0;
+   /* padding: 0; */
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+   /* height: 78px; */
+ }
 
-/* body {
+ /* body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,88 +16,93 @@
   background-color: rgb(109, 174, 146);
 } */
 
-.top-menu-bar {
-  display: flex;
-  justify-content: left;
-  /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
-  background: linear-gradient(30deg, 
-            #00AEEF, 
-            rgb(255, 255, 255) 30%, 
-            rgba(65, 171, 216, 0.8) 100%);
+ .top-menu-bar {
+   display: flex;
+   justify-content: left;
+   /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
+   background: linear-gradient(30deg,
+       #00AEEF,
+       rgb(255, 255, 255) 30%,
+       rgba(65, 171, 216, 0.8) 100%);
 
-  color: white;
-  padding: 10px;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* transform: skewY(-5deg); /* Added skew for 3D effect */
-  
-}
+   color: white;
+   padding: 10px;
+   font-weight: bold;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   /* transform: skewY(-5deg); /* Added skew for 3D effect */
 
-   .logo { 
-    height: 80px;
-    width: 160px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-/* Style for menu items */
-.nav-item {
-    position: relative;
-    font-size: 1.1em;
-    /* color: white; */
-    text-decoration: none;
-    padding: 6px 170px;
-    transition: color 0.5s;
-  }
-  
-  /* Style for hover effect */
-  .nav-item:hover {
-    color: #6bb2ec;
-  }
-  
-  /* Style for the underline effect */
-  .nav-item::after {
-    /* content: ''; */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 70%;
-    height: 40%;
-    border-radius: 5px;
-    transform: scale(0) translateY(50px);
-    transition: .5s;
-    opacity: 0;
-  }
-  
-  .nav-item:hover::after {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+ }
 
-  
-  .nav-item-title {
-    color: #fff; /* #00AEEF */
-    opacity: 2;
-    /* -webkit-text-stroke: 0.01vw rgb(36, 126, 196); */
-    /* animation: fadeAndMove 4s infinite, glitch 4s infinite, sparkle 2s infinite; /* Adjust the duration as needed */
-    text-shadow: 0 4px 3px rgba(49, 88, 217, 0.2);
-  }
+ .logo {
+   height: 80px;
+   width: 160px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ }
 
-  .circle {
-    width: 55px;
-    height: 55px;
-    background-color: #00AEEF;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto; /* This pushes the circle to the right */
-  }
-  
-  .circle-letter {
-    color: white;
-    font-size: 20px;
-  }
-  
+ /* Style for menu items */
+ .nav-item {
+   position: relative;
+   font-size: 1.1em;
+   /* color: white; */
+   text-decoration: none;
+   padding: 6px 170px;
+   transition: color 0.5s;
+ }
+
+ /* Style for hover effect */
+ .nav-item:hover {
+   color: #6bb2ec;
+ }
+
+ /* Style for the underline effect */
+ .nav-item::after {
+   /* content: ''; */
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 70%;
+   height: 40%;
+   border-radius: 5px;
+   transform: scale(0) translateY(50px);
+   transition: .5s;
+   opacity: 0;
+ }
+
+ .nav-item:hover::after {
+   transform: scale(1) translateY(0);
+   opacity: 1;
+ }
 
 
-  
+ .nav-item-title {
+   color: #fff;
+   /* #00AEEF */
+   opacity: 2;
+   /* -webkit-text-stroke: 0.01vw rgb(36, 126, 196); */
+   /* animation: fadeAndMove 4s infinite, glitch 4s infinite, sparkle 2s infinite; /* Adjust the duration as needed */
+   text-shadow: 0 4px 3px rgba(49, 88, 217, 0.2);
+ }
+
+ .pages {
+   color: #fff;
+   /* #00AEEF */
+   opacity: 2;
+   font-size: 20px;
+ }
+
+ .circle {
+   width: 55px;
+   height: 55px;
+   background-color: #00AEEF;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-left: auto;
+   /* This pushes the circle to the right */
+ }
+
+ .circle-letter {
+   color: white;
+   font-size: 20px;
+ }

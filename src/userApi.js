@@ -4,9 +4,9 @@ export const getUserlist = async () => {
   try {
     const token = localStorage.getItem('Token')
 
-    const response = await fetch(`http://localhost:8080/v1/user/userlist?pageindex=1&pagesize=222222`,{
+    const response = await fetch(`http://localhost:8080/v1/user/userlist?pageindex=1&pagesize=222222`, {
       method: "GET",
-      headers:{
+      headers: {
         'Authorization': `${token}`,
         // 'Authorization':'Bearer yTIgfbIDTnphChtiB6IpkswrIyVWeaau6HGlOb3Z64o='
       }
@@ -79,9 +79,9 @@ export const deleteUser = async (user_code, token) => {
     const token = localStorage.getItem('Token')
 
     // const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
-      const response = await fetch(`http://localhost:8080/v1/user/delete?userCode=${user_code}`, {
+    const response = await fetch(`http://localhost:8080/v1/user/delete?userCode=${user_code}`, {
       method: "DELETE",
-      headers:{
+      headers: {
         // 'Authorization': `Bearer ${token}`,
         'Authorization': `${token}`,
       }

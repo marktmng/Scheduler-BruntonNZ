@@ -4,8 +4,13 @@ import { UserOutlined, UploadOutlined } from '@ant-design/icons';
 import './navbar.css';
 import Login from './Login'; // Import the Login component
 import Profile from './Profile';
+import Employee from './employee';
+import { Link } from 'react-router-dom'; 
+// import { Link } from 'react-router-dom';
+
 
 const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, handleLogout }) => {
+ 
   // State variable to track if login modal is visible
   const [isLoginModalVisible, setIsLoginModalVisible] = React.useState(false);
 
@@ -20,6 +25,17 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
       return username.charAt(0).toUpperCase();
     }
     return <UserOutlined />; // Default letter when no username is provided
+  };
+
+  // Define a function to handle menu item click
+  const handleClick = (key) => {
+    // Call the handleTopMenuClick function passed from the parent component
+    handleTopMenuClick(key);
+    // Additional logic for navigation
+    if (key === 'Employee') {
+      // Navigate to the Employee page here
+      window.location.href = './employee'; // You can replace '/employee' with the appropriate URL
+    }
   };
 
   return (
@@ -37,6 +53,27 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <h1 className="nav-item-title"> Scheduler </h1>
       </div>
 
+      {/*Employee page */}
+      <div 
+      style={{ position: 'absolute', right: 220, top: 15 }} >
+
+        <li > 
+          <Link 
+          className='pages'
+          to="/">Calendar
+          </Link>
+        </li>
+      </div>
+      <div 
+      style={{ position: 'absolute', right: 100, top: 15 }} >
+      <li > 
+          <Link 
+          className='pages' 
+          to="/employee" > Employee 
+          </Link>
+        </li>
+      </div>
+
       {/* Render login circle if user is not logged in */}
       {!username &&
         <div className='circle' onClick={toggleLoginModal}>
@@ -51,7 +88,8 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         footer={null}
       >
         {/* Render Login component inside modal */}
-        <Profile handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
+        <Profile 
+        handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
 
       </Modal>
 

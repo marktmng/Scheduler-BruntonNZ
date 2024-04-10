@@ -1,43 +1,54 @@
 .app-container {
-    display: flex;
-  }
+  display: flex;
+}
 
-  /* .black-text {
+.employee-container {
+  display: flex;
+  padding-top: 10px;
+  justify-content: center;
+}
+
+/* .black-text {
     color: black;
   } */
-  
-  
-  .left-menu {
-    flex: 0 0 165px; /* Set a fixed width for the left menu */
-    /* background: linear-gradient(30deg, 
-              #00AEEF, 
-              rgb(255, 255, 255) 30%, 
-              rgba(65, 171, 216, 0.8) 100%); */
-  }
-  
-  .menu-bar {
-    border-right: none; /* Remove border on the right side */
-    /* background: linear-gradient(30deg, 
-              #00AEEF, 
-              rgb(255, 255, 255) 30%, 
-              rgba(65, 171, 216, 0.8) 100%); */
-  }
-  
-  .scheduler-container {
-    flex: 1; /* Let the scheduler container occupy remaining space */
-    padding: 1px;
-  }
-  
 
-  /* Popup overlay for EvenForm*/
+
+.left-menu {
+  flex: 0 0 165px;
+  /* Set a fixed width for the left menu */
+  /* background: linear-gradient(30deg, 
+              #00AEEF, 
+              rgb(255, 255, 255) 30%, 
+              rgba(65, 171, 216, 0.8) 100%); */
+}
+
+.menu-bar {
+  border-right: none;
+  /* Remove border on the right side */
+  /* background: linear-gradient(30deg, 
+              #00AEEF, 
+              rgb(255, 255, 255) 30%, 
+              rgba(65, 171, 216, 0.8) 100%); */
+}
+
+.scheduler-container {
+  flex: 1;
+  /* Let the scheduler container occupy remaining space */
+  padding: 1px;
+}
+
+
+/* Popup overlay for EvenForm*/
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 1000; /* Ensure the overlay appears above other content */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  z-index: 1000;
+  /* Ensure the overlay appears above other content */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +62,8 @@
   padding: 20px;
   max-width: 80%;
   max-height: 80%;
-  overflow: auto; /* Enable scrolling for content longer than modal height */
+  overflow: auto;
+  /* Enable scrolling for content longer than modal height */
 }
 
 /* Close button */
@@ -69,6 +81,31 @@
   }
 }
 
-  
+/* table */
 
-  
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  justify-content: center;
+  margin-top: 100px;
+  width: 150vh;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.employee-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.employee-table tbody tr:hover {
+  background-color: #f2f2f2;
+}

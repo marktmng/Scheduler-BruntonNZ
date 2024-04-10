@@ -18,11 +18,11 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
   const [location, setLocation] = useState(''); // location
   const [userList, setUserList] = useState([]);
 
-  
+
   // for userlist
   useEffect(() => {
     fetchUserlist();
-   },[]);
+  }, []);
 
   // for userlist
   const fetchUserlist = async () => {
@@ -54,7 +54,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       setLocation(task.Location || ''); // Set location from task
     }
   }, [task]);
-console.log(task) // print the data
+  console.log(task) // print the data
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ console.log(task) // print the data
           await updateRecTask(task.Task_code, updatedTask);
         } else if (task.recEndDate && !recurrence) { // If the task has recurrence but recurrence is removed
           await updateTask(task.Task_code, updatedTask);
-          
+
         } else if (!task.recEndDate && recurrence) { // If the task didn't have recurrence but a new recurrence is added
           await updateRecTask(task.Task_code, updatedTask);
         } else if (task.recEndDate && recurrence) { // If the task has recurrence and recurrence is unchanged
@@ -108,7 +108,7 @@ console.log(task) // print the data
       // If the ruleString is empty or contains only whitespace, return early
       return;
     }
-  
+
     try {
       // Parse recurrence rule string using rrulestr
       const rule = rrulestr(ruleString);
@@ -129,16 +129,16 @@ console.log(task) // print the data
   };
 
 
-  const handleDelete = async () => {  
+  const handleDelete = async () => {
     try {
-      if (task.recEndDate && recurrence ) { //&& recurrence
+      if (task.recEndDate && recurrence) { //&& recurrence
         // If the task has recurrence, call the deleteRecTask function
         await deleteRecTask(task.Task_code);
       } else if (task.recEndDate && !recurrence) {
         // Otherwise, call the deleteTask function for tasks without recurrence
         await deleteTask(task.Task_code);
       }
-      
+
       onDelete(task); // Passing the whole task object for removal
       onClose();
     } catch (error) {
@@ -147,78 +147,88 @@ console.log(task) // print the data
   };
 
   // logic for add and subtract 1 minute in date
-  const onChangeStart =(start)=>{
+  const onChangeStart = (start) => {
     setStart(start)
-    if(start >= end) {
-      setEnd(moment(start).add(1,'m').toDate()) // add 1 minutes to the end time
+    if (start >= end) {
+      setEnd(moment(start).add(1, 'm').toDate()) // add 1 minutes to the end time
     }
   }
 
-  
-  const onChangeEnd =(end)=>{
-    setEnd(end) 
-    if(start >= end) {
-      setStart(moment(end).subtract(1,'m').toDate()) // subtract 1 minutes from start time
+
+  const onChangeEnd = (end) => {
+    setEnd(end)
+    if (start >= end) {
+      setStart(moment(end).subtract(1, 'm').toDate()) // subtract 1 minutes from start time
     }
   }
-  
+
   return (
-    <form 
+    <form
       className='edit-form'
       onSubmit={handleSubmit}>
-      <input type="text" 
-      value={title} 
-      onChange={(e) => setTitle(e.target.value)} 
-      placeholder="Title" required 
+
+      <label for="title">Title:</label>
+      <input type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title" required
       />
 
+
+      <label for="start">Start Date:</label>
       <DateTimePicker value={start} onChange={onChangeStart} />
-      <DateTimePicker value={end} onChange={ onChangeEnd} />
+
+      <label for="end">End Date:</label>
+      <DateTimePicker value={end} onChange={onChangeEnd} />
 
       <br />
+      <label for="recurrence">Recurrence:</label>
       <select
-      className="select-opt"
-          value={recurrence}
-          onChange={(e) => setRecurrence(e.target.value)}
-        >
-          <option disabled value="">Make Recurrence</option>
-          <option value="FREQ=DAILY">Daily</option>
-          <option value="FREQ=WEEKLY">Weekly</option>
-          <option value="FREQ=MONTHLY">Monthly</option>
-          <option value="FREQ=YEARLY">Yearly</option>
-          
-        </select>
-        <br/>
-        <br/>
-        <DateTimePicker value={recEndDate} 
-        onChange={setRecEndDate} 
-        />
-        <br />
-
-        <select
         className="select-opt"
-        >
-          <option disabled value="">Select User</option>
-          {userList.map(userCode => (
-            <option key={userCode} value={userCode}>{userCode}</option>
-          ))}
-        </select>
-         <br/>
-         <br/>
+        value={recurrence}
+        onChange={(e) => setRecurrence(e.target.value)}
+      >
+        <option disabled value="">Make Recurrence</option>
+        <option value="FREQ=DAILY">Daily</option>
+        <option value="FREQ=WEEKLY">Weekly</option>
+        <option value="FREQ=MONTHLY">Monthly</option>
+        <option value="FREQ=YEARLY">Yearly</option>
 
-        <input 
-              type="text" 
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)} 
-              placeholder="Description" // required 
-          />
+      </select>
+      <br />
+      <br />
+      <label for="recEndDate">Recurrence Date:</label>
+      <DateTimePicker value={recEndDate}
+        onChange={setRecEndDate}
+      />
+      <br />
+      <label for="usercode">User Code:</label>
 
-          <input 
-              type="text" 
-              value={location} 
-              onChange={(e) => setLocation(e.target.value)} 
-              placeholder="Location/Venue" required 
-          />
+      <select
+        className="select-opt"
+      >
+        <option disabled value="">Select User</option>
+        {userList.map(userCode => (
+          <option key={userCode} value={userCode}>{userCode}</option>
+        ))}
+      </select>
+      <br />
+      <br />
+
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Description" // required 
+      />
+      <label for="location">Location:</label>
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        placeholder="Location/Venue" required
+      />
 
 
       <button className='update-btn' type="submit" onClick={handleSubmit}>Save Changes</button>
