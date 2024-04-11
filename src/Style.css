@@ -83,23 +83,33 @@
 
 /* table */
 
+.header{
+
+  margin-top: 40px;
+}
+
 .employee-table {
   width: 100%;
   border-collapse: collapse;
   justify-content: center;
-  margin-top: 100px;
-  width: 150vh;
+  margin-top: 10px;
+  /* width: 120vh; */
+  /* padding-left: 100px; */
+  text-align: center; /* Align text to the left */
 }
 
 .employee-table th,
 .employee-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #8d8d8d;
   padding: 8px;
+  
+
 }
 
 .employee-table th {
-  background-color: #f2f2f2;
-  color: #333;
+  /* color: #333; */
+  background-color: #b6c6cd;
+  box-shadow: 0 0.5px 0.7px rgba(3, 18, 87, 0.5);
 }
 
 .employee-table tbody tr:nth-child(even) {
@@ -108,4 +118,62 @@
 
 .employee-table tbody tr:hover {
   background-color: #f2f2f2;
+}
+
+
+/* row manually*/
+.email{
+  width: 300px;
+}
+
+.username {
+  width: 200px;
+}
+.position {
+  width: 150px;
+}
+
+
+/*Buttons*/
+.edit-btn {
+  display: center;
+  width: 50px;
+  background-color: rgb(43, 133, 223);
+  border: #fff;
+  height: 25px;
+  color: #fff;
+  border-radius: 0%;
+  transition: background-color 0.3s; /* Smooth transition for color change */
+}
+
+.edit-btn:hover {
+  background-color: rgb(0, 76, 255); /* Change background color on hover */
+}
+
+/* .dlt-btn{
+  display: center;
+  width: 50px;
+  background-color: rgb(228, 75, 75);
+  border: #fff;
+  height: 25px;
+  color: #fff;
+  border-radius: 0%;
+}
+
+.dlt-btn:hover{
+  background-color: red;
+} */
+
+.crtUser-btn {
+  position: absolute;
+  background-color: rgb(43, 133, 223);
+  border: #fff;
+  color: #fff;
+  height: 30px;
+  width: 100px;
+  border-radius: 0%;
+}
+
+.crtUser-btn:hover {
+  background-color: rgb(0, 76, 255); /* Change background color on hover */
 }

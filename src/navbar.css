@@ -22,14 +22,14 @@
    /* background: linear-gradient(45deg, rgba(73, 163, 242, 1) 0%, rgb(24, 140, 255) 100%); */
    background: linear-gradient(30deg,
        #00AEEF,
-       rgb(255, 255, 255) 30%,
-       rgba(65, 171, 216, 0.8) 100%);
+       rgb(133, 216, 255) 30%,
+       #00AEEF 100%);
 
    color: white;
    padding: 10px;
    font-weight: bold;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   /* transform: skewY(-5deg); /* Added skew for 3D effect */
+   padding-left: 10px;
 
  }
 
@@ -93,7 +93,7 @@
  .circle {
    width: 55px;
    height: 55px;
-   background-color: #00AEEF;
+   background-color: #0051ff;
    border-radius: 50%;
    display: flex;
    justify-content: center;

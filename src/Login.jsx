@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './login.css';
+import Home from './home';
 
-export const Login = ({ handleLogout, handleLogin }) => {
+export const Login = ({ handleLogout }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -9,10 +10,6 @@ export const Login = ({ handleLogout, handleLogin }) => {
     // const [token, setToken] = useState('');
 
     useEffect(() => {
-        // const loggedInStatus = localStorage.getItem('isLoggedIn');
-        // if (loggedInStatus === 'true') {
-        //     setIsLoggedIn(true);
-        // }
     }, []);
 
     const handleUsernameChange = (event) => {
@@ -29,8 +26,8 @@ export const Login = ({ handleLogout, handleLogin }) => {
     };
     
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleLogin = async (event) => {
+            event.preventDefault();
 
         if (username.trim() === '' || password.trim() === '') {
             setError('Username and password cannot be empty.');
@@ -57,13 +54,6 @@ export const Login = ({ handleLogout, handleLogin }) => {
                     
                 });
                 
-                // .then((response) => {
-                //     return response.JSON();
-                // })
-                // .then((data) => {
-                //     localStorage.setItem('takoen', data);
-                //     console.log(data)
-                // })
                 
                 console.log(response.headers.get('Authorization')) // to get the token
 
@@ -100,9 +90,9 @@ export const Login = ({ handleLogout, handleLogin }) => {
     return (
         <div className='login-container'>
             <div className='login-form'>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     <div>
-                        <label>User Code:</label>
+                        <label>Usercode:</label>
                         <input type="text" value={username} onChange={handleUsernameChange}  /> {/*disabled={isLoggedIn} */}
                     </div>
                     <div>
@@ -110,7 +100,7 @@ export const Login = ({ handleLogout, handleLogin }) => {
                         <input type="password" value={password} onChange={handlePasswordChange}  />  {/*disabled={isLoggedIn} */}
                     </div>
                     {error && <p className="error">{error}</p>}
-                    <button type="submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
+                    <button className='login-btn' type="submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
                 </form>
             </div>
         </div>

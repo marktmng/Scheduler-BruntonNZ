@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Modal, DatePicker } from "antd";
+import { Menu, Modal } from "antd";
 import Scheduler from './Scheduler';
-import EventForm from './EventForm';
-import AuUsers from './auUsers'; // Import the AuUsers component
+import AuUsers from './auUsers';
 import './App.css';
 import './Style.css';
 import './navbar.css';
 import { fetchData } from './Api';
 import moment from 'moment';
 import TopNavbar from './TopNavbar';
-import Login from './Login'; // Import the Login component
-import { Router } from './router';
-import { BrowserRouter } from 'react-router-dom';
+import Login from './Login';
+import { getUserlist } from './userApi'
+import { updateTask } from './Api'
 
-// import Profile from './Profile'; // Import the Profile component
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import Employee from './employee';
-
-
-function Home() { //{ fetchSchUser }
-  // State variables
+function Home() {
   const [selectMenu, setSelectMenu] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-  // const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // useEffect (() => {
-  //   fetchSchUser()
-  // }, [])
+  const [employees, setEmployees] = useState([]); // to show employeelist
+  // const [updEvent, setUpdEvent ] = useState([]); // to show updated after dragged
 
+  // const draggedEvent = async () => { // to show employeelist
+  //   const draggedTask = await updateTask();
+  //   setUpdEvent(draggedTask.Task_code)
+
+  //   console.log('Dragged Task:', draggedTask)
+  // }
+
+  const updateEmployeeList = async () => { // to show employeelist
+    const updatedEmployees = await getUserlist();
+    setEmployees(updatedEmployees.data.Users);
+
+    console.log('Brunton Staff:', updatedEmployees)
+  };
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn');
@@ -39,7 +43,6 @@ function Home() { //{ fetchSchUser }
     fetchEventList();
   }, [isLoggedIn]);
 
-  // Fetch event list from the backend
   const fetchEventList = async () => {
     const response = await fetchData();
 
@@ -55,8 +58,6 @@ function Home() { //{ fetchSchUser }
     console.log('Fetched', evnts)
   };
 
-
-  // Handle click on menu items
   const handleMenuClick = (event) => {
     setSelectMenu(event.key);
     setIsModalVisible(true);
@@ -73,34 +74,22 @@ function Home() { //{ fetchSchUser }
     }
   };
 
-  // Handle modal close event
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
 
-  // Handle date selection in the small calendar
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  // // Handle login
-  // const handleLogin = () => {
-  //   if (username.trim() === '' || password.trim() === '') {
-  //           setError('Username and password cannot be empty.');
-  //           return; // Prevent further execution if fields are empty
-  //       }
-  // };
-
-  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
 
-  // Render the component
   return (
     <div>
-      {isLoggedIn ? ( // If logged in, render the main application
+      {isLoggedIn ? (
         <div>
           <TopNavbar
             handleMenuClick={handleMenuClick}
@@ -109,60 +98,52 @@ function Home() { //{ fetchSchUser }
           />
           <div className="app-container">
             <div className="left-menu">
-              <Menu
+              {/* <Menu
                 className="menu-bar"
                 mode="vertical"
                 selectedKeys={selectMenu ? [selectMenu] : []}
                 onClick={handleMenuClick}
               >
-                {/* <Menu.Item key="events">Events</Menu.Item> */}
-                <Menu.Item key="users">Users</Menu.Item>
-
-              </Menu>
+                {/* <Menu.Item key="users">Users</Menu.Item> */}
+              {/* </Menu> */}
             </div>
             <div className='scheduler-container'>
               <Scheduler
                 events={events}
                 fetchEventList={fetchEventList}
                 selectedDate={selectedDate}
-              // fetchSchUser={fetchSchUser}
+                // draggedEvent={draggedEvent}
               />
             </div>
-            <form>
+            {/* <form>
               <Modal
                 title=''
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 footer={null}
               >
-                {/* {modalContent === "Events" && (
-                  <EventForm
-                    onCreate={fetchEventList}
-                  />
-                )} */}
-
                 {modalContent === "Users" && (
-                  <AuUsers
-                  // onCreate={fetchSchUser}
-                  />
-
+                  <AuUsers />
                 )}
-
               </Modal>
-            </form>
+            </form> */}
           </div>
         </div>
-      ) : ( // If not logged in, render the Login component
+      ) : (
         <Login
-          isLoggedIn={isLoggedIn}
-          loginHandler={setIsLoggedIn}
-          handleLogout={handleLogout} />
+          handleLogin={() => setIsLoggedIn(true)}
+          // handleLogin={(isLoggedIn) => setIsLoggedIn(isLoggedIn)}
+          handleLogout={handleLogout}
+        />
 
+        
       )}
-
+      <AuUsers 
+      updateEmployeeList={updateEmployeeList}
+       />
+      
     </div>
   );
-
 }
 
 export default Home;

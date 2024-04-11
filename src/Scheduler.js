@@ -78,17 +78,9 @@ const onEventDrop = async ({event,   start, end }) => {
     ...event,
     start,
     end,
-    // recurrence,
-    // recEndDate,
-    // description,
-    // location,
   };
-  // setEvent(updatedEvent)
 
-  // console.log("Event object:", event); //debugging
-
-  try {
-    
+  try {    
     // Update event in the backend
     await updateTask(updatedEvent.Task_code, {
       Title: updatedEvent.title,
@@ -152,14 +144,8 @@ useEffect (() => {
         onSelectEvent={handleSelectTask}
         onSelectSlot={handleSelectSlot}
         onEventDrop={onEventDrop} // Apply drag-and-drop functionality
-        // handleEventDrop={handleEventDrop}
         fetchUserlist={fetchUserlist}
-
-        // component ={{
-        //   events: ResizableEvent, // use resizable event comp
-        // }}
-
-        eventPropGetter={(event, start, end, isSelected) => {
+        eventPropGetter={() => {
           // Add additional classes based on event properties
           return {
             className: classNames('event', {

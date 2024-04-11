@@ -23,7 +23,7 @@ function AuUsers({ user }) {
         try {
             const response = await getUserlist();
             setSchUser(response);
-            console.log('Response', response)
+            console.log('ABCD', response)
 
         } catch (error) {
             console.error('Error fetching user list:', error);
@@ -65,16 +65,6 @@ function AuUsers({ user }) {
         }
     };
 
-    const handleDeleteUser = async (userCode) => {
-        try {
-            await deleteUser(userCode);
-            // Refresh user list after successful deletion
-            fetchSchUser();
-        } catch (error) {
-            console.error('Error deleting user:', error);
-        }
-    };
-
     return (
         <form
             className='edit-form'
@@ -112,7 +102,7 @@ function AuUsers({ user }) {
                     placeholder="password" // required 
                 />
 
-                <label for="role">Role:</label>
+                <label for="role">Position:</label>
                 <input
                     type="text"
                     value={role}
@@ -125,7 +115,6 @@ function AuUsers({ user }) {
                     type="color"
                     value={textColor}
                     onChange={(e) => setTextColor(e.target.value)}
-                    placeholder="text color" // required 
                 />
 
                 <label for="backgrounColor"> Background Color:</label>
@@ -133,20 +122,11 @@ function AuUsers({ user }) {
                     type="color"
                     value={backgrounColor}
                     onChange={(e) => setBackgroundColor(e.target.value)}
-                    placeholder="" // required 
                 />
 
 
             </div>
             <button type="submit">Add User</button>
-            {/* <ul>
-                {schUser.map((user) => (
-                    <li key={user.user_code}>
-                        {user.user_name}
-                        <button onClick={() => handleDeleteUser(user.user_code)}>Delete</button>
-                    </li>
-                ))}
-            </ul> */}
         </form>
     );
 };
