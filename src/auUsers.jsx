@@ -61,7 +61,7 @@ function AuUsers({ user }) {
             // Refresh user list after successful addition or update
             fetchSchUser();
         } catch (error) {
-            console.error('Error adding/updating user:', error);
+            console.error('Error adding user:', error);
         }
     };
 

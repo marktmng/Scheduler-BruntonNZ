@@ -54,7 +54,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       setLocation(task.Location || ''); // Set location from task
     }
   }, [task]);
-  console.log(task) // print the data
+  console.log('Pre-fill Task:',task) // print the data
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,6 +66,7 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
       EndDate: end,
       Repeatable: recurrence,
       RecEndDate: recEndDate,
+      user_code: userList,
       Description: description,
       Location: location
     };
@@ -97,7 +98,9 @@ function EditForm({ task, onUpdate, onDelete, onClose, onCreate }) {
     setTitle('');
     setStart(new Date());
     setEnd(new Date());
+    setRecurrence('');
     setRecEndDate(new Date());
+    setUserList('');
     setDescription(''); // description
     setLocation(''); // location
   };
