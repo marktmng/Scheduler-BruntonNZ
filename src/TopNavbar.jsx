@@ -5,12 +5,12 @@ import './navbar.css';
 import Login from './Login'; // Import the Login component
 import Profile from './Profile';
 import Employee from './employee';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 
 
 const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, handleLogout }) => {
- 
+
   // State variable to track if login modal is visible
   const [isLoginModalVisible, setIsLoginModalVisible] = React.useState(false);
 
@@ -49,27 +49,27 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <img src='/brunton_logo.png' alt='logo' className='logo' style={{ position: 'absolute', left: 0, top: 0 }} />
       </div>
 
-      <div className="nav-item">
+      <div className="itemnav-">
         <h1 className="nav-item-title"> Scheduler </h1>
       </div>
 
       {/*Employee page */}
-      <div 
-      style={{ position: 'absolute', right: 220, top: 15 }} >
+      <div
+        style={{ position: 'absolute', right: 220, top: 15 }} >
 
-        <li > 
-          <Link 
-          className='pages'
-          to="/">Calendar
+        <li >
+          <Link
+            className='pages'
+            to="/">Calendar
           </Link>
         </li>
       </div>
-      <div 
-      style={{ position: 'absolute', right: 100, top: 15 }} >
-      <li > 
-          <Link 
-          className='pages' 
-          to="/employee" > Employee 
+      <div
+        style={{ position: 'absolute', right: 100, top: 15 }} >
+        <li >
+          <Link
+            className='pages'
+            to="/employee" > Employee
           </Link>
         </li>
       </div>
@@ -88,8 +88,8 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         footer={null}
       >
         {/* Render Login component inside modal */}
-        <Profile 
-        handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
+        <Profile
+          handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
 
       </Modal>
 
