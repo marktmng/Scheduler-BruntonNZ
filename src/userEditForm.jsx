@@ -4,6 +4,8 @@ import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
 
 function UserEditForm({user}) {
     const [schUser, setSchUser] = useState([]);
+
+    const [id, setId] = useState();
     const [usercode, setUsercode] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -16,11 +18,15 @@ function UserEditForm({user}) {
         fetchSchUser();
     }, []);
 
+
     const fetchSchUser = async () => {
         try {
             const response = await getUserlist();
-            setSchUser(response);
-            console.log('Chorharu', response)
+
+            console.log('Chorharu:', response)
+            setSchUser(response.data.Users);
+            // setEmployees(userList.employees);
+            console.log('Chors', response)
 
         } catch (error) {
             console.error('Error fetching user list:', error);
@@ -29,6 +35,7 @@ function UserEditForm({user}) {
 
     useEffect(() => {
         if (user) {
+            setId(user.id || '')
             setUsercode(user.usercode || '');
             setUsername(user.username || '');
             setEmail(user.email || '');
@@ -44,6 +51,7 @@ function UserEditForm({user}) {
         e.preventDefault();
 
         const userData = {
+            id: id,
             user_code: usercode,
             user_name: username,
             email_address: email,
@@ -52,6 +60,7 @@ function UserEditForm({user}) {
             color_text: textColor,
             color_background: backgrounColor
         };
+
 
         try {
             await AddOrUpdUser(userData);

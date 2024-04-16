@@ -22,6 +22,7 @@ export const getUserlist = async () => {
   }
 };
 
+// adding and updating users
 export const AddOrUpdUser = async (data, token) => {
   try {
     const token = localStorage.getItem('Token')
@@ -73,29 +74,29 @@ export const AddOrUpdUser = async (data, token) => {
 // };
 
 // Function to delete a task
-export const deleteUser = async (user_code, token) => {
-  try {
+// export const deleteUser = async (user_code, token) => {
+//   try {
 
-    const token = localStorage.getItem('Token')
+//     const token = localStorage.getItem('Token')
 
-    // const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
-    const response = await fetch(`http://localhost:8080/v1/user/delete?userCode=${user_code}`, {
-      method: "DELETE",
-      headers: {
-        // 'Authorization': `Bearer ${token}`,
-        'Authorization': `${token}`,
-      }
-    });
-    if (!response.ok) {
-      throw new Error("Failed to delete task");
-    }
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    console.error("Error deleting task:", error);
-    throw error;
-  }
-};
+//     // const response = await fetch(`${API_URL}/taskDel/${Task_code}`, {
+//     const response = await fetch(`http://localhost:8080/v1/user/delete?userCode=${user_code}`, {
+//       method: "DELETE",
+//       headers: {
+//         // 'Authorization': `Bearer ${token}`,
+//         'Authorization': `${token}`,
+//       }
+//     });
+//     if (!response.ok) {
+//       throw new Error("Failed to delete task");
+//     }
+//     const responseData = await response.json();
+//     return responseData;
+//   } catch (error) {
+//     console.error("Error deleting task:", error);
+//     throw error;
+//   }
+// };
 
 
 // // for recurrence
