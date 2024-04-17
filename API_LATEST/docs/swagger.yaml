@@ -1,11 +1,63 @@
-basePath: /api/v1
+basePath: /v1
 definitions:
+  controllers.ClientView:
+    properties:
+      client_code:
+        type: string
+      client_id:
+        type: integer
+      client_inactive:
+        type: boolean
+      client_name:
+        type: string
+      client_sequence:
+        type: integer
+    type: object
   controllers.LoginParam:
     properties:
       password:
         type: string
       user_code:
         type: string
+    type: object
+  controllers.PositionView:
+    properties:
+      position_code:
+        type: string
+      position_description:
+        type: string
+      position_id:
+        type: integer
+      position_inactive:
+        type: boolean
+      position_name:
+        type: string
+      position_sequence:
+        type: integer
+    type: object
+  controllers.ProjectView:
+    properties:
+      client_code:
+        type: string
+      project_id:
+        type: integer
+      project_inactive:
+        type: boolean
+      project_name:
+        type: string
+      project_sequence:
+        type: integer
+    type: object
+  controllers.RoomView:
+    properties:
+      room_id:
+        type: integer
+      room_inactive:
+        type: boolean
+      room_name:
+        type: string
+      room_sequence:
+        type: integer
     type: object
   core.ModifyPwd:
     properties:
@@ -36,7 +88,11 @@ definitions:
         type: integer
       inactive:
         type: boolean
+      online:
+        type: boolean
       phone_no:
+        type: string
+      position_code:
         type: string
       role:
         type: string
@@ -69,6 +125,8 @@ definitions:
         type: string
       phone_no:
         type: string
+      position_code:
+        type: string
       role:
         type: string
       user_code:
@@ -97,19 +155,23 @@ definitions:
     type: object
   models.FTask:
     properties:
+      clientCode:
+        type: string
       description:
         type: string
       endDate:
         type: string
       hours:
         type: string
-      location:
+      projectName:
         type: string
       recEndDate:
         type: string
       recStartDate:
         type: string
       repeatable:
+        type: string
+      roomName:
         type: string
       startDate:
         type: string
@@ -135,6 +197,323 @@ info:
   title: Scheduler Test API
   version: 1.0.0
 paths:
+  /client:
+    delete:
+      description: delete client
+      parameters:
+      - description: client code
+        in: query
+        name: client_code
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - clients
+    get:
+      description: get client list
+      parameters:
+      - description: hide inactive clients
+        in: query
+        name: filter_inactive
+        type: boolean
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/controllers.ClientView'
+              type: object
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - clients
+    post:
+      description: add or update client
+      parameters:
+      - description: client detail
+        in: body
+        name: clientDetail
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ClientView'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - clients
+  /position:
+    delete:
+      description: delete position
+      parameters:
+      - description: position code
+        in: query
+        name: position_code
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - positions
+    get:
+      description: get position list
+      parameters:
+      - description: hide inactive position
+        in: query
+        name: filter_inactive
+        type: boolean
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/controllers.PositionView'
+              type: object
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - positions
+    post:
+      description: add or update position
+      parameters:
+      - description: position detail
+        in: body
+        name: positionDetail
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.PositionView'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - positions
+  /project:
+    delete:
+      description: delete project
+      parameters:
+      - description: client code
+        in: query
+        name: client_code
+        required: true
+        type: string
+      - description: project name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - projects
+    get:
+      description: get project list
+      parameters:
+      - description: hide inactive project
+        in: query
+        name: filter_inactive
+        type: boolean
+      - description: filter by client
+        in: query
+        name: client
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/controllers.ProjectView'
+              type: object
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - projects
+    post:
+      description: add or update project
+      parameters:
+      - description: project detail
+        in: body
+        name: projectDetail
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ProjectView'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - projects
+  /room:
+    delete:
+      description: delete room
+      parameters:
+      - description: room name
+        in: query
+        name: room_name
+        required: true
+        type: string
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - rooms
+    get:
+      description: get room list
+      parameters:
+      - description: hide inactive rooms
+        in: query
+        name: filter_inactive
+        type: boolean
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.JSONStruct'
+            - properties:
+                data:
+                  $ref: '#/definitions/controllers.RoomView'
+              type: object
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - rooms
+    post:
+      description: add or update room
+      parameters:
+      - description: room detail
+        in: body
+        name: roomDetail
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RoomView'
+      - description: With the bearer in front
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.JSONStruct'
+        "400":
+          description: Bad Request
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - rooms
   /task/:
     get:
       description: get all Tasks
@@ -462,6 +841,10 @@ paths:
         name: pagesize
         required: true
         type: integer
+      - description: hide inactive users
+        in: query
+        name: filter_inactive
+        type: boolean
       - description: With the bearer in front
         in: header
         name: Authorization

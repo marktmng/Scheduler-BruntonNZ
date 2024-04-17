@@ -51,7 +51,6 @@ function Scheduler({ events, fetchEventList, onEventDropCallback , dropEvent, fe
 
   useEffect(() => {
     fetchEventList();
-    // fetchUserlist();
   }, []);
   
   

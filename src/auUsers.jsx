@@ -1,10 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
-import './EditForm.css'; // Import your CSS file for styling
+import './EditForm.css';
+import './Style.css';
 
 // au = Add or Update
-function AuUsers({ user }) {
+function AuUsers({ user, }) {
 
     const [schUser, setSchUser] = useState([]);
     const [usercode, setUsercode] = useState('');
@@ -12,8 +13,10 @@ function AuUsers({ user }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [textColor, setTextColor] = useState('');
-    const [backgrounColor, setBackgroundColor] = useState('');
+
+    const [textColor, setTextColor] = useState('#ffffff');
+    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+
 
     useEffect(() => {
         fetchSchUser();
@@ -38,7 +41,7 @@ function AuUsers({ user }) {
             setPassword(password || '');
             setRole(user.role || '');
             setTextColor(user.textColor || '');
-            setBackgroundColor(user.backgrounColor || '');
+            setBackgroundColor(user.backgroundColor || '');
         }
     }, [user]);
 
@@ -53,12 +56,12 @@ function AuUsers({ user }) {
             password: password,
             role: role,
             color_text: textColor,
-            color_background: backgrounColor
+            color_background: backgroundColor
         };
 
         try {
             await AddOrUpdUser(userData);
-            // Refresh user list after successful addition or update
+            // Refresh user list after successful on addition
             fetchSchUser();
         } catch (error) {
             console.error('Error adding user:', error);
@@ -120,13 +123,13 @@ function AuUsers({ user }) {
                 <label for="backgrounColor"> Background Color:</label>
                 <input
                     type="color"
-                    value={backgrounColor}
+                    value={backgroundColor}
                     onChange={(e) => setBackgroundColor(e.target.value)}
                 />
 
 
             </div>
-            <button type="submit">Add User</button>
+            <button type="submit" className='addUser-btn'>Add User</button>
         </form>
     );
 };

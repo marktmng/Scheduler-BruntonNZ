@@ -1,8 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
+import './Style.css';
 
-function UserEditForm({user}) {
+function UserEditForm({ user }) {
     const [schUser, setSchUser] = useState([]);
 
     const [id, setId] = useState();
@@ -12,14 +13,14 @@ function UserEditForm({user}) {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
     const [textColor, setTextColor] = useState('');
-    const [backgrounColor, setBackgroundColor] = useState('');
+    const [backgroundColor, setBackgroundColor] = useState('');
 
     useEffect(() => {
-        fetchSchUser();
+        fetchEmployee();
     }, []);
 
 
-    const fetchSchUser = async () => {
+    const fetchEmployee = async () => {
         try {
             const response = await getUserlist();
 
@@ -35,14 +36,14 @@ function UserEditForm({user}) {
 
     useEffect(() => {
         if (user) {
-            setId(user.id || '')
-            setUsercode(user.usercode || '');
-            setUsername(user.username || '');
-            setEmail(user.email || '');
+            setId(user.id || '');
+            setUsercode(user.user_code || ''); 
+            setUsername(user.user_name || ''); 
+            setEmail(user.email_address || ''); 
             setPassword(user.password || '');
             setRole(user.role || '');
-            setTextColor(user.textColor || '');
-            setBackgroundColor(user.backgrounColor || '');
+            setTextColor(user.color_text || ''); 
+            setBackgroundColor(user.color_background || '');
         }
     }, [user]);
 
@@ -58,23 +59,26 @@ function UserEditForm({user}) {
             password: password,
             role: role,
             color_text: textColor,
-            color_background: backgrounColor
+            color_background: backgroundColor
         };
-
-
+        
         try {
-            await AddOrUpdUser(userData);
-            // Refresh user list after successful addition or update
-            fetchSchUser();
+            const updResponse = await AddOrUpdUser(userData);
+            console.log('User updated successfully', updResponse)
+
+            // Refresh user list after successful on update
+           fetchEmployee()
         } catch (error) {
-            console.error('Error adding/updating user:', error);
+            console.error('Error updating user:', error);
         }
     };
 
     return (
         <form
             className='edit-form'
-            onSubmit={handleAddOrUpdateUser}>
+            onSubmit={handleAddOrUpdateUser}
+            >
+
             <div>
                 {/* input fields */}
                 <label for="usercode">User Code:</label>
@@ -123,16 +127,16 @@ function UserEditForm({user}) {
                     onChange={(e) => setTextColor(e.target.value)}
                 />
 
-                <label for="backgrounColor"> Background Color:</label>
+                <label for="backgroundColor"> Background Color:</label>
                 <input
                     type="color"
-                    value={backgrounColor}
+                    value={backgroundColor}
                     onChange={(e) => setBackgroundColor(e.target.value)}
                 />
 
 
             </div>
-            <button type="submit"> Save Changes </button>
+            <button type="submit" className='save-btn'> Save Changes </button>
         </form>
     );
 };
