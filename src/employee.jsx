@@ -8,12 +8,12 @@ import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
 
 function Employee() {
     // Define state to hold employee data
+
     const [employees, setEmployees] = useState([]);
     const [addUser, setAddUser] = useState(false);
     const [editForm, setEditForm] = useState();
 
     const [showEditForm, setShowEditForm] = useState(false); // State to control the visibility of the edit form
-    const [selectedUser, setSelectedUser] = useState(null); // State to hold the user to be edited
 
     useEffect(() => {
         fetchUserList();
@@ -46,17 +46,12 @@ function Employee() {
         await fetchUserList();
     };
 
-    const editBtn = (user) => {
-        setEditForm(editForm);
-        setSelectedUser(user); // Set the selected user to be edited
+    const editBtn = (userId) => {
+        const selectedUser = employees.find(user => user.id === userId);
+        setEditForm(selectedUser);
         setShowEditForm(true); // Display the edit form
-        console.log('Edit Button is clicked!')
+        // console.log('Edit Button is clicked!')
     };
-
-    // const deleteBtn = () => {
-
-    //     console.log('Delete Button is clicked!')
-    // };
 
     return (
         <div>
@@ -75,9 +70,15 @@ function Employee() {
 
                 <div>
                     <h2 className='header' >Employee Table</h2>
+
                     <div
                     // fetchUserList={fetchUserList}
                     >
+                        <div
+                            className='checkbox' >
+                            <label><input type="checkbox" /> Inactive </label>
+                        </div>
+
                         <table
                             className="employee-table"
                         >
@@ -113,7 +114,12 @@ function Employee() {
 
                                         <td>
                                             <div>
-                                                <button className='edit-btn' onClick={editBtn}> Edit </button>
+                                                <button
+                                                    className='edit-btn'
+                                                    onClick={() => editBtn(employee.id)}
+                                                    fetchUserList={fetchUserList}
+                                                > Edit </button>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -123,11 +129,13 @@ function Employee() {
                     </div>
                 </div>
             </div>
-            {showEditForm && selectedUser && (
+            {showEditForm && (
                 <div className={`popup ${showEditForm ? 'show' : ''}`}>
                     <div className="popup-inner">
                         <button className="close-btn" onClick={() => setShowEditForm(false)}> [ x ] </button>
-                        <UserEditForm user={selectedUser} />
+                        <UserEditForm
+                            user={editForm}
+                        />
                     </div>
                 </div>
             )}

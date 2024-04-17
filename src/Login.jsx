@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './login.css';
-import Home from './home';
 
 export const Login = ({ handleLogout }) => {
     const [username, setUsername] = useState('');

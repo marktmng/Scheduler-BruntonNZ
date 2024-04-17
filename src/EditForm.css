@@ -82,7 +82,8 @@
   }
 
   .edit-form .update-btn:hover{
-    background-color: #1d9822;
+    background-color: #0bd211;
+    /* color: #4CAF50; */
 
   }
 
@@ -96,6 +97,7 @@
 
   .edit-form .delete-btn:hover{
     background-color: #d20e00;
+    /* color: #f44336; */
 
   }
 
@@ -107,6 +109,7 @@
   }
   .edit-form .add-btn:hover{
     background-color: rgb(0, 76, 255); /* Change background color on hover */
+    /* color: rgb(43, 133, 223); */
   }
   
   /* .edit-form .close-btn {

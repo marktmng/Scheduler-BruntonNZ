@@ -11,8 +11,533 @@
         "version": "1.0.0"
     },
     "host": "localhost:8080",
-    "basePath": "/api/v1",
+    "basePath": "/v1",
     "paths": {
+        "/client": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get client list",
+                "tags": [
+                    "clients"
+                ],
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "hide inactive clients",
+                        "name": "filter_inactive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/controllers.ClientView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "add or update client",
+                "tags": [
+                    "clients"
+                ],
+                "parameters": [
+                    {
+                        "description": "client detail",
+                        "name": "clientDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ClientView"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete client",
+                "tags": [
+                    "clients"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client code",
+                        "name": "client_code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/position": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get position list",
+                "tags": [
+                    "positions"
+                ],
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "hide inactive position",
+                        "name": "filter_inactive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/controllers.PositionView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "add or update position",
+                "tags": [
+                    "positions"
+                ],
+                "parameters": [
+                    {
+                        "description": "position detail",
+                        "name": "positionDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.PositionView"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete position",
+                "tags": [
+                    "positions"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "position code",
+                        "name": "position_code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/project": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get project list",
+                "tags": [
+                    "projects"
+                ],
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "hide inactive project",
+                        "name": "filter_inactive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter by client",
+                        "name": "client",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/controllers.ProjectView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "add or update project",
+                "tags": [
+                    "projects"
+                ],
+                "parameters": [
+                    {
+                        "description": "project detail",
+                        "name": "projectDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ProjectView"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete project",
+                "tags": [
+                    "projects"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client code",
+                        "name": "client_code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "project name",
+                        "name": "project_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/room": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get room list",
+                "tags": [
+                    "rooms"
+                ],
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "hide inactive rooms",
+                        "name": "filter_inactive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.JSONStruct"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/controllers.RoomView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "add or update room",
+                "tags": [
+                    "rooms"
+                ],
+                "parameters": [
+                    {
+                        "description": "room detail",
+                        "name": "roomDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.RoomView"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete room",
+                "tags": [
+                    "rooms"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "room name",
+                        "name": "room_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "With the bearer in front",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONStruct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/task/": {
             "get": {
                 "security": [
@@ -544,6 +1069,12 @@
                         "required": true
                     },
                     {
+                        "type": "boolean",
+                        "description": "hide inactive users",
+                        "name": "filter_inactive",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "With the bearer in front",
                         "name": "Authorization",
@@ -578,6 +1109,26 @@
         }
     },
     "definitions": {
+        "controllers.ClientView": {
+            "type": "object",
+            "properties": {
+                "client_code": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "integer"
+                },
+                "client_inactive": {
+                    "type": "boolean"
+                },
+                "client_name": {
+                    "type": "string"
+                },
+                "client_sequence": {
+                    "type": "integer"
+                }
+            }
+        },
         "controllers.LoginParam": {
             "type": "object",
             "properties": {
@@ -586,6 +1137,66 @@
                 },
                 "user_code": {
                     "type": "string"
+                }
+            }
+        },
+        "controllers.PositionView": {
+            "type": "object",
+            "properties": {
+                "position_code": {
+                    "type": "string"
+                },
+                "position_description": {
+                    "type": "string"
+                },
+                "position_id": {
+                    "type": "integer"
+                },
+                "position_inactive": {
+                    "type": "boolean"
+                },
+                "position_name": {
+                    "type": "string"
+                },
+                "position_sequence": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controllers.ProjectView": {
+            "type": "object",
+            "properties": {
+                "client_code": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer"
+                },
+                "project_inactive": {
+                    "type": "boolean"
+                },
+                "project_name": {
+                    "type": "string"
+                },
+                "project_sequence": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controllers.RoomView": {
+            "type": "object",
+            "properties": {
+                "room_id": {
+                    "type": "integer"
+                },
+                "room_inactive": {
+                    "type": "boolean"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "room_sequence": {
+                    "type": "integer"
                 }
             }
         },
@@ -633,7 +1244,13 @@
                 "inactive": {
                     "type": "boolean"
                 },
+                "online": {
+                    "type": "boolean"
+                },
                 "phone_no": {
+                    "type": "string"
+                },
+                "position_code": {
                     "type": "string"
                 },
                 "role": {
@@ -683,6 +1300,9 @@
                 "phone_no": {
                     "type": "string"
                 },
+                "position_code": {
+                    "type": "string"
+                },
                 "role": {
                     "type": "string"
                 },
@@ -723,6 +1343,9 @@
         "models.FTask": {
             "type": "object",
             "properties": {
+                "clientCode": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -732,7 +1355,7 @@
                 "hours": {
                     "type": "string"
                 },
-                "location": {
+                "projectName": {
                     "type": "string"
                 },
                 "recEndDate": {
@@ -742,6 +1365,9 @@
                     "type": "string"
                 },
                 "repeatable": {
+                    "type": "string"
+                },
+                "roomName": {
                     "type": "string"
                 },
                 "startDate": {

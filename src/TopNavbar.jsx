@@ -53,10 +53,9 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <h1 className="nav-item-title"> Scheduler </h1>
       </div>
 
-      {/*Employee page */}
+      {/* Calender page */}
       <div
-        style={{ position: 'absolute', right: 220, top: 15 }} >
-
+        style={{ position: 'absolute', right: 350, top: 15 }} >
         <li >
           <Link
             className='pages'
@@ -64,8 +63,19 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
           </Link>
         </li>
       </div>
+      {/* Employee page */}
       <div
         style={{ position: 'absolute', right: 100, top: 15 }} >
+        <li >
+          <Link
+            className='pages'
+            to="/clients" > Clients
+          </Link>
+        </li>
+      </div>
+      {/* Clients page */}
+      <div
+        style={{ position: 'absolute', right: 210, top: 15 }} >
         <li >
           <Link
             className='pages'
@@ -82,7 +92,7 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
       }
 
       <Modal
-        title="Logout"
+        title="Profile"
         open={isLoginModalVisible}
         onCancel={toggleLoginModal}
         footer={null}

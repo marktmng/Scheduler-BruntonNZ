@@ -8,7 +8,6 @@ export const getUserlist = async () => {
       method: "GET",
       headers: {
         'Authorization': `${token}`,
-        // 'Authorization':'Bearer yTIgfbIDTnphChtiB6IpkswrIyVWeaau6HGlOb3Z64o='
       }
     });
     if (!response.ok) {
