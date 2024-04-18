@@ -53,33 +53,24 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <h1 className="nav-item-title"> Scheduler </h1>
       </div>
 
+      {/* dropdown from Style.css */}
+      <div class="dropdown">
+        <div className='pages'>
+          <button class="dropbtn">Users <span class="dropdown-icon"></span> </button>
+        </div>
+        <div class="dropdown-content">
+          <a href="/employee">Employee</a> {/* Employee page */}
+          <a href="/clients">Clients</a> {/* Clients page */}
+        </div>
+      </div>
+
       {/* Calender page */}
       <div
-        style={{ position: 'absolute', right: 350, top: 15 }} >
+        style={{ position: 'absolute', right: 190, top: 15 }} >
         <li >
           <Link
             className='pages'
             to="/">Calendar
-          </Link>
-        </li>
-      </div>
-      {/* Employee page */}
-      <div
-        style={{ position: 'absolute', right: 100, top: 15 }} >
-        <li >
-          <Link
-            className='pages'
-            to="/clients" > Clients
-          </Link>
-        </li>
-      </div>
-      {/* Clients page */}
-      <div
-        style={{ position: 'absolute', right: 210, top: 15 }} >
-        <li >
-          <Link
-            className='pages'
-            to="/employee" > Employee
           </Link>
         </li>
       </div>
