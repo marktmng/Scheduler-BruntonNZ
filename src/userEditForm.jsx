@@ -14,6 +14,7 @@ function UserEditForm({ user }) {
     const [role, setRole] = useState('');
     const [textColor, setTextColor] = useState('');
     const [backgroundColor, setBackgroundColor] = useState('');
+    const [inactive, setInactive] = useState(''); // show and hide inactive staff
 
     useEffect(() => {
         fetchEmployee();
@@ -37,18 +38,19 @@ function UserEditForm({ user }) {
     useEffect(() => {
         if (user) {
             setId(user.id || '');
-            setUsercode(user.user_code || ''); 
-            setUsername(user.user_name || ''); 
-            setEmail(user.email_address || ''); 
+            setUsercode(user.user_code || '');
+            setUsername(user.user_name || '');
+            setEmail(user.email_address || '');
             setPassword(user.password || '');
             setRole(user.role || '');
-            setTextColor(user.color_text || ''); 
+            setTextColor(user.color_text || '');
             setBackgroundColor(user.color_background || '');
+            setInactive(user.inactive || '');
         }
     }, [user]);
 
 
-    const handleAddOrUpdateUser = async (e) => {
+    const updBtn = async (e) => {
         e.preventDefault();
 
         const userData = {
@@ -59,25 +61,30 @@ function UserEditForm({ user }) {
             password: password,
             role: role,
             color_text: textColor,
-            color_background: backgroundColor
+            color_background: backgroundColor,
+            inactive: inactive
         };
-        
+
         try {
             const updResponse = await AddOrUpdUser(userData);
             console.log('User updated successfully', updResponse)
 
             // Refresh user list after successful on update
-           fetchEmployee()
+            fetchEmployee()
         } catch (error) {
             console.error('Error updating user:', error);
         }
     };
 
+    const checkedInactive = (i) => {
+        setInactive(i.target.checked);
+    };
+
     return (
         <form
             className='edit-form'
-            onSubmit={handleAddOrUpdateUser}
-            >
+            onSubmit={updBtn}
+        >
 
             <div>
                 {/* input fields */}
@@ -104,13 +111,13 @@ function UserEditForm({ user }) {
                     placeholder="email" // required 
                 />
 
-                <label for="password">Password:</label>
+                {/* <label for="password">Password:</label>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="password" // required 
-                />
+                /> */}
 
                 <label for="role">Position:</label>
                 <input
@@ -119,6 +126,16 @@ function UserEditForm({ user }) {
                     onChange={(e) => setRole(e.target.value)}
                     placeholder="Position" // required 
                 />
+
+                {/* for inactive */}
+                <div className='check-div-align'>
+                    <label htmlFor="inactive"></label>
+                    <input
+                        className='check-box'
+                        type="checkbox"
+                        checked={inactive}
+                        onChange={checkedInactive} /> Inactive
+                </div>
 
                 <label for="textColor">Text Color:</label>
                 <input
