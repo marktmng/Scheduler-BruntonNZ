@@ -27,9 +27,9 @@ function Employee() {
         setEmployees(employees)
     }, [employees]);
 
-    const fetchUserList = async () => {
+    const fetchUserList = async (inactive) => {
         try {
-            const response = await getUserlist();
+            const response = await getUserlist(inactive);
 
             console.log('Userlist:', response)
             setEmployees(response.data.Users);
@@ -65,6 +65,7 @@ function Employee() {
 
     const toggleIncludeInactive = () => {
         setIncludeInactive(!includeInactive);
+        fetchUserList(includeInactive)
 
     };
 
@@ -113,9 +114,9 @@ function Employee() {
                             <tbody>
                                 {employees.length > 0 && employees.map((employee, index) => { // make sure the employees is not empty
                                     // Render the row only if the employee is active or if includeInactive is true
-                                    if (employee.inactive && !includeInactive) {
-                                        return null; // Skip rendering inactive employees when includeInactive is false
-                                    }
+                                    // if (employee.inactive && !includeInactive) {
+                                        // return null; // Skip rendering inactive employees when includeInactive is false
+                                    // }
 
                                     return (
                                         <tr key={index}>
