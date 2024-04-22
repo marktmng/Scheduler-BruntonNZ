@@ -7,6 +7,7 @@ import AddClient from './addClients';
 function Client() {
 
     const [addClients, setAddClients] = useState();
+
     // Dummy client data
     const clients = [
         { sequence: '=', code: 'C001', name: 'Client A', inactive: false },
@@ -18,10 +19,10 @@ function Client() {
 
 
     const addBtnClient = () => {
-
-        setAddClients(addClients)
-        console.log('Add client button added ;-) ')
+        setAddClients(!addClients); // Toggle the visibility of the popup
+        console.log('Add client button added ;-) ');
     }
+
 
     return (
         <div>
@@ -32,14 +33,15 @@ function Client() {
                     <button className='crtUser-btn' onClick={addBtnClient}> Create Clients </button> {/*style={{ position: 'absolute', right: 100, top: 100 }} */}
                 </div>
 
-                <div className={`popup ${addBtnClient ? 'show' : ''}`}>
+                <div className={`popup ${addClients ? 'show' : ''}`}>  {/*Toggle the visibility of the popup */}
                     <div className="popup-inner">
                         <button className="close-btn" onClick={addBtnClient}> [ x ] </button>
                         <AddClient />
                     </div>
                 </div>
+
                 <div>
-                <div className='align-row'>
+                    <div className='align-row'>
                         <div>
                             <h2 className='header' >Employee Table</h2>
                         </div>

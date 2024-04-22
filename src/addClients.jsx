@@ -48,7 +48,7 @@ function AddClient (){
 
                 <h1>Please don't bother this one. It's under construction! :)</h1>
                 
-                <button type="submit" className='addUser-btn'>Add User</button>
+                <button type="submit" className='addUser-btn'>Add Clients</button>
 
         </form>
     );
