@@ -1,10 +1,10 @@
 
 
-export const getUserlist = async () => {
+export const getUserlist = async (includeInactive=true) => {
   try {
     const token = localStorage.getItem('Token')
 
-    const response = await fetch(`http://localhost:8080/v1/user/userlist?pageindex=1&pagesize=222222`, {
+    const response = await fetch(`http://localhost:8080/v1/user/userlist?pageindex=1&pagesize=222222&filter_inactive=${includeInactive}`, {
       method: "GET",
       headers: {
         'Authorization': `${token}`,

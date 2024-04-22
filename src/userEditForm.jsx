@@ -14,6 +14,7 @@ function UserEditForm({ user }) {
     const [role, setRole] = useState('');
     const [textColor, setTextColor] = useState('');
     const [backgroundColor, setBackgroundColor] = useState('');
+
     const [inactive, setInactive] = useState(''); // show and hide inactive staff
 
     useEffect(() => {

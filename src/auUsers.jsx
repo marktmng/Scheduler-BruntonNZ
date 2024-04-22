@@ -13,7 +13,7 @@ function AuUsers({ user}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [inactive, setInactive] = useState(''); // show and hide inactive staff
+    const [inactive, setInactive] = useState(false); // show and hide inactive staff
 
     const [textColor, setTextColor] = useState('#ffffff');
     const [backgroundColor, setBackgroundColor] = useState('#ffffff');

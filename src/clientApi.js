@@ -1,4 +1,4 @@
-export const geClients = async () => {
+export const getClients = async () => {
     try {
       const token = localStorage.getItem('Token')
   
