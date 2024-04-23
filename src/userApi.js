@@ -1,6 +1,6 @@
 
 
-export const getUserlist = async (includeInactive=true) => {
+export const getUserlist = async (includeInactive=true) => { // used " includeInactive=true " to filter inactive/active
   try {
     const token = localStorage.getItem('Token')
 

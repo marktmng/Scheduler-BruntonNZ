@@ -11,10 +11,8 @@ function Employee() {
 
     const [employees, setEmployees] = useState([]); // Define state to hold employee data
     const [addUser, setAddUser] = useState(false);
-    const [editForm, setEditForm] = useState();
-
+    const [editForm, setEditForm] = useState(); // for edit form
     const [includeInactive, setIncludeInactive] = useState(false); // State to control whether to include inactive users
-
     const [showEditForm, setShowEditForm] = useState(false); // State to control the visibility of the edit form
 
     useEffect(() => {
@@ -41,11 +39,6 @@ function Employee() {
         }
     };
 
-
-    // const toggleIncludeInactive = () => {
-    //     setIncludeInactive(!includeInactive);
-    // };
-
     const addUserBtn = async () => {
         setAddUser(!addUser);
         console.log('Ready to add new user')
@@ -56,15 +49,16 @@ function Employee() {
     const editBtn = (userId) => {
 
         // Find the selected user from the employees array based on userId
-        const selectedUser = employees.find(user => user.id === userId);
+        const selectedUser = employees.find(user => user.id === userId); // .find is use to find from the data
         setEditForm(selectedUser);
         setShowEditForm(true); // Display the edit form
         // console.log('Edit Button is clicked!')
     };
 
 
+    // function to handle inactive/active user to checked
     const toggleIncludeInactive = () => {
-        setIncludeInactive(!includeInactive);
+        setIncludeInactive(!includeInactive); // if the user not'!' inactive then show
         fetchUserList(includeInactive)
 
     };
@@ -107,17 +101,16 @@ function Employee() {
                                     {/* <th>Text color</th>
                                     <th>Background color</th> */}
                                     <th>Color</th>
-                                    {includeInactive && <td className='inactive'>{employees.inactive} Inactive</td>} {/* Render the cell only if includeInactive is true */}
+                                    {includeInactive &&
+                                        <td className='inactive'>{employees.inactive} Inactive
+                                        </td>} {/* Render the cell only if includeInactive is true */}
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {employees.length > 0 && employees.map((employee, index) => { // make sure the employees is not empty
-                                    // Render the row only if the employee is active or if includeInactive is true
-                                    // if (employee.inactive && !includeInactive) {
-                                        // return null; // Skip rendering inactive employees when includeInactive is false
-                                    // }
 
+                                    // Render the row only if the employee is active or if includeInactive is true
                                     return (
                                         <tr key={index}>
                                             <td>{employee.user_code}</td>
@@ -127,7 +120,7 @@ function Employee() {
                                             <td className='colors' style={{ backgroundColor: employee.color_background, color: employee.color_text }}>color</td>
                                             {includeInactive && (
                                                 <td>
-                                                    <input type="checkbox" checked={employee.inactive} readOnly /> {/* to show status */}
+                                                    <input type="checkbox" checked={employee.inactive} readOnly />
                                                 </td>
                                             )}
                                             <td>

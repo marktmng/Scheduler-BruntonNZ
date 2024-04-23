@@ -245,18 +245,19 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  /* background-color: #f9f9f9; */
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
   color: #fff;
-  padding: 12px 16px;
+  padding: 3px 15px;
   text-decoration: none;
   display: block;
+  height: 50px;
   background: linear-gradient(30deg,
                   #00AEEF,
                   rgb(100, 191, 234) 30%,
@@ -297,3 +298,34 @@
 .lbl{
   margin-top: 45px;
 }
+
+/* Define the list icon */
+.list-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+/* Add the horizontal lines for the list */
+.list-icon::before,
+.list-icon::after,
+.list-icon .middle-line {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 2px;
+  background-color: #000;
+  top: calc(50% - 3px);
+  left: 0;
+}
+
+/* Adjust the spacing between lines */
+.list-icon::before {
+  top: calc(50% - 7px);
+}
+
+.list-icon::after {
+  top: calc(40% + 3px);
+}
+

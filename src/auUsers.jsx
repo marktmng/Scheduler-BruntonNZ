@@ -1,31 +1,32 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { getUserlist, AddOrUpdUser, deleteUser } from './userApi'
+import { getUserlist, AddOrUpdUser } from './userApi'
 import './EditForm.css';
 import './Style.css';
 
-// au = Add or Update
-function AuUsers({ user}) {
+// Component for adding or updating users
+function AuUsers({ user }) { // 'user' prop passed to the component
 
-    const [schUser, setSchUser] = useState([]);
+    const [schUser, setSchUser] = useState([]); //  '[]' is to hold an array of data
     const [usercode, setUsercode] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [inactive, setInactive] = useState(false); // show and hide inactive staff
+    const [inactive, setInactive] = useState(false);  // State for user status (active/inactive)
 
-    const [textColor, setTextColor] = useState('#ffffff');
-    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+    const [textColor, setTextColor] = useState('#ffffff'); // State for text color
+    const [backgroundColor, setBackgroundColor] = useState('#ffffff'); // State for background color
 
-
+    // Fetch user list when component mounts
     useEffect(() => {
         fetchSchUser();
     }, []);
 
+    // Function to fetch user list
     const fetchSchUser = async () => {
         try {
-            const response = await getUserlist();
+            const response = await getUserlist(); // Set the fetched user list in state
             setSchUser(response);
             console.log('ABCD', response)
 
@@ -34,6 +35,7 @@ function AuUsers({ user}) {
         }
     };
 
+    // Update form fields when 'user' prop changes
     useEffect(() => {
         if (user) {
             setUsercode(user.usercode || '');
@@ -43,11 +45,12 @@ function AuUsers({ user}) {
             setRole(user.role || '');
             setTextColor(user.textColor || '');
             setBackgroundColor(user.backgroundColor || '');
-            setInactive(user.inactive || '');
+            setInactive(user.inactive || ''); // Set user status (active/inactive)
         }
     }, [user]);
 
 
+    // Function to handle adding users
     const handleAddOrUpdateUser = async (e) => {
         e.preventDefault();
 
@@ -63,18 +66,20 @@ function AuUsers({ user}) {
         };
 
         try {
-            await AddOrUpdUser(userData);
-            // Refresh user list after successful on addition
-            fetchSchUser();
+            await AddOrUpdUser(userData); // Add or update user
+
+            fetchSchUser(); // Refresh user list after successful addition/update
         } catch (error) {
             console.error('Error adding user:', error);
         }
     };
 
+    // Function to handle checkbox for user status (active/inactive)
     const checkedInactive = (i) => {
-        setInactive(i.target.checked);
+        setInactive(i.target.checked); // if target is 'checked' true
     };
 
+    // Render form with input fields and submit button
     return (
         <form
             className='edit-form'
@@ -85,41 +90,41 @@ function AuUsers({ user}) {
                 <input
                     type="text"
                     value={usercode}
-                    onChange={(e) => setUsercode(e.target.value)}
-                    placeholder="usercode" // required 
+                    onChange={(e) => setUsercode(e.target.value)} // onchange handler for value
+                    placeholder="usercode" required
                 />
                 <label for="username">User Name:</label>
                 <input
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="username" // required 
+                    onChange={(e) => setUsername(e.target.value)} // onchange handler for value
+                    placeholder="username" required
                 />
                 <label for="email">Email:</label>
                 <input
                     type="text"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="email" // required 
+                    onChange={(e) => setEmail(e.target.value)} // onchange handler for value
+                    placeholder="email" required
                 />
 
                 <label for="password">Password:</label>
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="password" // required 
+                    onChange={(e) => setPassword(e.target.value)} // onchange handler for value
+                    placeholder="password" required
                 />
 
                 <label for="role">Position:</label>
                 <input
                     type="text"
                     value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    placeholder="Position" // required 
+                    onChange={(e) => setRole(e.target.value)} // onchange handler for value
+                    placeholder="Position" required
                 />
 
-                {/* for inactive */}
+                {/* Checkbox for user status (active/inactive) */}
                 <div className='check-div-align'>
                     <label htmlFor="inactive"></label>
                     <input

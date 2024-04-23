@@ -39,6 +39,7 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
   };
 
   return (
+
     <Menu
       className="top-menu-bar"
       mode="horizontal"
@@ -46,11 +47,11 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
       onClick={handleTopMenuClick}
     >
       <div>
-        <img src='/brunton_logo.png' alt='logo' className='logo' style={{ position: 'absolute', left: 0, top: 0 }} />
+        <h1 className="scheduler"  > Scheduler </h1> {/*style={{ position: 'absolute', right: 900, top: 0 }} */}
       </div>
 
-      <div className="itemnav-">
-        <h1 className="nav-item-title"> Scheduler </h1>
+      <div>
+        <img src='/brunton_logo.png' alt='logo' className='logo' style={{ position: 'absolute', left: 0, top: 0 }} />
       </div>
 
       {/* dropdown from Style.css */}
@@ -58,22 +59,30 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <div className='pages'>
           <button class="dropbtn">Users <span class="dropdown-icon"></span> </button>
         </div>
+
         <div class="dropdown-content">
+
           <a href="/employee">Employee</a> {/* Employee page */}
+
           <a href="/clients">Clients</a> {/* Clients page */}
+
         </div>
+
       </div>
 
       {/* Calender page */}
       <div
-        style={{ position: 'absolute', right: 190, top: 15 }} >
+        style={{ position: 'absolute', right: 190, top: 15 }}
+      >
         <li >
           <Link
             className='pages'
             to="/">Calendar
           </Link>
         </li>
+
       </div>
+
 
       {/* Render login circle if user is not logged in */}
       {!username &&
@@ -81,6 +90,7 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
           <span className='circle-letter'>{getFirstLetter()}</span>
         </div>
       }
+
 
       <Modal
         title="Profile"
@@ -93,6 +103,7 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
           handleLogout={handleLogout} /> {/* handleLogin={handleLogin} handleLogout={handleLogout}  || I will replace login with profile */}
 
       </Modal>
+
 
     </Menu>
   );
