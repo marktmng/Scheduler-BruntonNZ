@@ -1,8 +1,8 @@
-export const getClients = async () => {
+export const getClients = async (includeInactive=true) => { // used " includeInactive=true " to filter inactive/active
     try {
       const token = localStorage.getItem('Token')
   
-      const response = await fetch(`http://localhost:8080/v1/client`, {
+      const response = await fetch(`http://localhost:8080/v1/client?&filter_inactive=${includeInactive}`, { // after endpoint '?' + 'parameter' + '$' sign
         method: "GET",
         headers: {
           'Authorization': `${token}`,

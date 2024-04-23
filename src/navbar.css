@@ -73,7 +73,6 @@
    opacity: 1;
  }
 
-
  .nav-item-title {
    color: #fff;
    /* #00AEEF */
@@ -108,4 +107,8 @@
    font-size: 20px;
  }
 
- 
+ .scheduler {
+   position: absolute;
+   left: 180px;
+   top: 15px;
+ }

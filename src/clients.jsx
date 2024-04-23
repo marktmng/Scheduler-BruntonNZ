@@ -1,28 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TopNavbar from './TopNavbar';
 import './Style.css';
 import './Popup.css';
 import AddClient from './addClients';
+import { getClients, addClients } from './clientApi';
 
 function Client() {
 
+    const [clients, setClients] = useState([]); // Define state to hold clients data
     const [addClients, setAddClients] = useState();
+    const [editForm, setEditForm] = useState(false); // for edit form
+    const [showEditForm, setShowEditForm] = useState(false);// // State to control the visibility of the edit form
+    const [includeInactive, setIncludeInactive] = useState(false); // State to control whether to include inactive users
 
-    // Dummy client data
-    const clients = [
-        { sequence: '=', code: 'C001', name: 'Client A', inactive: false },
-        { sequence: '=', code: 'C002', name: 'Client B', inactive: true },
-        { sequence: '=', code: 'C003', name: 'Client C', inactive: false },
-        { sequence: '=', code: 'C004', name: 'Client D', inactive: true },
-        { sequence: '=', code: 'C005', name: 'Client E', inactive: false }
-    ];
+    useEffect(() => {
+        fetchedClients();
+    }, []);
+
+    useEffect(() => {
+        console.log('Chor Clients:', clients)
+        setClients(clients)
+    }, [clients]);
+
+    const fetchedClients = async () => {
+        try {
+            const cls = await getClients();
+            setClients(cls.data);
+            console.log('Clients fetched details:', cls)
+        } catch (erR) {
+            console.error("Error fetching clients list", erR)
+        }
+    };
 
 
-    const addBtnClient = () => {
+    const addBtnClient = () => { // add clients button
         setAddClients(!addClients); // Toggle the visibility of the popup
-        console.log('Add client button added ;-) ');
+        console.log('New client added ;-) ');
     }
 
+    const edtClientBtn = () => {
+        console.log('Client edit button clicked!!!')
+    }
 
     return (
         <div>
@@ -53,7 +71,7 @@ function Client() {
                         <table className="employee-table">
                             <thead>
                                 <tr>
-                                    <th > Seqeunce </th>
+                                    <th > - </th>
                                     <th className='username'>Code</th>
                                     <th className='cl-name'>Name</th>
                                     <th>Inactive</th>
@@ -61,25 +79,43 @@ function Client() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {clients.map((client, index) => (
-                                    <tr key={index}>
-                                        <td>{client.sequence}</td>
-                                        <td>{client.code}</td>
-                                        <td>{client.name}</td>
-                                        <td>{client.inactive ? 'Yes' : 'No'}</td>
-                                        <td>
-                                            <div>
-                                                <button
-                                                    className='edit-btn'
-                                                > Edit </button>
 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {clients.length > 0 && clients.map((client, index) => {
+
+                                    return (
+                                        <tr key={index}>
+                                            {/* <td>{client.client_sequence}</td> */}
+                                            <td>
+                                                <span className={`list-icon ${client.inactive ? 'inactive' : ''}`}>
+                                                    <span className="middle-line"></span>
+                                                </span>
+                                            </td>
+                                            <td>{client.client_code}</td>
+                                            <td>{client.client_name}</td>
+                                            <td>
+                                                <input type="checkbox" checked={client.inactive} readOnly /> {/* to show status */}
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <button
+                                                        className='edit-btn'
+                                                        onClick={edtClientBtn}
+                                                    > Edit </button>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+
+            <div className={`popup ${showEditForm ? 'show' : ''}`}>
+                <div className="popup-inner">
+                    <button className="close-btn" onClick={() => setShowEditForm(false)}> [ x ] </button>
                 </div>
             </div>
         </div>
