@@ -48,6 +48,8 @@ function Employee() {
 
     const editBtn = (userId) => {
 
+        console.log('Ckicked user ID:', userId)
+
         // Find the selected user from the employees array based on userId
         const selectedUser = employees.find(user => user.id === userId); // .find is use to find from the data
         setEditForm(selectedUser);
@@ -59,7 +61,7 @@ function Employee() {
     // function to handle inactive/active user to checked
     const toggleIncludeInactive = () => {
         setIncludeInactive(!includeInactive); // if the user not'!' inactive then show
-        fetchUserList(includeInactive)
+        fetchUserList(includeInactive);
 
     };
 
@@ -68,11 +70,13 @@ function Employee() {
             <TopNavbar />
             <div className='employee-container'>
                 <div>
-                    <button className='crtUser-btn' onClick={addUserBtn} > Create User </button> {/*style={{ position: 'absolute', right: 100, top: 100 }} */}
+                    <button className='crtUser-btn'
+                        onClick={addUserBtn} > Create User </button> {/*style={{ position: 'absolute', right: 100, top: 100 }} */}
                 </div>
                 <div className={`popup ${addUser ? 'show' : ''}`}>
                     <div className="popup-inner">
-                        <button className="close-btn" onClick={addUserBtn}> [ x ] </button>
+                        <button className="close-btn"
+                            onClick={addUserBtn}> [ x ] </button>
                         <AuUsers />
                     </div>
                 </div>
@@ -81,7 +85,7 @@ function Employee() {
                 <div>
                     <div className='align-row'>
                         <div>
-                            <h2 className='header' >Employee Table</h2>
+                            <h2 className='header' > Staff </h2>
                         </div>
                         <div className='lbl'>
                             <label ><input type="checkbox" checked={includeInactive} onChange={toggleIncludeInactive} /> Include Inactive </label> {/*checked={includeInactive} onChange={toggleIncludeInactive} */}
@@ -102,8 +106,8 @@ function Employee() {
                                     <th>Background color</th> */}
                                     <th>Color</th>
                                     {includeInactive &&
-                                        <td className='inactive'>{employees.inactive} Inactive
-                                        </td>} {/* Render the cell only if includeInactive is true */}
+                                        <th>{employees.inactive} Inactive
+                                        </th>} {/* Render the cell only if includeInactive is true */}
                                     <th>Action</th>
                                 </tr>
                             </thead>

@@ -2,6 +2,7 @@ import { useRoutes, Outlet } from 'react-router-dom'
 import Employee from './employee'
 import Home from './home'
 import Client from './clients'
+import Rooms from './rooms'
 
 
 export const rootRouter = [
@@ -25,6 +26,10 @@ export const rootRouter = [
             {
                 path: '/clients',
                 element: <Client />
+            },
+            {
+                path: '/rooms',
+                element: <Rooms />
             }
         ]
     }

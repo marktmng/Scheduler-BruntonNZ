@@ -54,25 +54,30 @@ const TopNavbar = ({ handleTopMenuClick, selectTopMenu, username, handleSubmit, 
         <img src='/brunton_logo.png' alt='logo' className='logo' style={{ position: 'absolute', left: 0, top: 0 }} />
       </div>
 
-      {/* dropdown from Style.css */}
+      {/* first dropdown from Style.css */}
       <div class="dropdown">
         <div className='pages'>
           <button class="dropbtn">Users <span class="dropdown-icon"></span> </button>
         </div>
-
         <div class="dropdown-content">
-
           <a href="/employee">Employee</a> {/* Employee page */}
-
           <a href="/clients">Clients</a> {/* Clients page */}
-
         </div>
+      </div>
 
+      {/* second dropdown from Style.css */}
+      <div class="dropdown" style={{position: 'absolute', right: 190}}>
+        <div className='pages'>
+          <button class="dropbtn">Setting <span class="dropdown-icon"></span> </button>
+        </div>
+        <div class="dropdown-content">
+          <a href="/rooms">Room</a> {/* Employee page */}
+        </div>
       </div>
 
       {/* Calender page */}
       <div
-        style={{ position: 'absolute', right: 190, top: 15 }}
+        style={{ position: 'absolute', right: 290, top: 15 }}
       >
         <li >
           <Link
