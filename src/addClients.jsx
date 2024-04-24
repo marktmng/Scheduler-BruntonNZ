@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './EditForm.css'; // Import your CSS file for styling
-import { getClients, addClients } from './clientApi';
+import { getClients, addClients } from './otherApi';
 
 // component for adding or updating clients
 function AddClient({ clt }) { // 'clt' prop passed to the component
@@ -22,12 +22,12 @@ function AddClient({ clt }) { // 'clt' prop passed to the component
         }
     };
 
-    useState(() => {
+    useEffect(() => {
         fetchedClients();
     }, []);
 
     // Update form fields when 'clt' prop changes
-    useState(() => {
+    useEffect(() => {
         if (clt) {
             setClientCode(clt.clientCode || '');
             setClientName(clt.clientName || '');
@@ -65,6 +65,7 @@ function AddClient({ clt }) { // 'clt' prop passed to the component
         <form
             className='edit-form'
             onSubmit={addClient}
+            fetchedClients={fetchedClients}
         >
             <div>
                 <label for="clientCode">Code:</label>

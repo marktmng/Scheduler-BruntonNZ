@@ -329,3 +329,7 @@
   top: calc(40% + 3px);
 }
 
+/* room table */
+.rth-name {
+width: 700px;
+}
